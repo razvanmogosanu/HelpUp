@@ -1,0 +1,24 @@
+.center-image{
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  width: 8%;
+}
+
+.center {
+  margin: auto;
+  width: 20%;
+  border: 1px solid #8a8a8a;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.button{
+  width: 100%;
+  color: white;
+  background-color: #00529C;
+}
+
+a{
+  color: #00529C;
+}
