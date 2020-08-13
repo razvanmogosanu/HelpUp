@@ -1,4 +1,4 @@
-package com.example.help.models;
+package com.malinabenegui.help.models;
 
 public class User {
 

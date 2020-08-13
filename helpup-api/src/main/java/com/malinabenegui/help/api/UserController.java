@@ -1,4 +1,4 @@
-package com.example.help.api;
+package com.malinabenegui.help.api;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
