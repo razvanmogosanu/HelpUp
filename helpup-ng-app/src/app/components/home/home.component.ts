@@ -10,7 +10,7 @@ export class HomeComponent implements OnInit {
   strings: string[];
 
   constructor(private http: HttpClient) {
-    this.getString();
+    // this.getString();
   }
 
   ngOnInit(): void {
