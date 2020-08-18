@@ -1,0 +1,22 @@
+<div class="profile">
+  <h2>{{this.userDetails.first_name}} {{this.userDetails.last_name}}</h2>
+  <h3 class="username">@{{this.userDetails.username}}</h3>
+
+  <img class="profile_pic" src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png">
+
+  <button class="btn">Message</button>
+</div>
+<div class="infos">
+  <h4>About me</h4>
+  <p>{{this.userDetails.description}}</p>
+  <hr>
+
+  <span class="glyphicon glyphicon-home"></span>
+  <p>Lives in {{this.userDetails.city}}</p>
+
+  <span class="glyphicon glyphicon-education"></span>
+  <p>Studied at {{this.userDetails.education}}</p>
+
+  <span class="glyphicon glyphicon-briefcase"></span>
+  <p>Works at {{this.userDetails.job}}</p>
+</div>

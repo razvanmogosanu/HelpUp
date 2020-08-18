@@ -14,7 +14,6 @@ public class User{
     private String username;
     private String password;
     private String email;
-    private String authority;
 
 
     public int getId() {
@@ -39,14 +38,6 @@ public class User{
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getAuthority() {
-        return authority;
-    }
-
-    public void setAuthority(String authority) {
-        this.authority = authority;
     }
 
     public String getEmail() {
