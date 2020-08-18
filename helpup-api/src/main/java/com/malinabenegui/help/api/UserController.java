@@ -1,23 +1,32 @@
 package com.malinabenegui.help.api;
 
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import java.util.LinkedList;
-import java.util.List;
+import com.malinabenegui.help.models.User;
+import com.malinabenegui.help.repositories.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("")
 @CrossOrigin
 public class UserController {
+    @Autowired
+    private UserRepository userRepository;
+
     @GetMapping("/all")
-    public List<String> all() {
-        var allCategories = new LinkedList<String>();
-        for(int i = 0; i < 10; i++) {
-            allCategories.add("postare " + i);
-        }
-        return allCategories;
+    public Iterable<User> all() {
+        return userRepository.findAll();
+    }
+
+    @PostMapping(path = "/add") // Map ONLY POST Requests
+    public @ResponseBody String addNewUser(@RequestParam String name
+            , @RequestParam String email) {
+        // @ResponseBody means the returned String is the response, not a view name
+        // @RequestParam means it is a parameter from the GET or POST request
+
+        User n = new User();
+        n.setUsername(name);
+        n.setEmail(email);
+        userRepository.save(n);
+        return "Saved";
     }
 }
