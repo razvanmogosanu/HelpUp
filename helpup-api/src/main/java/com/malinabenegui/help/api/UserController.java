@@ -5,6 +5,8 @@ import com.malinabenegui.help.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("")
 @CrossOrigin
@@ -17,16 +19,28 @@ public class UserController {
         return userRepository.findAll();
     }
 
-    @PostMapping(path = "/add") // Map ONLY POST Requests
-    public @ResponseBody String addNewUser(@RequestParam String name
-            , @RequestParam String email) {
-        // @ResponseBody means the returned String is the response, not a view name
-        // @RequestParam means it is a parameter from the GET or POST request
+    @RequestMapping("/add")
+    public @ResponseBody String addNewUser(@RequestParam String username, @RequestParam String email, @RequestParam String password) {
+        List<User> usernameList = userRepository.findAllByUsername(username);
+        List<User> emailList = userRepository.findAllByEmail(email);
+        if (emailExists(emailList))
+            return "mail already associated to an account";
+        if (usernameExists(usernameList))
+            return "username taken";
 
-        User n = new User();
-        n.setUsername(name);
-        n.setEmail(email);
-        userRepository.save(n);
-        return "Saved";
+        User user = new User();
+        user.setUsername(username);
+        user.setEmail(email);
+        user.setPassword(password);
+        userRepository.save(user);
+
+        return "accepted";
+        }
+
+    private boolean usernameExists(List<User> usernameList){
+        return !usernameList.isEmpty();
+    }
+    private boolean emailExists(List<User> emailList){
+        return !emailList.isEmpty();
     }
 }

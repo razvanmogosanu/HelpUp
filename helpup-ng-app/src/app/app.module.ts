@@ -12,6 +12,7 @@ import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { AboutComponent } from './components/about/about.component';
 import { ProfileComponent } from './components/profile/profile.component';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 const appRoutes: Routes = [
   {
@@ -52,7 +53,9 @@ const appRoutes: Routes = [
     HttpClientModule,
     RouterModule,
     BsDropdownModule.forRoot(),
-    RouterModule.forRoot(appRoutes)
+    RouterModule.forRoot(appRoutes),
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
