@@ -7,6 +7,8 @@
 </div>
 <br>
 
+<div *ngIf="emailOrUsernameExists == true">"{{emailOrUsernameExistsMessage}}"</div>
+
 <div class="center">
   <form [formGroup]="regForm" class="px-4 py-3">
     <div class="form-group">
@@ -21,8 +23,8 @@
       <label for="pass">Password</label>
       <input type="password" class="form-control" formControlName="pass" id="pass" placeholder="Password">
     </div>
-    <button type="button" class="btn button" (click)="onSubmit()" [routerLink]= "['']">Sign up</button>
+    <button type="button" class="btn button" (click)="onSubmit()">Sign up</button>
   </form>
   <br>
-  <a class="dropdown-item"  [routerLink]="['','login']">Already have an account? Login</a>
+  <a class="dropdown-item" [routerLink]="['','login']">Already have an account? Login</a>
 </div>

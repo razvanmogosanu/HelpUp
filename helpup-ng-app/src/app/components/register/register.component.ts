@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {FormControl, FormGroup} from '@angular/forms';
+import {Router} from '@angular/router';
 
 class User {
   private id: number;
@@ -55,13 +56,17 @@ class User {
 })
 export class RegisterComponent implements OnInit {
   regForm: FormGroup;
+  emailOrUsernameExists: boolean;
+  emailOrUsernameExistsMessage: string;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private router: Router) {
     this.regForm = new FormGroup({
       username: new FormControl(),
       mail: new FormControl(),
       pass: new FormControl()
     });
+    this.emailOrUsernameExists = false;
+    this.emailOrUsernameExistsMessage = '';
   }
 
   postUser(usernameParam: string, emailParam: string, passwordParam: string): void {
@@ -77,17 +82,21 @@ export class RegisterComponent implements OnInit {
       .then()
       .catch(error => {
         postResponse = error.error.text;
+        if (postResponse.includes('mail')) {
+          this.emailOrUsernameExists = true;
+          this.emailOrUsernameExistsMessage = 'mail already exists';
+        }
+        if (postResponse.includes('username')) {
+          this.emailOrUsernameExists = true;
+          this.emailOrUsernameExistsMessage = 'username already exists';
+        }
+        if (postResponse.includes('accepted')) {
+          this.emailOrUsernameExists = false;
+        }
+        if (!this.emailOrUsernameExists) {
+          this.router.navigateByUrl('');
+        }
       });
-
-    if (postResponse.includes('mail')) {
-      console.log('mail already associated to an account');
-    }
-    if (postResponse.includes('username')) {
-      console.log('username taken');
-    }
-    if (postResponse.includes('accepted')) {
-      console.log('accepted');
-    }
   }
 
   ngOnInit(): void {
