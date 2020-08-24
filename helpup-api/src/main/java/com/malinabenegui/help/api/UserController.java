@@ -28,12 +28,7 @@ public class UserController {
         if (usernameExists(usernameList))
             return "username taken";
 
-        User user = new User();
-        user.setUsername(username);
-        user.setEmail(email);
-        user.setPassword(password);
-        userRepository.save(user);
-
+        userRepository.save(new User(username, password, email));
         return "accepted";
         }
 
