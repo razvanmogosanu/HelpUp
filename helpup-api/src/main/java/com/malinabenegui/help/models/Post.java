@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.util.Arrays;
 import java.util.Date;
 
 @Entity
@@ -15,6 +16,17 @@ public class Post {
     private int user_id;
     private String description;
     private byte[] image;
+
+    @Override
+    public String toString() {
+        return "Post{" +
+                "id=" + id +
+                ", date=" + date +
+                ", user_id=" + user_id +
+                ", description='" + description + '\'' +
+                ", image=" + Arrays.toString(image) +
+                '}';
+    }
 
     public Post() {
     }

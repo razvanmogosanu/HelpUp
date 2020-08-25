@@ -16,8 +16,8 @@
   <div class="posts">
     <div *ngFor="let post of retrievedPosts">
       {{post.description}}
-      <img [src]="translateImage(post.image)">
-      {{post.date}}
+      <img [src]="translateImage(post.image)" style="width: 40%; margin-bottom: 5%">
+      {{translateTime(post.date)}}
     </div>
   </div>
 

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 import java.util.zip.DataFormatException;
 import java.util.zip.Deflater;
@@ -28,7 +29,9 @@ public class PostController {
 
     @GetMapping("/all")
     public Iterable<Post> all() {
-        return postRepository.findAll();
+        List<Post> all = postRepository.findAll();
+        System.out.println(all);
+        return all;
     }
 
     @PostMapping("/upload")

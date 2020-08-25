@@ -5,7 +5,7 @@ import {FormControl, FormGroup} from '@angular/forms';
 class Post {
   public description: string;
   public image: any;
-  public date: any;
+  public date: Date;
 
   constructor(description: string, image: any) {
     this.description = description;
@@ -38,25 +38,19 @@ export class HomeComponent implements OnInit {
   message: string;
   imageName: any;
   retrievedPosts: Post[];
-  response:any;
+  response: any;
 
-  // Gets called when the user selects an image
   public onFileChanged(event): void {
-    // Select File
     this.selectedFile = event.target.files[0];
   }
 
-  // Gets called when the user clicks on submit to upload the image
   onUpload(): void {
-    console.log(this.selectedFile);
     const description = this.postForm.get('description').value;
 
-    // FormData API provides methods and properties to allow us easily prepare form data to be sent with POST HTTP requests.
     const uploadImageData = new FormData();
     uploadImageData.append('imageFile', this.selectedFile, this.selectedFile.name);
     uploadImageData.append('description', description);
 
-    // Make a call to the Spring Boot Application to save the image
     this.httpClient.post('http://localhost:8080/post/upload', uploadImageData, {observe: 'response'})
       .subscribe((response) => {
           if (response.status === 200) {
@@ -70,30 +64,20 @@ export class HomeComponent implements OnInit {
   }
 
   getPosts(): void {
-    // Make a call to Spring Boot to get the Image Bytes.
     this.httpClient.get('http://localhost:8080/post/all')
       .subscribe((data: Post[]) => {
         this.retrievedPosts = data;
       });
   }
 
-  // Gets called when the user clicks on retrieve image button to get the image from back end
-  getImage(): void {
-    // Make a call to Spring Boot to get the Image Bytes.
-    this.httpClient.get('http://localhost:8080/post/get/' + 4)
-      .subscribe(
-        res => {
-          this.response = res;
-          this.base64Data = this.response.image;
-          this.retrievedImage = 'data:image/jpeg;base64,' + this.base64Data;
-        }
-      );
-  }
-
   translateImage(image: any): any {
     return 'data:image/jpeg;base64,' + image;
   }
-
+  translateTime(date: Date): any {
+    const yearsAndMonths = date.toString().substring(0, 8);
+    const day = date.toString().substring(8, 10);
+    return yearsAndMonths + (Number(day) + 1);
+  }
   ngOnInit(): void {
     this.getPosts();
   }
