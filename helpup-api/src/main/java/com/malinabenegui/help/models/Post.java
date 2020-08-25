@@ -1,7 +1,5 @@
 package com.malinabenegui.help.models;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -16,12 +14,13 @@ public class Post {
     private Date date;
     private int user_id;
     private String description;
-    private String image;
+    private byte[] image;
 
     public Post() {
     }
 
-    public Post(int user_id, String description, String image) {
+    public Post(String description, byte[] image) {
+        date = new Date(System.currentTimeMillis());
 
         this.description = description;
         this.image = image;
@@ -59,11 +58,11 @@ public class Post {
         this.description = description;
     }
 
-    public String getImage() {
+    public byte[] getimage() {
         return image;
     }
 
-    public void setImage(String image) {
+    public void setimage(byte[] image) {
         this.image = image;
     }
 }

@@ -1,0 +1,27 @@
+.all{
+  background: #f2f2f2;
+  padding-top: 20px;
+}
+
+.center {
+  background: white;
+  margin: auto;
+  width: 45%;
+  border: 1px solid #dedede;
+  border-radius: 5px;
+  padding: 10px 20px;
+}
+
+h5{
+  font-weight: bold;
+}
+
+#description{
+  height: 70px;
+}
+
+.button{
+  background: #00529C;
+  color: white;
+}
+
