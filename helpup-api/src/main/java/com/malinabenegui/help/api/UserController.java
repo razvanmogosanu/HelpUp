@@ -2,9 +2,12 @@ package com.malinabenegui.help.api;
 
 import com.malinabenegui.help.models.User;
 import com.malinabenegui.help.repositories.UserRepository;
+import com.malinabenegui.help.services.MailingService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.MailException;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.http.HttpResponse;
 import java.util.List;
 
 @RestController
@@ -13,6 +16,9 @@ import java.util.List;
 public class UserController {
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private MailingService mailingService;
 
     @GetMapping("/all")
     public Iterable<User> all() {
@@ -28,7 +34,12 @@ public class UserController {
         if (usernameExists(usernameList))
             return "username taken";
 
-        userRepository.save(new User(username, password, email));
+        User user = new User(username, password, email);
+        try{
+            mailingService.sendNotification(user);
+        } catch (MailException e){
+        }
+        userRepository.save(user);
         return "accepted";
         }
 
