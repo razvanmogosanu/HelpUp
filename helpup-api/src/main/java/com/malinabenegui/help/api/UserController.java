@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.http.HttpResponse;
 import java.util.List;
 
 @RestController
@@ -26,7 +25,8 @@ public class UserController {
     }
 
     @RequestMapping("/add")
-    public @ResponseBody String addNewUser(@RequestParam String username, @RequestParam String email, @RequestParam String password) {
+    public @ResponseBody
+    String addNewUser(@RequestParam String username, @RequestParam String email, @RequestParam String password) {
         List<User> usernameList = userRepository.findAllByUsername(username);
         List<User> emailList = userRepository.findAllByEmail(email);
         if (emailExists(emailList))
@@ -35,18 +35,19 @@ public class UserController {
             return "username taken";
 
         User user = new User(username, password, email);
-        try{
+        try {
             mailingService.sendNotification(user);
-        } catch (MailException e){
+        } catch (MailException e) {
         }
         userRepository.save(user);
         return "accepted";
-        }
+    }
 
-    private boolean usernameExists(List<User> usernameList){
+    private boolean usernameExists(List<User> usernameList) {
         return !usernameList.isEmpty();
     }
-    private boolean emailExists(List<User> emailList){
+
+    private boolean emailExists(List<User> emailList) {
         return !emailList.isEmpty();
     }
 }

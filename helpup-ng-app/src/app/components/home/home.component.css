@@ -25,3 +25,49 @@ h5{
   color: white;
 }
 
+.posts{
+  background: white;
+  margin: 15px auto auto;
+  width: 45%;
+  border: 1px solid #dedede;
+  border-radius: 5px;
+  padding: 10px 20px;
+}
+
+.post{
+  margin-bottom: 30px;
+  border: 1px solid #dedede;
+  border-radius: 5px;
+}
+
+.post-image{
+  width: 70%;
+  display:block;
+  margin:auto;
+}
+
+.username{
+  font-weight: bold;
+  padding-left: 15%;
+}
+
+.date{
+  color: #6e6e6e;
+  float:right;
+  padding-right: 15%;
+}
+
+.description{
+  padding-left: 15%;
+  padding-right: 15%;
+}
+
+@media only screen and (max-width: 800px){
+  .center{
+    width: 70%;
+  }
+
+  .posts{
+    width: 70%;
+  }
+}

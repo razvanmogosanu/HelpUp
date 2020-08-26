@@ -1,4 +1,5 @@
 <div class="all">
+  <!-- Create a post-->
   <div class="center">
     <h5>Create Post</h5>
     <form [formGroup]="postForm" class="px-4 py-3">
@@ -13,11 +14,15 @@
       <input type="button" (click)="onUpload()" value="Post" class="btn button">
     </form>
   </div>
+
+  <!-- List with posts -->
   <div class="posts">
-    <div *ngFor="let post of retrievedPosts">
-      {{post.description}}
-      <img [src]="translateImage(post.image)" style="width: 40%; margin-bottom: 5%">
-      {{translateTime(post.date)}}
+    <div *ngFor="let post of retrievedPosts" class="post">
+      <span class="username">@andreicosmin</span>
+      <span class="date">‧ {{translateTime(post.date)}}</span>
+      <p class="description">{{post.description}}</p>
+      <img [src]="translateImage(post.image)" class="post-image">
+
     </div>
   </div>
 
