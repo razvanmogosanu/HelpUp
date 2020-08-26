@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {FormControl, FormGroup} from '@angular/forms';
+import {CookieService} from 'ngx-cookie-service';
 
 class Post {
   public description: string;
@@ -23,7 +24,7 @@ class Post {
 export class HomeComponent implements OnInit {
   postForm: FormGroup;
 
-  constructor(private httpClient: HttpClient) {
+  constructor(private httpClient: HttpClient, private cookies: CookieService) {
     this.postForm = new FormGroup({
       description: new FormControl(),
     });
@@ -64,7 +65,12 @@ export class HomeComponent implements OnInit {
   }
 
   getPosts(): void {
-    this.httpClient.get('http://localhost:8080/post/all')
+    const auth = 'Bearer ' + this.cookies.get('jwt');
+    this.httpClient.get('http://localhost:8080/post/all', {
+      headers: {
+        Authorization: auth
+      }
+    })
       .subscribe((data: Post[]) => {
         this.retrievedPosts = data;
       });
@@ -73,11 +79,13 @@ export class HomeComponent implements OnInit {
   translateImage(image: any): any {
     return 'data:image/jpeg;base64,' + image;
   }
+
   translateTime(date: Date): any {
     const yearsAndMonths = date.toString().substring(0, 8);
     const day = date.toString().substring(8, 10);
     return yearsAndMonths + (Number(day) + 1);
   }
+
   ngOnInit(): void {
     this.getPosts();
   }

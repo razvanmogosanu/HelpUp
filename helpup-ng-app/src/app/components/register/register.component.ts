@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {FormControl, FormGroup} from '@angular/forms';
 import {Router} from '@angular/router';
+import {CookieService} from 'ngx-cookie-service';
 
 class User {
   private id: number;
@@ -59,7 +60,7 @@ export class RegisterComponent implements OnInit {
   emailOrUsernameExists: boolean;
   emailOrUsernameExistsMessage: string;
 
-  constructor(private http: HttpClient, private router: Router) {
+  constructor(private http: HttpClient, private router: Router, private cookie: CookieService) {
     this.regForm = new FormGroup({
       username: new FormControl(),
       mail: new FormControl(),
@@ -78,26 +79,61 @@ export class RegisterComponent implements OnInit {
 
     let postResponse = '';
     this.http.post('http://localhost:8080/add', user, {params: options})
-      .toPromise()
-      .then()
-      .catch(error => {
-        postResponse = error.error.text;
-        if (postResponse.includes('mail')) {
-          this.emailOrUsernameExists = true;
-          this.emailOrUsernameExistsMessage = 'mail already exists';
+      .subscribe(
+        data => {
+
+        },
+        (error: ErrorEvent) => {
+          console.log(error);
+          postResponse = error.error.text;
+          if (postResponse.includes('mail')) {
+            this.emailOrUsernameExists = true;
+            this.emailOrUsernameExistsMessage = 'mail already exists';
+          }
+          if (postResponse.includes('username')) {
+            this.emailOrUsernameExists = true;
+            this.emailOrUsernameExistsMessage = 'username already exists';
+          }
+          if (postResponse.includes('accepted')) {
+            this.emailOrUsernameExists = false;
+          }
+          if (!this.emailOrUsernameExists) {
+            this.http.post('http://localhost:8080/auth', {
+              username: usernameParam,
+              password: passwordParam
+            } ).subscribe((token: {
+                jwt: string
+              }) => {
+                console.log(token.jwt);
+                this.cookie.set('jwt', token.jwt);
+                this.router.navigateByUrl('');
+              },
+              error1 => {
+                console.log(error1);
+              }
+            );
+          }
         }
-        if (postResponse.includes('username')) {
-          this.emailOrUsernameExists = true;
-          this.emailOrUsernameExistsMessage = 'username already exists';
-        }
-        if (postResponse.includes('accepted')) {
-          this.emailOrUsernameExists = false;
-        }
-        if (!this.emailOrUsernameExists) {
-          this.router.navigateByUrl('');
-        }
-      });
+      );
   }
+
+  // error => {
+  //         postResponse = error.error.text;
+  //         if (postResponse.includes('mail')) {
+  //           this.emailOrUsernameExists = true;
+  //           this.emailOrUsernameExistsMessage = 'mail already exists';
+  //         }
+  //         if (postResponse.includes('username')) {
+  //           this.emailOrUsernameExists = true;
+  //           this.emailOrUsernameExistsMessage = 'username already exists';
+  //         }
+  //         if (postResponse.includes('accepted')) {
+  //           this.emailOrUsernameExists = false;
+  //         }
+  //         if (!this.emailOrUsernameExists) {
+  //           this.router.navigateByUrl('');
+  //         }
+  //       }
 
   ngOnInit(): void {
   }
