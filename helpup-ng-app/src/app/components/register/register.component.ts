@@ -101,7 +101,7 @@ export class RegisterComponent implements OnInit {
             this.http.post('http://localhost:8080/auth', {
               username: usernameParam,
               password: passwordParam
-            } ).subscribe((token: {
+            }).subscribe((token: {
                 jwt: string
               }) => {
                 console.log(token.jwt);

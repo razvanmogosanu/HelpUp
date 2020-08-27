@@ -13,6 +13,7 @@ import { RegisterComponent } from './components/register/register.component';
 import { AboutComponent } from './components/about/about.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {CookieService} from 'ngx-cookie-service';
 
 const appRoutes: Routes = [
   {
@@ -57,7 +58,7 @@ const appRoutes: Routes = [
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [],
+  providers: [CookieService],
   bootstrap: [AppComponent]
 })
 export class AppModule {
