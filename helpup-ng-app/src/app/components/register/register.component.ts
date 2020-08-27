@@ -10,44 +10,12 @@ class User {
   private password: string;
   private email: string;
 
-
   constructor(username: string, password: string, email: string) {
     this.username = username;
     this.password = password;
     this.email = email;
   }
 
-  getId(): number {
-    return this.id;
-  }
-
-  setId(value: number): void {
-    this.id = value;
-  }
-
-  getUsername(): string {
-    return this.username;
-  }
-
-  setUsername(value: string): void {
-    this.username = value;
-  }
-
-  getPassword(): string {
-    return this.password;
-  }
-
-  setPassword(value: string): void {
-    this.password = value;
-  }
-
-  getEmail(): string {
-    return this.email;
-  }
-
-  setEmail(value: string): void {
-    this.email = value;
-  }
 }
 
 @Component({
@@ -70,6 +38,9 @@ export class RegisterComponent implements OnInit {
     this.emailOrUsernameExistsMessage = '';
   }
 
+  ngOnInit(): void {
+  }
+
   postUser(usernameParam: string, emailParam: string, passwordParam: string): void {
     const user = new User(usernameParam, emailParam, passwordParam);
     const options = new HttpParams()
@@ -78,13 +49,11 @@ export class RegisterComponent implements OnInit {
       .set('password', passwordParam);
 
     let postResponse = '';
-    this.http.post('http://localhost:8080/add', user, {params: options})
-      .subscribe(
+    this.http.post('http://localhost:8080/add', user, {params: options}).subscribe(
         data => {
 
         },
         (error: ErrorEvent) => {
-          console.log(error);
           postResponse = error.error.text;
           if (postResponse.includes('mail')) {
             this.emailOrUsernameExists = true;
@@ -104,7 +73,6 @@ export class RegisterComponent implements OnInit {
             }).subscribe((token: {
                 jwt: string
               }) => {
-                console.log(token.jwt);
                 this.cookie.set('jwt', token.jwt);
                 this.router.navigateByUrl('');
               },
@@ -115,27 +83,6 @@ export class RegisterComponent implements OnInit {
           }
         }
       );
-  }
-
-  // error => {
-  //         postResponse = error.error.text;
-  //         if (postResponse.includes('mail')) {
-  //           this.emailOrUsernameExists = true;
-  //           this.emailOrUsernameExistsMessage = 'mail already exists';
-  //         }
-  //         if (postResponse.includes('username')) {
-  //           this.emailOrUsernameExists = true;
-  //           this.emailOrUsernameExistsMessage = 'username already exists';
-  //         }
-  //         if (postResponse.includes('accepted')) {
-  //           this.emailOrUsernameExists = false;
-  //         }
-  //         if (!this.emailOrUsernameExists) {
-  //           this.router.navigateByUrl('');
-  //         }
-  //       }
-
-  ngOnInit(): void {
   }
 
   onSubmit(): void {

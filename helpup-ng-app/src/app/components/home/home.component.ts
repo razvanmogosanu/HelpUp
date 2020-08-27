@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {FormControl, FormGroup} from '@angular/forms';
 import {CookieService} from 'ngx-cookie-service';
+import {Router} from '@angular/router';
 
 class Post {
   public description: string;
@@ -24,22 +25,16 @@ class Post {
 export class HomeComponent implements OnInit {
   postForm: FormGroup;
 
-  constructor(private httpClient: HttpClient, private cookies: CookieService) {
+  constructor(private httpClient: HttpClient, private cookies: CookieService, private router: Router) {
     this.postForm = new FormGroup({
       description: new FormControl(),
     });
     this.retrievedPosts = new Array<Post>();
-    this.retrieveResponse = new Array<Post>();
   }
 
   selectedFile: File;
-  retrievedImage: any;
-  base64Data: any;
-  retrieveResponse: any[];
   message: string;
-  imageName: any;
   retrievedPosts: Post[];
-  response: any;
 
   public onFileChanged(event): void {
     this.selectedFile = event.target.files[0];
@@ -54,13 +49,8 @@ export class HomeComponent implements OnInit {
 
     this.httpClient.post('http://localhost:8080/post/upload', uploadImageData, {observe: 'response'})
       .subscribe((response) => {
-          if (response.status === 200) {
-            this.message = 'Image uploaded successfully';
-          } else {
-            this.message = 'Image not uploaded successfully';
-          }
-        }
-      );
+        this.message = (response.status === 200) ? 'Image uploaded successfully' : 'Image not uploaded successfully';
+      });
     this.postForm.reset();
   }
 
@@ -87,6 +77,10 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getPosts();
+    if (this.cookies.get('jwt').length > 100) {
+      this.getPosts();
+    } else {
+      this.router.navigateByUrl('login');
+    }
   }
 }

@@ -56,7 +56,7 @@ const appRoutes: Routes = [
     BsDropdownModule.forRoot(),
     RouterModule.forRoot(appRoutes),
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   providers: [CookieService],
   bootstrap: [AppComponent]
