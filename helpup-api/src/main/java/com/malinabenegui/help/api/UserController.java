@@ -1,9 +1,13 @@
 package com.malinabenegui.help.api;
 
 import com.malinabenegui.help.models.User;
+import com.malinabenegui.help.models.auth.AuthenticationResponse;
 import com.malinabenegui.help.repositories.UserRepository;
 import com.malinabenegui.help.services.MailingService;
+import com.sun.mail.iap.Response;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.mail.MailAuthenticationException;
 import org.springframework.mail.MailException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -32,23 +36,24 @@ public class UserController {
     }
 
     @RequestMapping("/add")
-    public @ResponseBody String addUser(@RequestParam String username, @RequestParam String email, @RequestParam String password) throws MailException {
-        List<User> usernameList = userRepository.findAllByUsername(username);
-        List<User> emailList = userRepository.findAllByEmail(email);
+    public @ResponseBody
+    ResponseEntity<?> addUser(@RequestBody User user) throws MailException {
+        List<User> usernameList = userRepository.findAllByUsername(user.getUsername());
+        List<User> emailList = userRepository.findAllByEmail(user.getEmail());
 
         if (emailExists(emailList))
-            return "mail already associated to an account";
+            return new ResponseEntity<>("mail already associated to an account", HttpStatus.UNAUTHORIZED);
         if (usernameExists(usernameList))
-            return "username taken";
+            return new ResponseEntity<>("username already used", HttpStatus.UNAUTHORIZED);
 
-        User user = new User(username, passwordEncoder.encode(password), email);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         try {
             mailingService.sendNotification(user);
         } catch (MailException e) {
-            throw new MailAuthenticationException(email);
+            throw new MailAuthenticationException(user.getEmail());
         }
         userRepository.save(user);
-        return "accepted";
+        return ResponseEntity.ok(new AuthenticationResponse("accepted"));
     }
 
     private boolean usernameExists(List<User> usernameList) {

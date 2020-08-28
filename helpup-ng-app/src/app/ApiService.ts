@@ -1,7 +1,8 @@
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpParams, HttpResponse} from '@angular/common/http';
 import {CookieService} from 'ngx-cookie-service';
 import {Router} from '@angular/router';
 import {Injectable} from '@angular/core';
+import {map} from 'rxjs/operators';
 
 interface TokenFormat {
   jwt: any;
@@ -13,6 +14,7 @@ interface TokenFormat {
 export class ApiService {
   private BASE_URL = 'http://localhost:8080';
   private AUTH_USER_URL = `${this.BASE_URL}/auth`;
+  private POST_USER_URL = `${this.BASE_URL}/add`;
 
   constructor(private http: HttpClient, private cookies: CookieService, private router: Router) {
   }
@@ -40,5 +42,31 @@ export class ApiService {
       username: usernameParam,
       password: passwordParam
     };
+  }
+
+  /**
+   * this function should add a new user in the database(method="POST")
+   */
+  postUser(usernameParam: string, emailParam: string, passwordParam: string): string {
+    const user = {
+      username: usernameParam,
+      email: emailParam,
+      password: passwordParam
+    };
+
+    let requestResponse = '';
+    this.http.post(this.POST_USER_URL, user)
+      .subscribe(
+      (data: {
+        jwt: string
+      }) => {
+        requestResponse = data.jwt;
+        console.log(requestResponse + 'frst');
+        },
+      (error) => {
+        console.log(error);
+      }
+    );
+    return requestResponse;
   }
 }
