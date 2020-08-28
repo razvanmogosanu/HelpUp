@@ -25,9 +25,9 @@ public class PostController {
     }
 
     @PostMapping("/upload")
-    public ResponseEntity.BodyBuilder uploadPost(@RequestParam("imageFile") MultipartFile file, @RequestParam("description") String description) throws IOException {
+    public ResponseEntity<?> uploadPost(@RequestParam("imageFile") MultipartFile file, @RequestParam("description") String description) throws IOException {
         postRepository.save(new Post(description, file.getBytes()));
-        return ResponseEntity.status(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping(path = {"/get/{imageName}"})

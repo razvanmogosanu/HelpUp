@@ -1,9 +1,8 @@
-import {HttpClient, HttpParams, HttpResponse} from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 import {CookieService} from 'ngx-cookie-service';
 import {Router} from '@angular/router';
 import {Injectable} from '@angular/core';
-import {map} from 'rxjs/operators';
-import {Observable} from "rxjs";
+import {Observable} from 'rxjs';
 
 interface TokenFormat {
   jwt: any;
@@ -16,6 +15,8 @@ export class ApiService {
   private BASE_URL = 'http://localhost:8080';
   private AUTH_USER_URL = `${this.BASE_URL}/auth`;
   private POST_USER_URL = `${this.BASE_URL}/register`;
+  private USER_POSTING_URL = `${this.BASE_URL}/post/upload`;
+  private GET_ALL_POSTS_URL = `${this.BASE_URL}/post/all`;
 
   constructor(private http: HttpClient, private cookies: CookieService, private router: Router) {
   }
@@ -56,5 +57,32 @@ export class ApiService {
     };
 
     return this.http.post(this.POST_USER_URL, user);
+  }
+
+  /*** adding a new post**/
+  addNewPost(uploadData: FormData): void {
+    this.http.post(this.USER_POSTING_URL, uploadData, {
+      observe: 'response', headers: this.generateAuthorizeBearerJWT()
+    })
+      .subscribe((data) => {
+        },
+        (error => {
+          console.log(error);
+        })
+      );
+  }
+
+  /*** this function returns an observable where on subscribe will come the list of all posts**/
+  getAllPosts(): Observable<any> {
+    return this.http.get(this.GET_ALL_POSTS_URL, {
+      headers: this.generateAuthorizeBearerJWT()
+    });
+  }
+
+  /*** this function appends to 'Bearer', the jwt, resulting an authorize header**/
+  generateAuthorizeBearerJWT(): { Authorization: string } {
+    return {
+      Authorization: 'Bearer ' + this.cookies.get('jwt')
+    };
   }
 }

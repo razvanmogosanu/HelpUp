@@ -3,18 +3,13 @@ import {HttpClient} from '@angular/common/http';
 import {FormControl, FormGroup} from '@angular/forms';
 import {CookieService} from 'ngx-cookie-service';
 import {Router} from '@angular/router';
+import {ApiService} from '../../ApiService';
 
-class Post {
-  public description: string;
-  public image: any;
-  public date: Date;
-
-  constructor(description: string, image: any) {
-    this.description = description;
-    this.image = image;
-  }
+interface Post {
+  description: string;
+  image: any;
+  date: Date;
 }
-
 
 @Component({
   selector: 'app-home',
@@ -25,7 +20,7 @@ class Post {
 export class HomeComponent implements OnInit {
   postForm: FormGroup;
 
-  constructor(private httpClient: HttpClient, private cookies: CookieService, private router: Router) {
+  constructor(private httpClient: HttpClient, private cookies: CookieService, private router: Router, private apiService: ApiService) {
     this.postForm = new FormGroup({
       description: new FormControl(),
     });
@@ -33,7 +28,6 @@ export class HomeComponent implements OnInit {
   }
 
   selectedFile: File;
-  message: string;
   retrievedPosts: Post[];
 
   public onFileChanged(event): void {
@@ -43,24 +37,15 @@ export class HomeComponent implements OnInit {
   onUpload(): void {
     const description = this.postForm.get('description').value;
 
-    const uploadImageData = new FormData();
-    uploadImageData.append('imageFile', this.selectedFile, this.selectedFile.name);
-    uploadImageData.append('description', description);
-
-    this.httpClient.post('http://localhost:8080/post/upload', uploadImageData, {observe: 'response'})
-      .subscribe((response) => {
-        this.message = (response.status === 200) ? 'Image uploaded successfully' : 'Image not uploaded successfully';
-      });
+    const uploadData = new FormData();
+    uploadData.append('imageFile', this.selectedFile, this.selectedFile.name);
+    uploadData.append('description', description);
+    this.apiService.addNewPost(uploadData);
     this.postForm.reset();
   }
 
   getPosts(): void {
-    const auth = 'Bearer ' + this.cookies.get('jwt');
-    this.httpClient.get('http://localhost:8080/post/all', {
-      headers: {
-        Authorization: auth
-      }
-    })
+    this.apiService.getAllPosts()
       .subscribe((data: Post[]) => {
         this.retrievedPosts = data;
       });
