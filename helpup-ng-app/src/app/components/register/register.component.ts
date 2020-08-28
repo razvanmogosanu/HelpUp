@@ -5,19 +5,6 @@ import {Router} from '@angular/router';
 import {CookieService} from 'ngx-cookie-service';
 import {ApiService} from '../../ApiService';
 
-class User {
-  private id: number;
-  private username: string;
-  private password: string;
-  private email: string;
-
-  constructor(username: string, password: string, email: string) {
-    this.username = username;
-    this.password = password;
-    this.email = email;
-  }
-
-}
 
 @Component({
   selector: 'app-register',
@@ -44,6 +31,16 @@ export class RegisterComponent implements OnInit {
     const username = this.regForm.get('username').value;
     const mail = this.regForm.get('mail').value;
     const pass = this.regForm.get('pass').value;
-    this.emailOrUsernameExistsMessage = this.apiservice.postUser(username, mail, pass);
+    this.apiservice.postUser(username, mail, pass).subscribe(
+      (message: {
+        registerResponseMessage: string
+      }) => {
+        this.emailOrUsernameExistsMessage = message.registerResponseMessage;
+        this.apiservice.authUser(username, pass);
+      },
+      (error) => {
+
+      }
+    );
   }
 }

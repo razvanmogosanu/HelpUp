@@ -27,11 +27,6 @@ public class AuthenticationController {
         this.jwtTokenUtil = jwtTokenUtil;
     }
 
-    @RequestMapping("/hello")
-    public String hello() {
-        return "hello world";
-    }
-
     @RequestMapping(value = "", method = RequestMethod.POST)
     public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest) throws Exception {
         try {
