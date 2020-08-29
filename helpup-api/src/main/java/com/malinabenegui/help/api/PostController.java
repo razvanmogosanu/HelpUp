@@ -2,7 +2,10 @@ package com.malinabenegui.help.api;
 
 
 import com.malinabenegui.help.models.Post;
+import com.malinabenegui.help.models.httpCustomRequest.DeleteRequest;
+import com.malinabenegui.help.models.httpCustomRequest.EditRequest;
 import com.malinabenegui.help.repositories.PostRepository;
+import org.hibernate.sql.Delete;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,22 +33,23 @@ public class PostController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping(path = {"/get/{imageName}"})
-    public Post getImage(@PathVariable("imageName") String imageID) {
-        final Optional<Post> retrievedPost = postRepository.findById(Long.parseLong(imageID));
-        return new Post(retrievedPost.get().getDescription(), retrievedPost.get().getImage());
+//    @GetMapping(path = {"/get/{imageName}"})
+//    public Post getImage(@PathVariable("imageName") String imageID) {
+//        final Optional<Post> retrievedPost = postRepository.findById(Long.parseLong(imageID));
+//        return new Post(retrievedPost.get().getDescription(), retrievedPost.get().getImage());
+//    }
+
+    @GetMapping("/edit")
+    public void editPost(@RequestBody EditRequest editRequest) {
+        Post post = postRepository.getOne(editRequest.getId());
+        post.setDescription(editRequest.getDescription());
+        postRepository.save(post);
+        System.out.println("DONE");
     }
 
-    @RequestMapping("/edit")
-    public @ResponseBody
-    String editPost() {
-        return "";
-    }
-
-    @RequestMapping("/delete")
-    public @ResponseBody
-    String deletePost() {
-        return "";
+    @GetMapping("/delete")
+    public void deletePost(@RequestBody DeleteRequest deleteRequest) {
+        postRepository.deleteById(deleteRequest.getId());
     }
 
 }
