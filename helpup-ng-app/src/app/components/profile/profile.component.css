@@ -17,10 +17,13 @@
   margin-top: -8%;
 }
 
-.btn{
-  display: block;
+.message{
   background-color: dimgray;
   color: white;
+}
+
+.btn-light{
+  margin-left: 10px;
 }
 
 .infos{

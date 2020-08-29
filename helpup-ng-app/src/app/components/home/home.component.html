@@ -20,7 +20,12 @@
     <div *ngFor="let post of retrievedPosts" class="post">
       <span class="username">@andreicosmin</span>
       <span class="date">‧ {{translateTime(post.date)}}</span>
+      <div style="float: right;">
+        <button (click)="edit(post.userId, post.description)" style="display: block">Edit</button>
+        <button>Delete</button>
+      </div>
       <p class="description">{{post.description}}</p>
+
       <img [src]="translateImage(post.image)" class="post-image">
 
     </div>

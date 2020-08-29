@@ -21,3 +21,23 @@
 a{
   color: #00529C;
 }
+
+
+
+@media only screen and (max-width: 800px){
+  .center-image{
+    width: 20%;
+  }
+  .center{
+    width: 35%;
+  }
+}
+
+@media only screen and (max-width: 600px){
+  .center-image{
+    width: 30%;
+  }
+  .center{
+    width: 65%;
+  }
+}

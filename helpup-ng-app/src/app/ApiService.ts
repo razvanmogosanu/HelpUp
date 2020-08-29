@@ -17,6 +17,7 @@ export class ApiService {
   private POST_USER_URL = `${this.BASE_URL}/register`;
   private USER_POSTING_URL = `${this.BASE_URL}/post/upload`;
   private GET_ALL_POSTS_URL = `${this.BASE_URL}/post/all`;
+  private EDIT_POST_URL = `${this.BASE_URL}/edit`;
 
   constructor(private http: HttpClient, private cookies: CookieService, private router: Router) {
   }
@@ -84,5 +85,13 @@ export class ApiService {
     return {
       Authorization: 'Bearer ' + this.cookies.get('jwt')
     };
+  }
+
+  editPost(idNr: number, desc: string): void {
+    const body = {
+      id: idNr,
+      description: desc
+    };
+    this.http.post(this.EDIT_POST_URL, body, {headers: this.generateAuthorizeBearerJWT()});
   }
 }

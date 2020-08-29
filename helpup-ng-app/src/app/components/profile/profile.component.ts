@@ -31,4 +31,7 @@ export class ProfileComponent implements OnInit {
     };
   }
 
+  // tslint:disable-next-line:typedef
+  editDetails() {
+  }
 }

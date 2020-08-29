@@ -15,8 +15,9 @@ public class MailingService {
         SimpleMailMessage mail = new SimpleMailMessage();
         mail.setTo(user.getEmail());
         mail.setFrom("helpupcompany@gmail.com");
-        mail.setSubject("licenta");
-        mail.setText("link cool");
+        mail.setSubject("Account created");
+        mail.setText("Hello, your HelpUp account has been created. Your username is " + user.getUsername() +
+                ". Now you can access all posts and contact others.");
 
         javaMailSender.send(mail);
     }

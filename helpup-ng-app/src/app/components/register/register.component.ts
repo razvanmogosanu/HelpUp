@@ -32,14 +32,11 @@ export class RegisterComponent implements OnInit {
     const mail = this.regForm.get('mail').value;
     const pass = this.regForm.get('pass').value;
     this.apiservice.postUser(username, mail, pass).subscribe(
-      (message: {
-        registerResponseMessage: string
-      }) => {
-        this.emailOrUsernameExistsMessage = message.registerResponseMessage;
+      (message: { registerResponseMessage: string }) => {
         this.apiservice.authUser(username, pass);
       },
       (error) => {
-
+        this.emailOrUsernameExistsMessage = error.error.registerResponseMessage;
       }
     );
   }

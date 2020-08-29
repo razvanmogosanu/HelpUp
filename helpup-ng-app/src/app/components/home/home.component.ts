@@ -7,6 +7,7 @@ import {ApiService} from '../../ApiService';
 
 interface Post {
   description: string;
+  userId: number;
   image: any;
   date: Date;
 }
@@ -59,6 +60,11 @@ export class HomeComponent implements OnInit {
     const yearsAndMonths = date.toString().substring(0, 8);
     const day = date.toString().substring(8, 10);
     return yearsAndMonths + (Number(day) + 1);
+  }
+
+  edit(userId, description): void
+  {
+    this.apiService.editPost(userId, description);
   }
 
   ngOnInit(): void {
