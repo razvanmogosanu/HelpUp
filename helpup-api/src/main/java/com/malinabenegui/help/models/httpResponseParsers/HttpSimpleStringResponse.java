@@ -1,4 +1,4 @@
-package com.malinabenegui.help.models.httpCustomResponse;
+package com.malinabenegui.help.models.httpResponseParsers;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -1,7 +1,7 @@
 import {HttpClient} from '@angular/common/http';
 import {CookieService} from 'ngx-cookie-service';
 import {Router} from '@angular/router';
-import {Injectable} from '@angular/core';
+import {Injectable, OnInit} from '@angular/core';
 import {Observable} from 'rxjs';
 
 interface TokenFormat {
@@ -17,10 +17,14 @@ export class ApiService {
   private POST_USER_URL = `${this.BASE_URL}/register`;
   private USER_POSTING_URL = `${this.BASE_URL}/post/upload`;
   private GET_ALL_POSTS_URL = `${this.BASE_URL}/post/all`;
-  private EDIT_POST_URL = `${this.BASE_URL}/edit`;
+  private EDIT_POST_URL = `${this.BASE_URL}/post/edit`;
+  private DELETE_POST_URL = `${this.BASE_URL}/post/delete`;
+  private GET_USERNAME_FROM_JWT = `${this.BASE_URL}/jwt/username`;
+  private USERNAME: string;
 
   constructor(private http: HttpClient, private cookies: CookieService, private router: Router) {
   }
+
 
   /**
    * this function is used to validate the credentials and get the authentication token, in case the credentials are correct.
@@ -32,6 +36,9 @@ export class ApiService {
       .subscribe((token: TokenFormat) => {
           this.cookies.set('jwt', token.jwt);
           this.router.navigateByUrl('');
+          this.whoAmI().subscribe(username => {
+            this.cookies.set('username', username.registerResponseMessage);
+          });
         },
         error1 => {
           console.log(error1);
@@ -62,19 +69,25 @@ export class ApiService {
 
   /*** adding a new post**/
   addNewPost(uploadData: FormData): void {
-    this.http.post(this.USER_POSTING_URL, uploadData, {
-      observe: 'response', headers: this.generateAuthorizeBearerJWT()
-    })
-      .subscribe((data) => {
-        },
-        (error => {
-          console.log(error);
-        })
-      );
+    this.whoAmI().subscribe(username => {
+      uploadData.append('user_username', this.cookies.get('username'));
+      this.http.post(this.USER_POSTING_URL, uploadData, {
+        observe: 'response', headers: this.generateAuthorizeBearerJWT()
+      })
+        .subscribe((data) => {
+          },
+          (error => {
+            console.log(error);
+          })
+        );
+    });
   }
 
   /*** this function returns an observable where on subscribe will come the list of all posts**/
   getAllPosts(): Observable<any> {
+    const username = this.http.get('http://localhost:8080/jwt/username', {
+      headers: this.generateAuthorizeBearerJWT()
+    });
     return this.http.get(this.GET_ALL_POSTS_URL, {
       headers: this.generateAuthorizeBearerJWT()
     });
@@ -92,6 +105,16 @@ export class ApiService {
       id: idNr,
       description: desc
     };
-    this.http.post(this.EDIT_POST_URL, body, {headers: this.generateAuthorizeBearerJWT()});
+    this.http.post(this.EDIT_POST_URL, body, {headers: this.generateAuthorizeBearerJWT()}).subscribe();
+  }
+  deletePost(idNr: number): void {
+    const body = {
+      id: idNr
+    };
+    this.http.post(this.DELETE_POST_URL, body, {headers: this.generateAuthorizeBearerJWT()}).subscribe();
+  }
+
+  whoAmI(): Observable<any> {
+    return this.http.get(this.GET_USERNAME_FROM_JWT, {headers: this.generateAuthorizeBearerJWT()});
   }
 }

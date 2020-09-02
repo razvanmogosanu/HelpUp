@@ -4,11 +4,12 @@
     <h5>Create Post</h5>
     <form [formGroup]="postForm" class="px-4 py-3">
       <div class="form-group">
-        <input type="text" class="form-control" formControlName="description" id="description" placeholder="Description...">
+        <input type="text" class="form-control" formControlName="description" id="description"
+               placeholder="Description...">
       </div>
 
       <div class="form-group">
-          <input type="file" (change)="onFileChanged($event)">
+        <input type="file" (change)="onFileChanged($event)">
       </div>
 
       <input type="button" (click)="onUpload()" value="Post" class="btn button">
@@ -18,66 +19,80 @@
   <!-- List with posts -->
   <div class="posts">
     <div *ngFor="let post of retrievedPosts" class="post">
-      <span class="username">@andreicosmin</span>
+      <span class="username">@{{post.user_username}}</span>
       <span class="date">‧ {{translateTime(post.date)}}</span>
-      <div style="float: right;">
-        <button (click)="edit(post.userId, post.description)" style="display: block">Edit</button>
-        <button>Delete</button>
+
+      <div>
+        <div *ngIf="isMine(post)" style="float: right;">
+          <button (click)="post.editMode = true; ">EDIT</button>
+          <button (click)="apiService.deletePost(post.id)">Delete</button>
+        </div>
+
+        <form>
+          <div *ngIf="!post.editMode">
+            <p class="description"> {{post.description}} </p>
+
+          </div>
+          <div *ngIf="post.editMode">
+            <input #newDescription value="{{post.description}}">
+            <button (click)="saveDescriptionAfterEdit(post, newDescription.value);">SAVE</button>
+          </div>
+        </form>
+
       </div>
-      <p class="description">{{post.description}}</p>
 
       <img [src]="translateImage(post.image)" class="post-image">
+
 
     </div>
   </div>
 
 
-
-<div style="height: 100px"></div>
+  <div style="height: 100px"></div>
 
 
   <!-- Unused => To be deleted -->
-<!--<div class="container row">-->
-<!--  <div class="col-md-12">-->
-<!--    <h1>Upload Image</h1>-->
-<!--  </div>-->
-<!--</div>-->
+  <!--<div class="container row">-->
+  <!--  <div class="col-md-12">-->
+  <!--    <h1>Upload Image</h1>-->
+  <!--  </div>-->
+  <!--</div>-->
 
-<!--<div class="container row">-->
-<!--  <div class="col-md-6">-->
-<!--    <input type="file" (change)="onFileChanged($event)">-->
-<!--  </div>-->
-<!--  <div class="col-md-6">-->
-<!--    <input type="button" (click)="onUpload()" value="upload">-->
-<!--  </div>-->
-<!--</div>-->
+  <!--<div class="container row">-->
+  <!--  <div class="col-md-6">-->
+  <!--    <input type="file" (change)="onFileChanged($event)">-->
+  <!--  </div>-->
+  <!--  <div class="col-md-6">-->
+  <!--    <input type="button" (click)="onUpload()" value="upload">-->
+  <!--  </div>-->
+  <!--</div>-->
 
-<!--<hr/>-->
+  <!--<hr/>-->
 
-<!--<div class="container row">-->
-<!--  <div class="col-md-12">-->
-<!--    <div *ngIf=message>{{message}}</div>-->
-<!--  </div>-->
-<!--</div>-->
+  <!--<div class="container row">-->
+  <!--  <div class="col-md-12">-->
+  <!--    <div *ngIf=message>{{message}}</div>-->
+  <!--  </div>-->
+  <!--</div>-->
 
-<!--<div class="container row">-->
-<!--  <div class="col-md-6">-->
-<!--    <input type="text" class="form-control" id="name" placeholder="image name" [(ngModel)]="imageName"-->
-<!--           name="name" />-->
-<!--  </div>-->
-<!--  <div class="col-md-6">-->
-<!--    <input type="button" (click)="getImage()" value="Get Image">-->
+  <!--<div class="container row">-->
+  <!--  <div class="col-md-6">-->
+  <!--    <input type="text" class="form-control" id="name" placeholder="image name" [(ngModel)]="imageName"-->
+  <!--           name="name" />-->
+  <!--  </div>-->
+  <!--  <div class="col-md-6">-->
+  <!--    <input type="button" (click)="getImage()" value="Get Image">-->
 
-<!--  </div>-->
-<!--</div>-->
+  <!--  </div>-->
+  <!--</div>-->
 
-<!--<div class="container row">-->
-<!--  <div class="col-md-12">-->
-<!--    <div *ngIf=retrievedImage>-->
-<!--      <img [src]="retrievedImage">-->
-<!--      {{retrievedImage}}-->
-<!--    </div>-->
-<!--  </div>-->
-<!--</div>-->
+  <!--<div class="container row">-->
+  <!--  <div class="col-md-12">-->
+  <!--    <div *ngIf=retrievedImage>-->
+  <!--      <img [src]="retrievedImage">-->
+  <!--      {{retrievedImage}}-->
+  <!--    </div>-->
+  <!--  </div>-->
+  <!--</div>-->
 
 </div>

@@ -2,10 +2,9 @@ package com.malinabenegui.help.api;
 
 
 import com.malinabenegui.help.models.Post;
-import com.malinabenegui.help.models.httpCustomRequest.DeleteRequest;
-import com.malinabenegui.help.models.httpCustomRequest.EditRequest;
+import com.malinabenegui.help.models.editPostRequest.DeleteRequest;
+import com.malinabenegui.help.models.editPostRequest.EditRequest;
 import com.malinabenegui.help.repositories.PostRepository;
-import org.hibernate.sql.Delete;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/post")
@@ -28,8 +26,8 @@ public class PostController {
     }
 
     @PostMapping("/upload")
-    public ResponseEntity<?> uploadPost(@RequestParam("imageFile") MultipartFile file, @RequestParam("description") String description) throws IOException {
-        postRepository.save(new Post(description, file.getBytes()));
+    public ResponseEntity<?> uploadPost(@RequestParam("imageFile") MultipartFile file, @RequestParam("description") String description, @RequestParam("user_username") String user_username) throws IOException {
+        postRepository.save(new Post(description, user_username, file.getBytes()));
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -39,15 +37,14 @@ public class PostController {
 //        return new Post(retrievedPost.get().getDescription(), retrievedPost.get().getImage());
 //    }
 
-    @GetMapping("/edit")
+    @RequestMapping(value = "/edit", method = RequestMethod.POST)
     public void editPost(@RequestBody EditRequest editRequest) {
         Post post = postRepository.getOne(editRequest.getId());
         post.setDescription(editRequest.getDescription());
         postRepository.save(post);
-        System.out.println("DONE");
     }
 
-    @GetMapping("/delete")
+    @RequestMapping(value = "/delete", method = RequestMethod.POST)
     public void deletePost(@RequestBody DeleteRequest deleteRequest) {
         postRepository.deleteById(deleteRequest.getId());
     }

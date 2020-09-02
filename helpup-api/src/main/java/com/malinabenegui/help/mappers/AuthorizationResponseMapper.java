@@ -1,6 +1,6 @@
 package com.malinabenegui.help.mappers;
 
-import com.malinabenegui.help.models.httpCustomResponse.HttpSimpleStringResponse;
+import com.malinabenegui.help.models.httpResponseParsers.HttpSimpleStringResponse;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

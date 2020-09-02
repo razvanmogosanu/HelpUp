@@ -3,7 +3,9 @@ package com.malinabenegui.help.api;
 import com.malinabenegui.help.constants.RegisterResponseMessage;
 import com.malinabenegui.help.mappers.AuthorizationResponseMapper;
 import com.malinabenegui.help.models.User;
-import com.malinabenegui.help.models.httpCustomResponse.HttpSimpleStringResponse;
+import com.malinabenegui.help.models.UserDetails;
+import com.malinabenegui.help.models.httpResponseParsers.HttpSimpleStringResponse;
+import com.malinabenegui.help.repositories.UserDetailsRepository;
 import com.malinabenegui.help.repositories.UserRepository;
 import com.malinabenegui.help.services.MailingService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,18 +26,23 @@ public class RegisterController {
     private UserRepository userRepository;
     private PasswordEncoder passwordEncoder;
     private MailingService mailingService;
+    private UserDetailsRepository userDetailsRepository;
 
     @Autowired
-    public RegisterController(UserRepository userRepository, PasswordEncoder passwordEncoder, MailingService mailingService) {
+    public RegisterController(UserRepository userRepository, PasswordEncoder passwordEncoder,
+                              MailingService mailingService, UserDetailsRepository userDetailsRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.mailingService = mailingService;
+        this.userDetailsRepository = userDetailsRepository;
     }
 
     @RequestMapping("")
     public @ResponseBody
     ResponseEntity<HttpSimpleStringResponse> registerUser(@RequestBody User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setRole("USER");
+
 
         AuthorizationResponseMapper credentialsAvailability = this.checkCredentialsAvailability(user);
         if (credentialsAvailability.getHttpStatus() != HttpStatus.ACCEPTED) {
@@ -43,6 +50,12 @@ public class RegisterController {
         }
 
         this.sendRegistrationMail(user);
+
+        UserDetails userDetails = new UserDetails();
+        userDetails.setUsername(user.getUsername());
+        userDetails.setFirstname("");
+        userDetails.setLastname("");
+        userDetailsRepository.save(userDetails);
 
         userRepository.save(user);
         return new ResponseEntity<>(credentialsAvailability.getResponseMessage(), credentialsAvailability.getHttpStatus());

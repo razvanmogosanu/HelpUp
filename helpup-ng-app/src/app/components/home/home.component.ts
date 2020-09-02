@@ -6,10 +6,12 @@ import {Router} from '@angular/router';
 import {ApiService} from '../../ApiService';
 
 interface Post {
+  id: number;
   description: string;
-  userId: number;
+  user_username: string;
   image: any;
   date: Date;
+  editMode: boolean;
 }
 
 @Component({
@@ -20,6 +22,9 @@ interface Post {
 
 export class HomeComponent implements OnInit {
   postForm: FormGroup;
+  selectedFile: File;
+  retrievedPosts: Post[];
+  username: string;
 
   constructor(private httpClient: HttpClient, private cookies: CookieService, private router: Router, private apiService: ApiService) {
     this.postForm = new FormGroup({
@@ -27,9 +32,6 @@ export class HomeComponent implements OnInit {
     });
     this.retrievedPosts = new Array<Post>();
   }
-
-  selectedFile: File;
-  retrievedPosts: Post[];
 
   public onFileChanged(event): void {
     this.selectedFile = event.target.files[0];
@@ -62,16 +64,28 @@ export class HomeComponent implements OnInit {
     return yearsAndMonths + (Number(day) + 1);
   }
 
-  edit(userId, description): void
-  {
+  edit(userId, description): void {
     this.apiService.editPost(userId, description);
   }
 
   ngOnInit(): void {
-    if (this.cookies.get('jwt').length > 100) {
+    if (this.cookies.check('jwt')) {
       this.getPosts();
     } else {
       this.router.navigateByUrl('login');
     }
+  }
+
+  saveDescriptionAfterEdit(post: Post, newDescription: string): void {
+    post.editMode = false;
+    if (post.description !== newDescription) {
+      post.description = newDescription;
+      this.edit(post.id, post.description);
+    }
+
+  }
+
+  isMine(post: Post): boolean {
+    return this.cookies.get('username') === post.user_username;
   }
 }

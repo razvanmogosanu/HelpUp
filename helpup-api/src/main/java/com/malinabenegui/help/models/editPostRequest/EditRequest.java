@@ -1,4 +1,4 @@
-package com.malinabenegui.help.models.httpCustomRequest;
+package com.malinabenegui.help.models.editPostRequest;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

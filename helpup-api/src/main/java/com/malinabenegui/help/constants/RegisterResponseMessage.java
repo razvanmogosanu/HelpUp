@@ -1,6 +1,6 @@
 package com.malinabenegui.help.constants;
 
-import com.malinabenegui.help.models.httpCustomResponse.HttpSimpleStringResponse;
+import com.malinabenegui.help.models.httpResponseParsers.HttpSimpleStringResponse;
 
 public final class RegisterResponseMessage {
     public static final HttpSimpleStringResponse USED_MAIL_HTTP_RESPONSE = new HttpSimpleStringResponse("Mail already used");

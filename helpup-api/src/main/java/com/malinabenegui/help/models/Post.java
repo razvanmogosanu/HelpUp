@@ -20,14 +20,15 @@ public class Post {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private Date date;
-    private int user_id;
+    private String user_username;
     private String description;
     private byte[] image;
 
-    public Post(String description, byte[] image) {
+    public Post(String description, String user_username, byte[] image) {
         date = new Date(System.currentTimeMillis());
 
         this.description = description;
+        this.user_username = user_username;
         this.image = image;
     }
 }
