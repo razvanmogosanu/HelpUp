@@ -43,7 +43,6 @@ public class RegisterController {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setRole("USER");
 
-
         AuthorizationResponseMapper credentialsAvailability = this.checkCredentialsAvailability(user);
         if (credentialsAvailability.getHttpStatus() != HttpStatus.ACCEPTED) {
             return new ResponseEntity<>(credentialsAvailability.getResponseMessage(), HttpStatus.UNAUTHORIZED);

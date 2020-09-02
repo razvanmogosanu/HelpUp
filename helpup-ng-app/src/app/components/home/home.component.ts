@@ -12,6 +12,7 @@ interface Post {
   image: any;
   date: Date;
   editMode: boolean;
+  toggle: any;
 }
 
 @Component({
