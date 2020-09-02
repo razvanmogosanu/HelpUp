@@ -19,7 +19,6 @@
   <!-- List with posts -->
   <div class="posts">
     <div *ngFor="let post of retrievedPosts" class="post">
-<<<<<<< Updated upstream
       <span class="username">@{{post.user_username}}</span>
       <span class="date">‧ {{translateTime(post.date)}}</span>
 
@@ -41,28 +40,6 @@
         </form>
 
       </div>
-=======
-      <span class="username">@andreicosmin</span>
-
-
-      <button style="background-color: black; width: 30px; height: 30px" ngbDropdown data-toggle="collapse" (click)="post.toggle = true;">
-        <div class="dropdown-menu" ngbDropdownMenu>
-          <div *ngIf="post.toggle">
-            <button ngbDropdownItem>Edit</button>
-          </div>
-          <!--          <button ngbDropdownItem>Delete</button>-->
-        </div>
-      </button>
-
-
-
-      <span class="date">‧ {{translateTime(post.date)}}</span>
-      <!--      <div style="float: right;">-->
-      <!--        <button (click)="edit(post.userId, post.description)" style="display: block">Edit</button>-->
-      <!--        <button>Delete</button>-->
-      <!--      </div>-->
-      <p class="description">{{post.description}}</p>
->>>>>>> Stashed changes
 
       <img [src]="translateImage(post.image)" class="post-image">
 
