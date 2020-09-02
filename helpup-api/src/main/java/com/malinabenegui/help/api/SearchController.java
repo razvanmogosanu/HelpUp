@@ -32,8 +32,8 @@ public class SearchController {
     }
 
     @RequestMapping(value = "/users", method = RequestMethod.POST)
-    private ResponseEntity<List<User>> searchUsers(@RequestBody SearchFilter search) {
-        List<User> filteredUsersList = userRepository.findAll()
+    private ResponseEntity<List<UserDetails>> searchUsers(@RequestBody SearchFilter search) {
+        List<UserDetails> filteredUsersList = userDetailsRepository.findAll()
                 .stream()
                 .filter(user -> usersFilter(user, search.getSearchField()))
                 .collect(Collectors.toList());
@@ -41,7 +41,7 @@ public class SearchController {
         return new ResponseEntity<>(filteredUsersList, HttpStatus.ACCEPTED);
     }
 
-    private boolean usersFilter(User user, String filter) {
+    private boolean usersFilter(UserDetails user, String filter) {
         if (user.getUsername().contains(filter))
             return true;
 
