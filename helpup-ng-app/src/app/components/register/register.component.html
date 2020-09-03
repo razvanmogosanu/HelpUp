@@ -1,32 +1,42 @@
-<div id="wrapper">
-  <div>
-    <img class="center-image" src="assets/logo.png">
-  </div>
+<div class="all">
+  <div id="wrapper">
+    <div>
+      <img class="center-image" src="assets/logo.png">
+    </div>
 
-  <div style="text-align: center">
-    <h3>Sign up to HelpUp</h3>
-  </div>
-  <br>
-
-  <div *ngIf="emailOrUsernameExistsMessage !== ''" id="center-error">{{emailOrUsernameExistsMessage}}</div>
-
-  <div class="center">
-    <form [formGroup]="regForm" class="px-4 py-3">
-      <div class="form-group">
-        <label for="username">Username</label>
-        <input type="username" class="form-control" formControlName="username" id="username" placeholder="Username">
-      </div>
-      <div class="form-group">
-        <label for="mail">Email address</label>
-        <input type="email" class="form-control" formControlName="mail" id="mail" placeholder="email@example.com">
-      </div>
-      <div class="form-group">
-        <label for="pass">Password</label>
-        <input type="password" class="form-control" formControlName="pass" id="pass" placeholder="Password">
-      </div>
-      <button type="button" class="btn button" (click)="onSubmit()">Sign up</button>
-    </form>
+    <div style="text-align: center">
+      <h3>Sign up to HelpUp</h3>
+    </div>
     <br>
-    <a class="dropdown-item" [routerLink]="['','login']">Already have an account? Login</a>
+
+    <div *ngIf="emailOrUsernameExistsMessage !== ''" id="center-error">{{emailOrUsernameExistsMessage}}</div>
+
+    <div class="center">
+      <form [formGroup]="regForm" class="px-4 py-3">
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input type="username" class="form-control" formControlName="username" id="username">
+        </div>
+        <div class="form-group">
+          <label for="mail">Email address</label>
+          <input type="email" class="form-control" formControlName="mail" id="mail">
+        </div>
+        <div class="form-group">
+          <label for="pass">Password</label>
+          <input type="password" class="form-control" formControlName="pass" id="pass">
+        </div>
+        <button type="button" class="btn button" (click)="onSubmit()">Sign up</button>
+      </form>
+      <br>
+    </div>
+  </div>
+
+  <div class="center redirect-div">
+    <p class="redirect">Already have an account?</p>
+    <a class="dropdown-item" [routerLink]="['','login']">Login</a>
+  </div>
+
+  <div style="height: 50px">
+
   </div>
 </div>
