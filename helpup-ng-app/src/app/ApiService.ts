@@ -20,7 +20,8 @@ export class ApiService {
   private EDIT_POST_URL = `${this.BASE_URL}/post/edit`;
   private DELETE_POST_URL = `${this.BASE_URL}/post/delete`;
   private GET_USERNAME_FROM_JWT = `${this.BASE_URL}/jwt/username`;
-  private USERNAME: string;
+  private GET_USER_DETAILS = `${this.BASE_URL}/user/getdetails`;
+
 
   constructor(private http: HttpClient, private cookies: CookieService, private router: Router) {
   }
@@ -107,6 +108,7 @@ export class ApiService {
     };
     this.http.post(this.EDIT_POST_URL, body, {headers: this.generateAuthorizeBearerJWT()}).subscribe();
   }
+
   deletePost(idNr: number): void {
     const body = {
       id: idNr
@@ -116,5 +118,9 @@ export class ApiService {
 
   whoAmI(): Observable<any> {
     return this.http.get(this.GET_USERNAME_FROM_JWT, {headers: this.generateAuthorizeBearerJWT()});
+  }
+
+  getUserDetails(): Observable<any> {
+    return this.http.get(this.GET_USER_DETAILS, {headers: this.generateAuthorizeBearerJWT()});
   }
 }

@@ -1,5 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {UserDetails} from '../../user_details';
+import {ApiService} from '../../ApiService';
+import {FormControl, FormGroup} from '@angular/forms';
 
 @Component({
   selector: 'app-profile',
@@ -8,30 +10,39 @@ import {UserDetails} from '../../user_details';
 })
 export class ProfileComponent implements OnInit {
   userDetails: UserDetails;
+  editMode: boolean;
+  onPhotoMode: boolean;
+  postForm: FormGroup;
 
-  constructor() {
-    this.userDetails = this.initDetails();
+  constructor(private api: ApiService) {
+    this.postForm = new FormGroup({
+      description: new FormControl(),
+      city: new FormControl()
+    });
   }
 
   ngOnInit(): void {
-
+    this.initDetails();
   }
 
-  initDetails(): UserDetails {
-    return {
-      username: 'malinabenegui',
-      first_name: 'Malina',
-      last_name: 'Benegui',
-      city: 'Bucharest',
-      education: 'Faculty of Mathematics and Computer Science',
-      job: 'Developer at HelpUp',
-      gender: 'female',
-      description: 'Enthusiast person willing to help others',
-      date_of_birth: '24/08/1998',
-    };
+  initDetails(): void {
+    this.userDetails = new UserDetails('', '', '',
+      '', '', '', '', '', '', '');
+    this.api.getUserDetails()
+      .subscribe(
+        (data: UserDetails) => {
+          this.userDetails = data;
+        });
   }
 
-  // tslint:disable-next-line:typedef
-  editDetails() {
+
+
+  editDetails(): void {
+    this.editMode = true;
   }
+
+  saveEdit(): void {
+    this.editMode = false;
+  }
+
 }
