@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 public class SearchController {
     private PostRepository postRepository;
     private UserRepository userRepository;
-    private UserDetailsRepository userDetailsRepository;
+    private final UserDetailsRepository userDetailsRepository;
 
     @Autowired
     public SearchController(PostRepository postRepository, UserRepository userRepository, UserDetailsRepository userDetailsRepository) {
@@ -30,6 +30,7 @@ public class SearchController {
         this.userDetailsRepository = userDetailsRepository;
     }
 
+    @GetMapping
     @RequestMapping(value = "/users", method = RequestMethod.POST)
     private ResponseEntity<List<UserDetails>> searchUsers(@RequestBody SearchFilter search) {
         List<UserDetails> filteredUsersList = userDetailsRepository.findAll()
