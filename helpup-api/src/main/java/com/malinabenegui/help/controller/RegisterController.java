@@ -1,4 +1,4 @@
-package com.malinabenegui.help.api;
+package com.malinabenegui.help.controller;
 
 import com.malinabenegui.help.constants.RegisterResponseMessage;
 import com.malinabenegui.help.mappers.AuthorizationResponseMapper;

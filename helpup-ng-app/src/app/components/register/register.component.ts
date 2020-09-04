@@ -4,8 +4,8 @@ import {FormControl, FormGroup} from '@angular/forms';
 import {Router} from '@angular/router';
 import {CookieService} from 'ngx-cookie-service';
 import {ApiService} from '../../ApiService';
-import {map} from "rxjs/operators";
-import {throwError} from "rxjs";
+import {map} from 'rxjs/operators';
+import {throwError} from 'rxjs';
 
 
 @Component({
@@ -36,7 +36,7 @@ export class RegisterComponent implements OnInit {
 
     this.apiservice.postUser(username, mail, pass)
       .pipe(map(data => {
-        if (data == null) throwError("nulldata");
+        if (data == null) { throwError('nulldata'); }
       }))
       .subscribe(
       () => {
