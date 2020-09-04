@@ -63,7 +63,7 @@ export class HomeComponent implements OnInit {
   deletePost(idPost: number): void {
     this.apiService.deletePost(idPost).subscribe(() => {
       this.getPosts();
-    })
+    });
   }
 
   translateImage(image: any): any {

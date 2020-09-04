@@ -1,4 +1,4 @@
-package com.malinabenegui.help.api;
+package com.malinabenegui.help.controller;
 
 
 import com.malinabenegui.help.models.Post;

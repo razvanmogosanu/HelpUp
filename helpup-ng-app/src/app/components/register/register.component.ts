@@ -36,6 +36,7 @@ export class RegisterComponent implements OnInit {
         this.apiservice.authUser(username, pass);
       },
       (error) => {
+        console.log(error.error.registerResponseMessage);
         this.emailOrUsernameExistsMessage = error.error.registerResponseMessage;
       }
     );

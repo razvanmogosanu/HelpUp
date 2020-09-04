@@ -1,4 +1,4 @@
-package com.malinabenegui.help.api;
+package com.malinabenegui.help.controller;
 
 import com.malinabenegui.help.models.UserDetails;
 import com.malinabenegui.help.models.httpResponseParsers.HttpSimpleStringResponse;
@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.RequestEntity;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController

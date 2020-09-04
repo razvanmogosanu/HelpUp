@@ -1,6 +1,5 @@
-package com.malinabenegui.help.api;
+package com.malinabenegui.help.controller;
 
-import com.malinabenegui.help.models.Post;
 import com.malinabenegui.help.models.search.SearchFilter;
 import com.malinabenegui.help.repositories.PostRepository;
 import org.junit.jupiter.api.Test;
