@@ -15,6 +15,11 @@
   border-radius: 50%;
   margin-left: 50%;
   margin-top: -8%;
+  display: block;
+}
+
+.profile_pic:hover{
+  opacity: 60%;
 }
 
 .message{
@@ -51,6 +56,7 @@ span{
     margin-top: -15%;
   }
 
+
   .infos{
     width: 30%;
     margin-left: 16%;
@@ -63,6 +69,14 @@ span{
   }
 
   .profile_pic{
+    width: 5%;
+    border-radius: 50%;
+    margin-left: -55%;
+    margin-top: 10%;
+    margin-bottom: 5%;
+  }
+
+  .profile_pic:hover{
     width: 40%;
     border-radius: 50%;
     margin-left: -55%;

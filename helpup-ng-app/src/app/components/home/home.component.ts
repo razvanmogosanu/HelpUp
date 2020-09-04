@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {FormControl, FormGroup} from '@angular/forms';
 import {CookieService} from 'ngx-cookie-service';
@@ -26,6 +26,8 @@ export class HomeComponent implements OnInit {
   selectedFile: File;
   retrievedPosts: Post[];
   username: string;
+  @ViewChild('fileInput', {static: false})
+  myFileInput: ElementRef;
 
   constructor(private httpClient: HttpClient, private cookies: CookieService, private router: Router, private apiService: ApiService) {
     this.postForm = new FormGroup({
@@ -42,9 +44,12 @@ export class HomeComponent implements OnInit {
     const description = this.postForm.get('description').value;
 
     const uploadData = new FormData();
-    uploadData.append('imageFile', this.selectedFile, this.selectedFile.name);
+    uploadData.append('imageFile', this.selectedFile);
     uploadData.append('description', description);
-    this.apiService.addNewPost(uploadData);
+    this.apiService.addNewPost(uploadData).subscribe(() => {
+      this.getPosts();
+    });
+    this.myFileInput.nativeElement.value = '';
     this.postForm.reset();
   }
 
@@ -53,6 +58,12 @@ export class HomeComponent implements OnInit {
       .subscribe((data: Post[]) => {
         this.retrievedPosts = data;
       });
+  }
+
+  deletePost(idPost: number): void {
+    this.apiService.deletePost(idPost).subscribe(() => {
+      this.getPosts();
+    })
   }
 
   translateImage(image: any): any {

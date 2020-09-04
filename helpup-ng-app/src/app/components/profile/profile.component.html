@@ -1,25 +1,69 @@
 <div class="profile">
-  <h2>{{this.userDetails.first_name}} {{this.userDetails.last_name}}</h2>
+  <h2>{{this.userDetails.firstname}} {{this.userDetails.lastname}}</h2>
   <h3 class="username">@{{this.userDetails.username}}</h3>
 
-  <img class="profile_pic" src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png">
-
+  <div class="profile_pic" (mouseenter)="onPhotoMode = true;" (mouseleave)="onPhotoMode = false;" >
+    <input  style="display: none" type="file" accept="image/*" #file>
+    <div *ngIf="onPhotoMode" style="position: absolute;
+  transform: translateY(400%);
+  margin-left: 10%;
+  display: inline-block;" (click)="file.click()">edit
+    </div>
+    <img *ngIf="userDetails.profilepic != null" src="{{userDetails.profilepic}}">
+    <img *ngIf="userDetails.profilepic == null" src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
+      style="border-radius: 50%;width: 100%" (click)="file.click()">
+  </div>
   <div>
-    <button class="btn message">Message</button>
-    <button class="btn btn-light" (click)="editDetails()">Edit</button>
+    <button *ngIf="!isMine()" class="btn message">Message</button>
+    <button *ngIf="isMine()" class="btn btn-light" (click)="editDetails()">Edit</button>
+    <button class="btn btn-light" *ngIf="editMode" (click)="saveEdit()">Save</button>
   </div>
 </div>
-<div class="infos">
+
+
+
+
+<form  class="infos">
   <h4>About me</h4>
-  <p>{{this.userDetails.description}}</p>
-  <hr>
+  <div *ngIf="editMode; then editModeOn else editModeOff"></div>
+  <ng-template #editModeOn>
+    <div>
+      <input #description (change)="userDetails.description = description.value" value="{{this.userDetails.description}}">
+    </div>
 
-  <span class="glyphicon glyphicon-home"></span>
-  <p>Lives in {{this.userDetails.city}}</p>
+    <hr>
 
-  <span class="glyphicon glyphicon-education"></span>
-  <p>Studied at {{this.userDetails.education}}</p>
+    <div>
+      <span class="glyphicon glyphicon-home"></span>
+      <input #city (change)="userDetails.city = city.value" value="{{this.userDetails.city}}">
+    </div>
 
-  <span class="glyphicon glyphicon-briefcase"></span>
-  <p>Works at {{this.userDetails.job}}</p>
-</div>
+    <div>
+      <span class="glyphicon glyphicon-education"></span>
+        <input #education (change)="userDetails.education = education.value" value="{{this.userDetails.education}}">
+    </div>
+
+    <div>
+      <span class="glyphicon glyphicon-briefcase"></span>
+        <input #job (change)="userDetails.job = job.value" value="{{this.userDetails.job}}">
+    </div>
+
+
+  </ng-template>
+  <ng-template #editModeOff>
+    <p>{{this.userDetails.description}}</p>
+
+    <hr>
+
+    <span class="glyphicon glyphicon-home"></span>
+    <p>Lives in {{this.userDetails.city}}</p>
+
+    <span class="glyphicon glyphicon-education"></span>
+    <p>Studied at {{this.userDetails.education}}</p>
+
+    <span class="glyphicon glyphicon-briefcase"></span>
+    <p>Works at {{this.userDetails.job}}</p>
+
+  </ng-template>
+
+</form>

@@ -2,3 +2,12 @@
   border-radius: 0;
   margin-bottom: 0;
 }
+
+.state-container-dropdown {
+  position: absolute;
+  z-index: 1;
+  width: 100%;
+  height: 200px;
+  max-height: 300px;
+  background: lightgray;
+}

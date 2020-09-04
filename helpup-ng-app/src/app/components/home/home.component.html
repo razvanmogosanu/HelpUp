@@ -9,12 +9,15 @@
       </div>
 
       <div class="form-group">
-        <input type="file" (change)="onFileChanged($event)">
+        <input #fileInput type="file" (change)="onFileChanged($event)">
       </div>
 
       <input type="button" (click)="onUpload()" value="Post" class="btn button">
     </form>
   </div>
+
+
+
 
   <!-- List with posts -->
   <div class="posts">
@@ -24,8 +27,8 @@
 
       <div>
         <div *ngIf="isMine(post)" style="float: right;">
-          <button (click)="post.editMode = true; ">EDIT</button>
-          <button (click)="apiService.deletePost(post.id)">Delete</button>
+          <button (click)="post.editMode = true;">EDIT</button>
+          <button (click)="deletePost(post.id)">Delete</button>
         </div>
 
         <form>
