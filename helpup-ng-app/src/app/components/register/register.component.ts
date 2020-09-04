@@ -4,6 +4,8 @@ import {FormControl, FormGroup} from '@angular/forms';
 import {Router} from '@angular/router';
 import {CookieService} from 'ngx-cookie-service';
 import {ApiService} from '../../ApiService';
+import {map} from "rxjs/operators";
+import {throwError} from "rxjs";
 
 
 @Component({
@@ -31,13 +33,19 @@ export class RegisterComponent implements OnInit {
     const username = this.regForm.get('username').value;
     const mail = this.regForm.get('mail').value;
     const pass = this.regForm.get('pass').value;
-    this.apiservice.postUser(username, mail, pass).subscribe(
-      (message: { registerResponseMessage: string }) => {
+
+    this.apiservice.postUser(username, mail, pass)
+      .pipe(map(data => {
+        if (data == null) throwError("nulldata");
+      }))
+      .subscribe(
+      () => {
         this.apiservice.authUser(username, pass);
       },
       (error) => {
-        this.emailOrUsernameExistsMessage = error.error.registerResponseMessage;
+        this.emailOrUsernameExistsMessage = error.error.string;
       }
     );
+
   }
 }

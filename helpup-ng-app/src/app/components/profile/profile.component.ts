@@ -45,7 +45,6 @@ export class ProfileComponent implements OnInit {
   }
 
 
-
   editDetails(): void {
     this.editMode = true;
   }
@@ -53,7 +52,7 @@ export class ProfileComponent implements OnInit {
   saveEdit(): void {
     this.editMode = false;
 
-    
+
   }
 
   isMine(): boolean {

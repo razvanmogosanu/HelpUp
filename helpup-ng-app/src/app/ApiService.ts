@@ -65,7 +65,7 @@ export class ApiService {
 
   /*** this function returns an observable where on subscribe will come the list of all posts**/
   getAllPosts(): Observable<any> {
-    const username = this.http.get('http://localhost:8080/jwt/username', {
+    const username = this.http.get(this.GET_USERNAME_FROM_JWT, {
       headers: this.generateAuthorizeBearerJWT()
     });
     return this.http.get(this.GET_ALL_POSTS_URL, {
