@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {UserDetails} from '../../user_details';
 import {ApiService} from '../../ApiService';
 import {FormControl, FormGroup} from '@angular/forms';
@@ -14,10 +14,11 @@ export class ProfileComponent implements OnInit {
   userDetails: UserDetails;
   editMode: boolean;
   onPhotoMode: boolean;
-  postForm: FormGroup;
+  profileForm: FormGroup;
+  selectedFile: File;
 
   constructor(private api: ApiService, private route: ActivatedRoute, private cookies: CookieService) {
-    this.postForm = new FormGroup({
+    this.profileForm = new FormGroup({
       description: new FormControl(),
       city: new FormControl(),
       education: new FormControl(),
@@ -31,6 +32,11 @@ export class ProfileComponent implements OnInit {
         this.initDetails();
       }
     )
+  }
+
+  public onFileChanged(event): void {
+    this.selectedFile = event.target.files[0];
+    this.userDetails.profilepic = event.target.files[0];
   }
 
   initDetails(): void {
@@ -52,8 +58,15 @@ export class ProfileComponent implements OnInit {
   saveEdit(): void {
     this.editMode = false;
 
-    
+
   }
+
+  translateImage(image: any): any {
+    // return 'data:image/jpeg;base64,' + image;
+    console.log(image);
+    return image;
+  }
+
 
   isMine(): boolean {
     return this.cookies.get('username') === this.userDetails.username;
