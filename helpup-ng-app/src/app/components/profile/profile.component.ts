@@ -52,7 +52,7 @@ export class ProfileComponent implements OnInit {
   saveEdit(): void {
     this.editMode = false;
 
-
+    
   }
 
   isMine(): boolean {
