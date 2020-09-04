@@ -1,6 +1,7 @@
 package com.malinabenegui.help.api;
 
 import com.malinabenegui.help.models.UserDetails;
+import com.malinabenegui.help.models.httpResponseParsers.HttpSimpleStringResponse;
 import com.malinabenegui.help.repositories.UserDetailsRepository;
 import com.malinabenegui.help.repositories.UserRepository;
 import com.malinabenegui.help.utils.JwtUtil;
@@ -29,9 +30,9 @@ public class UserController {
         this.jwtUtil = jwtUtil;
     }
 
-    @RequestMapping(value = "/getdetails", method = RequestMethod.GET)
-    private ResponseEntity<UserDetails> getUserDetails(@RequestHeader("Authorization") String header) {
-        return new ResponseEntity<>(userDetailsRepository.getByUsername(jwtUtil.extractUsername(header.substring(7))), HttpStatus.ACCEPTED);
+    @RequestMapping(value = "/getdetails", method = RequestMethod.POST)
+    private ResponseEntity<UserDetails> getUserDetails(@RequestBody HttpSimpleStringResponse username) {
+        return new ResponseEntity<>(userDetailsRepository.getByUsername(username.getString()), HttpStatus.ACCEPTED);
     }
 
 

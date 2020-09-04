@@ -13,6 +13,7 @@ import {ApiService} from '../../ApiService';
 
 export class LoginComponent implements OnInit {
   regForm: FormGroup;
+  errorMessage: string
 
   constructor(private http: HttpClient, private cookies: CookieService, private router: Router, private apiService: ApiService) {
     this.regForm = new FormGroup({
@@ -27,6 +28,19 @@ export class LoginComponent implements OnInit {
   onSubmit(): void {
     const username = this.regForm.get('username').value;
     const password = this.regForm.get('password').value;
-    this.apiService.authUser(username, password);
+    this.apiService.authUser(username, password).subscribe((token: { jwt: any }) => {
+        this.cookies.set('jwt', token.jwt);
+        this.router.navigateByUrl('');
+        this.apiService.whoAmI().subscribe(username => {
+          this.cookies.set('username', username.string);
+        });
+      },
+      (error) => {
+        // Forbidden
+        if (error.status == 403) {
+          this.errorMessage = "Incorrect username or password.";
+        }
+      }
+    )
   }
 }

@@ -4,9 +4,6 @@ import {Router} from '@angular/router';
 import {Injectable, OnInit} from '@angular/core';
 import {Observable} from 'rxjs';
 
-interface TokenFormat {
-  jwt: any;
-}
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +18,7 @@ export class ApiService {
   private DELETE_POST_URL = `${this.BASE_URL}/post/delete`;
   private GET_USERNAME_FROM_JWT = `${this.BASE_URL}/jwt/username`;
   private GET_USER_DETAILS = `${this.BASE_URL}/user/getdetails`;
+  private SEARCH_USERS = `${this.BASE_URL}/search/users`;
 
 
   constructor(private http: HttpClient, private cookies: CookieService, private router: Router) {
@@ -32,19 +30,8 @@ export class ApiService {
    * if the credentials are ok and the log in process comes to success, then attach the token into cookies and navigate to home
    * otherwise, console.log the error
    */
-  authUser(usernameParam: string, passwordParam: string): void {
-    this.http.post(this.AUTH_USER_URL, this.generateAuthUserBody(usernameParam, passwordParam))
-      .subscribe((token: TokenFormat) => {
-          this.cookies.set('jwt', token.jwt);
-          this.router.navigateByUrl('');
-          this.whoAmI().subscribe(username => {
-            this.cookies.set('username', username.registerResponseMessage);
-          });
-        },
-        error1 => {
-          console.log(error1);
-        }
-      );
+  authUser(usernameParam: string, passwordParam: string): Observable<any> {
+    return this.http.post(this.AUTH_USER_URL, this.generateAuthUserBody(usernameParam, passwordParam));
   }
 
   /** Used to parse the needed json */
@@ -69,18 +56,10 @@ export class ApiService {
   }
 
   /*** adding a new post**/
-  addNewPost(uploadData: FormData): void {
-    this.whoAmI().subscribe(username => {
-      uploadData.append('user_username', this.cookies.get('username'));
-      this.http.post(this.USER_POSTING_URL, uploadData, {
-        observe: 'response', headers: this.generateAuthorizeBearerJWT()
-      })
-        .subscribe((data) => {
-          },
-          (error => {
-            console.log(error);
-          })
-        );
+  addNewPost(uploadData: FormData): Observable<any> {
+    uploadData.append('user_username', this.cookies.get('username'));
+    return this.http.post(this.USER_POSTING_URL, uploadData, {
+      observe: 'response', headers: this.generateAuthorizeBearerJWT()
     });
   }
 
@@ -109,18 +88,29 @@ export class ApiService {
     this.http.post(this.EDIT_POST_URL, body, {headers: this.generateAuthorizeBearerJWT()}).subscribe();
   }
 
-  deletePost(idNr: number): void {
+  deletePost(idNr: number): Observable<any> {
     const body = {
       id: idNr
     };
-    this.http.post(this.DELETE_POST_URL, body, {headers: this.generateAuthorizeBearerJWT()}).subscribe();
+    return this.http.post(this.DELETE_POST_URL, body, {headers: this.generateAuthorizeBearerJWT()});
   }
 
   whoAmI(): Observable<any> {
     return this.http.get(this.GET_USERNAME_FROM_JWT, {headers: this.generateAuthorizeBearerJWT()});
   }
 
-  getUserDetails(): Observable<any> {
-    return this.http.get(this.GET_USER_DETAILS, {headers: this.generateAuthorizeBearerJWT()});
+  getUserDetails(usernameToFind: string): Observable<any> {
+    const body = {
+      string: usernameToFind
+    }
+    return this.http.post(this.GET_USER_DETAILS, body, {headers: this.generateAuthorizeBearerJWT()});
   }
+
+  searchAfterUsers(searchFilter: string): Observable<any> {
+    const body = {
+      searchField: searchFilter
+    };
+    return this.http.post(this.SEARCH_USERS, body, {headers: this.generateAuthorizeBearerJWT()});
+  }
+
 }

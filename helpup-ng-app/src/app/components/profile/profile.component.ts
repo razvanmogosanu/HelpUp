@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {UserDetails} from '../../user_details';
 import {ApiService} from '../../ApiService';
 import {FormControl, FormGroup} from '@angular/forms';
+import {ActivatedRoute} from "@angular/router";
+import {CookieService} from "ngx-cookie-service";
 
 @Component({
   selector: 'app-profile',
@@ -14,21 +16,28 @@ export class ProfileComponent implements OnInit {
   onPhotoMode: boolean;
   postForm: FormGroup;
 
-  constructor(private api: ApiService) {
+  constructor(private api: ApiService, private route: ActivatedRoute, private cookies: CookieService) {
     this.postForm = new FormGroup({
       description: new FormControl(),
-      city: new FormControl()
+      city: new FormControl(),
+      education: new FormControl(),
+      job: new FormControl()
     });
   }
 
   ngOnInit(): void {
-    this.initDetails();
+    this.route.params.subscribe(
+      () => {
+        this.initDetails();
+      }
+    )
   }
 
   initDetails(): void {
     this.userDetails = new UserDetails('', '', '',
       '', '', '', '', '', '', '');
-    this.api.getUserDetails()
+
+    this.api.getUserDetails(this.route.snapshot.params.username)
       .subscribe(
         (data: UserDetails) => {
           this.userDetails = data;
@@ -43,6 +52,12 @@ export class ProfileComponent implements OnInit {
 
   saveEdit(): void {
     this.editMode = false;
+
+    
+  }
+
+  isMine(): boolean {
+    return this.cookies.get('username') === this.userDetails.username;
   }
 
 }

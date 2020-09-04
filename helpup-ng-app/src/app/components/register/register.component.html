@@ -9,7 +9,7 @@
     </div>
     <br>
 
-    <div *ngIf="emailOrUsernameExistsMessage !== ''" id="center-error">{{emailOrUsernameExistsMessage}}</div>
+    <div *ngIf="emailOrUsernameExistsMessage !== ''" class="error-message">{{emailOrUsernameExistsMessage}}</div>
 
     <div class="center">
       <form [formGroup]="regForm" class="px-4 py-3">

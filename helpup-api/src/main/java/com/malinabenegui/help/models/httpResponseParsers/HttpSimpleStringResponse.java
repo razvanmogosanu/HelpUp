@@ -8,9 +8,9 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class HttpSimpleStringResponse {
-    private String registerResponseMessage;
+    private String string;
 
     public HttpSimpleStringResponse(String registerResponseMessage) {
-        this.registerResponseMessage = registerResponseMessage;
+        this.string = registerResponseMessage;
     }
 }
