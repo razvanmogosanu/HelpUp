@@ -15,7 +15,7 @@
                (click)="showDropdown = true;" (keyup)="onSubmit()">
         <div *ngIf="showDropdown == true" class="state-container-dropdown" >
           <div *ngFor="let user of searchedUsers">
-            <div  (click)="showDropdown = false" [routerLink]="['profile', user.username]">{{user.username}}</div>
+            <div  (click)="showDropdown = false" [routerLink]="['profile', user.username]" id="search-username">{{user.username}}</div>
           </div>
         </div>
       </div>

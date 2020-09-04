@@ -3,11 +3,28 @@
   margin-bottom: 0;
 }
 
+.navbar-form{
+  margin-left: 10.5%;
+}
+
 .state-container-dropdown {
   position: absolute;
   z-index: 1;
-  width: 100%;
+  padding: 10px;
+
+  width: 200px;
   height: 200px;
   max-height: 300px;
-  background: lightgray;
+
+  border: 1px solid #dedede;
+  border-radius: 3px;
+  background: white;
+}
+
+#search-username{
+  padding: 5px;
+}
+
+#search-username:hover{
+  background: #ECF0F7;
 }
