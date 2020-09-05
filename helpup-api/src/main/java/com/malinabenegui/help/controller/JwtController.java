@@ -2,7 +2,7 @@ package com.malinabenegui.help.controller;
 
 
 import com.malinabenegui.help.models.httpResponseParsers.HttpSimpleStringResponse;
-import com.malinabenegui.help.utils.JwtUtil;
+import com.malinabenegui.help.services.jwt.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,10 +16,10 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin
 public class JwtController {
     @Autowired
-    private JwtUtil jwtUtil;
+    private JwtService service;
 
     @RequestMapping("/username")
-    private ResponseEntity<HttpSimpleStringResponse> parseUsernameFromJWT(@RequestHeader("Authorization") String header) {
-        return new ResponseEntity<>(new HttpSimpleStringResponse(jwtUtil.extractUsername(header.substring(7))), HttpStatus.ACCEPTED);
+    private ResponseEntity<HttpSimpleStringResponse> parseUsername(@RequestHeader("Authorization") String header) {
+        return new ResponseEntity<>(service.parseUsernameFromJWT(header), HttpStatus.ACCEPTED);
     }
 }
