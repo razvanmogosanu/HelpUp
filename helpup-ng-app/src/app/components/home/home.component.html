@@ -10,7 +10,7 @@
       </div>
 
       <div class="form-group">
-        <input #fileInput type="file" (change)="onFileChanged($event)">
+        <input #fileInput type="file" accept="image/*" (change)="onFileChanged($event)">
       </div>
 
       <input type="button" (click)="onUpload()" value="Post" class="btn button">
