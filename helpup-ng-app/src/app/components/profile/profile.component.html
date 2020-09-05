@@ -4,27 +4,28 @@
 
   <div class="profile_pic" (mouseenter)="onPhotoMode = true;" (mouseleave)="onPhotoMode = false;" >
     <input  style="display: none" type="file" accept="image/*" #file>
-    <div *ngIf="onPhotoMode" style="position: absolute;
-  transform: translateY(400%);
-  margin-left: 10%;
-  display: inline-block;" (click)="file.click()">edit
+
+    <div *ngIf="onPhotoMode" style="position: absolute; transform: translateY(400%);
+            margin-left: 10%; display: inline-block;" (click)="file.click()">edit
     </div>
+
     <img *ngIf="userDetails.profilepic != null" src="{{userDetails.profilepic}}">
     <img *ngIf="userDetails.profilepic == null" src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
       style="border-radius: 50%;width: 100%" (click)="file.click()">
   </div>
+
   <div>
     <button *ngIf="!isMine()" class="btn message">Message</button>
-    <button *ngIf="isMine()" class="btn btn-light" (click)="editDetails()">Edit</button>
+    <button *ngIf="isMine() && !editMode" class="btn btn-light" (click)="editDetails()">Edit</button>
     <button class="btn btn-light" *ngIf="editMode" (click)="saveEdit()">Save</button>
   </div>
 </div>
 
 
-
-
 <form  class="infos">
   <h4>About me</h4>
+
+  <!-- Edit fields -->
   <div *ngIf="editMode; then editModeOn else editModeOff"></div>
   <ng-template #editModeOn>
     <div>
@@ -33,37 +34,47 @@
 
     <hr>
 
-    <div>
-      <span class="glyphicon glyphicon-home"></span>
+    <div class="edit-field">
+      <span class="glyphicon glyphicon-home edit-span"></span>
       <input #city (change)="userDetails.city = city.value" value="{{this.userDetails.city}}">
     </div>
 
-    <div>
-      <span class="glyphicon glyphicon-education"></span>
+    <div class="edit-field">
+      <span class="glyphicon glyphicon-education edit-span"></span>
         <input #education (change)="userDetails.education = education.value" value="{{this.userDetails.education}}">
     </div>
 
-    <div>
-      <span class="glyphicon glyphicon-briefcase"></span>
+    <div class="edit-field">
+      <span class="glyphicon glyphicon-briefcase edit-span"></span>
         <input #job (change)="userDetails.job = job.value" value="{{this.userDetails.job}}">
     </div>
 
+    <div class="edit-field">
+      <span class="glyphicon glyphicon-earphone edit-span"></span>
+        <input #phonenumber (change)="userDetails.phonenumber = phonenumber.value" value="{{this.userDetails.phonenumber}}">
+    </div>
 
+  <!-- Appearing fields -->
   </ng-template>
   <ng-template #editModeOff>
     <p>{{this.userDetails.description}}</p>
 
     <hr>
 
-    <span class="glyphicon glyphicon-home"></span>
-    <p>Lives in {{this.userDetails.city}}</p>
+    <span class="glyphicon glyphicon-home" *ngIf="this.userDetails.city != null"></span>
+    <p *ngIf="this.userDetails.city != null">Lives in {{this.userDetails.city}}</p>
 
-    <span class="glyphicon glyphicon-education"></span>
-    <p>Studied at {{this.userDetails.education}}</p>
+    <span class="glyphicon glyphicon-education" *ngIf="this.userDetails.education != null"></span>
+    <p *ngIf="this.userDetails.education != null">Studied at {{this.userDetails.education}}</p>
 
-    <span class="glyphicon glyphicon-briefcase"></span>
-    <p>Works at {{this.userDetails.job}}</p>
+    <span class="glyphicon glyphicon-briefcase" *ngIf="this.userDetails.job != null"></span>
+    <p *ngIf="this.userDetails.job != null">Works at {{this.userDetails.job}}</p>
+
+    <span class="glyphicon glyphicon-earphone" *ngIf="this.userDetails.phonenumber != null"></span>
+    <p *ngIf="this.userDetails.phonenumber != null">Call at {{this.userDetails.phonenumber}}</p>
 
   </ng-template>
 
 </form>
+
+<div style="height: 90px"></div>

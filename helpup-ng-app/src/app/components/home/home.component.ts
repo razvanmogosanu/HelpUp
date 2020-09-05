@@ -28,12 +28,14 @@ export class HomeComponent implements OnInit {
   username: string;
   @ViewChild('fileInput', {static: false})
   myFileInput: ElementRef;
+  errorMessage: string;
 
   constructor(private httpClient: HttpClient, private cookies: CookieService, private router: Router, private apiService: ApiService) {
     this.postForm = new FormGroup({
       description: new FormControl(),
     });
     this.retrievedPosts = new Array<Post>();
+    this.errorMessage = '';
   }
 
   public onFileChanged(event): void {
@@ -43,14 +45,21 @@ export class HomeComponent implements OnInit {
   onUpload(): void {
     const description = this.postForm.get('description').value;
 
-    const uploadData = new FormData();
-    uploadData.append('imageFile', this.selectedFile);
-    uploadData.append('description', description);
-    this.apiService.addNewPost(uploadData).subscribe(() => {
-      this.getPosts();
-    });
-    this.myFileInput.nativeElement.value = '';
-    this.postForm.reset();
+    if (!description) { this.errorMessage = 'Description must be completed.'; }
+    else
+      if (!this.selectedFile) { this.errorMessage = 'Image must be uploaded.'; }
+    else
+    {
+      const uploadData = new FormData();
+      uploadData.append('imageFile', this.selectedFile);
+      uploadData.append('description', description);
+      this.apiService.addNewPost(uploadData).subscribe(() => {
+        this.getPosts();
+      });
+      this.myFileInput.nativeElement.value = '';
+      this.postForm.reset();
+      this.errorMessage = '';
+    }
   }
 
   getPosts(): void {

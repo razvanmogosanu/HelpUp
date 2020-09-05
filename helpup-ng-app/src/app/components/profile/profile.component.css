@@ -36,8 +36,21 @@
   margin-top: 1%;
   margin-left: 20%;
   padding: 10px;
-  border-radius: 2%;
+  border-radius: 5px;
   border: #c9c9c9 1px solid;
+}
+
+input{
+  border-radius: 3px;
+  border: #c9c9c9 1px solid;
+}
+
+.edit-field{
+  margin-bottom: 5px;
+}
+
+.edit-span{
+  margin-top: 3px;
 }
 
 span{

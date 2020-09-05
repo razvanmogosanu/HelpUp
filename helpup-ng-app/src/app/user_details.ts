@@ -9,9 +9,10 @@ export class UserDetails {
   gender: string;
   description: string;
   birthday: string;
+  phonenumber: string;
 
   constructor(username: string, firstname: string, lastname: string, profilepic: any, city: string,
-              education: string, job: string, gender: string, description: string, birthday: string) {
+              education: string, job: string, gender: string, description: string, birthday: string, phonenumber: string) {
     this.username = username;
     this.firstname = firstname;
     this.lastname = lastname;
@@ -22,5 +23,6 @@ export class UserDetails {
     this.gender = gender;
     this.description = description;
     this.birthday = birthday;
+    this.phonenumber = phonenumber;
   }
 }
