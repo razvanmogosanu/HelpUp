@@ -12,5 +12,4 @@ import lombok.Setter;
 @AllArgsConstructor
 public class SearchFilter {
     private String searchField;
-
 }

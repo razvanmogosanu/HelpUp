@@ -14,12 +14,13 @@ import java.util.stream.Collectors;
 
 @Service
 public class SearchUserService {
-    private final UserRepository userRepository;
-    private final UserDetailsRepository userDetailsRepository;
+    private UserDetailsRepository userDetailsRepository;
+
+    public SearchUserService() {
+    }
 
     @Autowired
-    public SearchUserService(UserRepository userRepository, UserDetailsRepository userDetailsRepository) {
-        this.userRepository = userRepository;
+    public SearchUserService(UserDetailsRepository userDetailsRepository) {
         this.userDetailsRepository = userDetailsRepository;
     }
 
@@ -36,11 +37,10 @@ public class SearchUserService {
         if (user.getUsername().contains(filter))
             return true;
 
-        UserDetails userDetails = userDetailsRepository.getByUsername(user.getUsername());
 
-        if (userDetails.getFirstname().contains(filter))
+        if (user.getFirstname().contains(filter))
             return true;
-        return userDetails.getLastname().contains(filter);
+        return user.getLastname().contains(filter);
     }
 
 

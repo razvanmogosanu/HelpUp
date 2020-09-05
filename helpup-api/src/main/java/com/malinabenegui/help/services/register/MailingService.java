@@ -1,4 +1,4 @@
-package com.malinabenegui.help.services;
+package com.malinabenegui.help.services.register;
 
 import com.malinabenegui.help.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
