@@ -1,0 +1,56 @@
+package com.malinabenegui.help.services.post;
+
+import com.malinabenegui.help.models.Post;
+import com.malinabenegui.help.models.editPostRequest.DeleteRequest;
+import com.malinabenegui.help.models.editPostRequest.EditRequest;
+import com.malinabenegui.help.repositories.PostRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.util.Collections;
+import java.util.List;
+
+@Service
+public class PostService {
+    @Autowired
+    private PostRepository postRepository;
+
+    public Iterable<Post> getAllPosts() {
+        List<Post> list = postRepository.findAll();
+        Collections.reverse(list);
+        return list;
+    }
+
+    public ResponseEntity<?>
+    addPostInDatabase(MultipartFile file, String description, String user_username) throws IOException {
+        if (description == null || user_username == null || file == null)
+            return new ResponseEntity<>(HttpStatus.METHOD_NOT_ALLOWED);
+        postRepository.save(new Post(description, user_username, file.getBytes()));
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    public void editPost(EditRequest editRequest) {
+        Post post = postRepository.getOne(editRequest.getId());
+        post.setDescription(editRequest.getDescription());
+        postRepository.save(post);
+    }
+
+    public void deletePostById(DeleteRequest deleteRequest) {
+        postRepository.deleteById(deleteRequest.getId());
+    }
+
+
+
+
+//    @GetMapping(path = {"/get/{imageName}"})
+//    public Post getImage(@PathVariable("imageName") String imageID) {
+//        final Optional<Post> retrievedPost = postRepository.findById(Long.parseLong(imageID));
+//        return new Post(retrievedPost.get().getDescription(), retrievedPost.get().getImage());
+//    }
+}

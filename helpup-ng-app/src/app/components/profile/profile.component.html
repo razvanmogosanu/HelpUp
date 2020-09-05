@@ -29,7 +29,8 @@
   <div *ngIf="editMode; then editModeOn else editModeOff"></div>
   <ng-template #editModeOn>
     <div>
-      <input #description (change)="userDetails.description = description.value" value="{{this.userDetails.description}}">
+      <input #description (change)="userDetails.description = description.value"
+             value="{{this.userDetails.description}}">
     </div>
 
     <hr>
@@ -38,6 +39,7 @@
       <span class="glyphicon glyphicon-home edit-span"></span>
       <input #city (change)="userDetails.city = city.value" value="{{this.userDetails.city}}">
     </div>
+
 
     <div class="edit-field">
       <span class="glyphicon glyphicon-education edit-span"></span>
