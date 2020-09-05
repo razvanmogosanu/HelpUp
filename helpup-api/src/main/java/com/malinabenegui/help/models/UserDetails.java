@@ -43,4 +43,12 @@ public class UserDetails {
         this.userType = userType;
     }
 
+    @Override
+    public String  toString() {
+        return "UserDetails{" +
+                "username='" + username + '\'' +
+                ", firstname='" + firstname + '\'' +
+                ", lastname='" + lastname + '\'' +
+                '}';
+    }
 }

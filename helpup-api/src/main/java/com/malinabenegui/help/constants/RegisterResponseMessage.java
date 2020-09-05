@@ -9,4 +9,9 @@ public final class RegisterResponseMessage {
             new HttpSimpleStringResponse("Username already used.");
     public static final HttpSimpleStringResponse ACCEPTED_HTTP_RESPONSE =
             new HttpSimpleStringResponse("ACCEPTED");
+
+    @Override
+    public String toString() {
+        return "RegisterResponseMessage{}";
+    }
 }
