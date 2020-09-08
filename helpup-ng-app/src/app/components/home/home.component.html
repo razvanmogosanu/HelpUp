@@ -21,7 +21,7 @@
   <!-- List with posts -->
   <div class="posts">
     <div *ngFor="let post of retrievedPosts" class="post">
-      <span class="username">@{{post.user_username}}</span>
+      <span class="username">@{{post.username}}</span>
       <span class="date">‧ {{translateTime(post.date)}}</span>
 
       <div>
@@ -47,5 +47,6 @@
 
     </div>
   </div>
+
   <div style="height: 50px"></div>
 </div>

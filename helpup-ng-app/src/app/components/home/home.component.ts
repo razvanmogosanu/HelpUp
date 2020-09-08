@@ -8,7 +8,7 @@ import {ApiService} from '../../ApiService';
 interface Post {
   id: number;
   description: string;
-  user_username: string;
+  username: string;
   image: any;
   date: Date;
   editMode: boolean;
@@ -45,11 +45,11 @@ export class HomeComponent implements OnInit {
   onUpload(): void {
     const description = this.postForm.get('description').value;
 
-    if (!description) { this.errorMessage = 'Description must be completed.'; }
-    else
-      if (!this.selectedFile) { this.errorMessage = 'Image must be uploaded.'; }
-    else
-    {
+    if (!description) {
+      this.errorMessage = 'Description must be completed.';
+    } else if (!this.selectedFile) {
+      this.errorMessage = 'Image must be uploaded.';
+    } else {
       const uploadData = new FormData();
       uploadData.append('imageFile', this.selectedFile);
       uploadData.append('description', description);
@@ -107,6 +107,6 @@ export class HomeComponent implements OnInit {
   }
 
   isMine(post: Post): boolean {
-    return this.cookies.get('username') === post.user_username;
+    return this.cookies.get('username') === post.username;
   }
 }

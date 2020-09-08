@@ -2,10 +2,8 @@ package com.malinabenegui.help.register;
 
 import com.malinabenegui.help.constants.RegisterResponseMessage;
 import com.malinabenegui.help.models.User;
-import com.malinabenegui.help.repositories.UserDetailsRepository;
 import com.malinabenegui.help.repositories.UserRepository;
 import com.malinabenegui.help.services.register.CredentialsChecker;
-import com.malinabenegui.help.services.register.RegisterService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

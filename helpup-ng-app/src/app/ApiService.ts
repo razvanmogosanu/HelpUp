@@ -3,6 +3,7 @@ import {CookieService} from 'ngx-cookie-service';
 import {Router} from '@angular/router';
 import {Injectable, OnInit} from '@angular/core';
 import {Observable} from 'rxjs';
+import {UserDetails} from './user_details';
 
 
 @Injectable({
@@ -19,6 +20,8 @@ export class ApiService {
   private GET_USERNAME_FROM_JWT = `${this.BASE_URL}/jwt/username`;
   private GET_USER_DETAILS = `${this.BASE_URL}/user/getdetails`;
   private SEARCH_USERS = `${this.BASE_URL}/search/users`;
+  private EDIT_USER_DETAILS = `${this.BASE_URL}/user/editdetails`;
+  private GET_POSTS_OF_USER = `${this.BASE_URL}/user/getposts`;
 
 
   constructor(private http: HttpClient, private cookies: CookieService, private router: Router) {
@@ -102,8 +105,12 @@ export class ApiService {
   getUserDetails(usernameToFind: string): Observable<any> {
     const body = {
       string: usernameToFind
-    }
+    };
     return this.http.post(this.GET_USER_DETAILS, body, {headers: this.generateAuthorizeBearerJWT()});
+  }
+
+  editUserDetails(userDetails: UserDetails): Observable<any>{
+    return this.http.post(this.EDIT_USER_DETAILS, userDetails, {headers: this.generateAuthorizeBearerJWT()});
   }
 
   searchAfterUsers(searchFilter: string): Observable<any> {
@@ -111,6 +118,13 @@ export class ApiService {
       searchField: searchFilter
     };
     return this.http.post(this.SEARCH_USERS, body, {headers: this.generateAuthorizeBearerJWT()});
+  }
+
+  getPostsOfUser(username: string): Observable<any> {
+    const body = {
+      string: username
+    };
+    return this.http.post(this.GET_POSTS_OF_USER, body, {headers: this.generateAuthorizeBearerJWT()});
   }
 
 }

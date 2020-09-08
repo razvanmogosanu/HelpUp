@@ -1,5 +1,16 @@
 <div class="profile">
-  <h2>{{this.userDetails.firstname}} {{this.userDetails.lastname}}</h2>
+
+  <!-- Show first and last name -->
+  <h2 *ngIf="!editMode">{{this.userDetails.firstname}} {{this.userDetails.lastname}}</h2>
+
+  <!-- When editing first and last name -->
+  <div *ngIf="editMode" class="edit-name">
+    <input class="name-input" #firstname (change)="userDetails.firstname = firstname.value"
+           value="{{this.userDetails.firstname}}">
+    <input class="name-input" #lastname (change)="userDetails.lastname = lastname.value"
+           value="{{this.userDetails.lastname}}">
+  </div>
+
   <h3 class="username">@{{this.userDetails.username}}</h3>
 
   <div class="profile_pic" (mouseenter)="onPhotoMode = true;" (mouseleave)="onPhotoMode = false;" >
@@ -55,28 +66,38 @@
       <span class="glyphicon glyphicon-earphone edit-span"></span>
         <input #phonenumber (change)="userDetails.phonenumber = phonenumber.value" value="{{this.userDetails.phonenumber}}">
     </div>
+  </ng-template>
 
   <!-- Appearing fields -->
-  </ng-template>
   <ng-template #editModeOff>
     <p>{{this.userDetails.description}}</p>
 
     <hr>
 
-    <span class="glyphicon glyphicon-home" *ngIf="this.userDetails.city != null"></span>
-    <p *ngIf="this.userDetails.city != null">Lives in {{this.userDetails.city}}</p>
+    <div *ngIf="this.userDetails.city != null && this.userDetails.city.length > 0">
+      <span class="glyphicon glyphicon-home"></span>
+      <p>Lives in {{this.userDetails.city}}</p>
+    </div>
 
-    <span class="glyphicon glyphicon-education" *ngIf="this.userDetails.education != null"></span>
-    <p *ngIf="this.userDetails.education != null">Studied at {{this.userDetails.education}}</p>
+    <div *ngIf="this.userDetails.education != null && this.userDetails.education.length > 0">
+      <span class="glyphicon glyphicon-education"></span>
+      <p>Studied at {{this.userDetails.education}}</p>
+    </div>
 
-    <span class="glyphicon glyphicon-briefcase" *ngIf="this.userDetails.job != null"></span>
-    <p *ngIf="this.userDetails.job != null">Works at {{this.userDetails.job}}</p>
+    <div *ngIf="this.userDetails.job != null && this.userDetails.job.length > 0">
+      <span class="glyphicon glyphicon-briefcase"></span>
+      <p>Works at {{this.userDetails.job}}</p>
+    </div>
 
-    <span class="glyphicon glyphicon-earphone" *ngIf="this.userDetails.phonenumber != null"></span>
-    <p *ngIf="this.userDetails.phonenumber != null">Call at {{this.userDetails.phonenumber}}</p>
-
+    <div *ngIf="this.userDetails.phonenumber != null && this.userDetails.phonenumber.length > 0">
+      <span class="glyphicon glyphicon-earphone"></span>
+      <p>Call at {{this.userDetails.phonenumber}}</p>
+    </div>
   </ng-template>
-
 </form>
+
+<div *ngFor="let post of retrievedPosts">
+  {{post.description}}
+</div>
 
 <div style="height: 90px"></div>

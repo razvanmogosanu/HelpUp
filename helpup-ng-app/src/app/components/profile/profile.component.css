@@ -4,6 +4,15 @@
   padding: 30px 10px 10px;
 }
 
+.edit-name{
+  margin-bottom: 20px;
+}
+
+.name-input{
+  height: 35px;
+  font-size: large;
+}
+
 .username{
   margin-top: -1%;
   color: gray;

@@ -1,5 +1,6 @@
 package com.malinabenegui.help.controller;
 
+import com.malinabenegui.help.models.Post;
 import com.malinabenegui.help.models.UserDetails;
 import com.malinabenegui.help.models.httpResponseParsers.HttpSimpleStringResponse;
 import com.malinabenegui.help.services.user.UserService;
@@ -19,5 +20,14 @@ public class UserController {
         return service.getUserDetails(username);
     }
 
+    @RequestMapping(value = "/editdetails", method = RequestMethod.POST)
+    private void editUserDetails(@RequestBody UserDetails userDetails) {
+        service.editUserDetails(userDetails);
+    }
+
+    @RequestMapping(value = "/getposts", method = RequestMethod.POST)
+    private ResponseEntity<?> getPostsOfUser(@RequestBody HttpSimpleStringResponse username){
+        return service.getPostsOfUser(username);
+    }
 
 }
