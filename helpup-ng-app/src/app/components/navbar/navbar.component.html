@@ -8,20 +8,24 @@
       <li><a routerLink="about">About Us</a></li>
     </ul>
 
-
+    <!-- Search bar-->
     <form *ngIf="cookies.check('username')" class="navbar-form navbar-left" [formGroup]="searchForm" (clickOutside)="showDropdown = false">
       <div class="form-group">
         <input type="text" class="form-control" placeholder="Search" formControlName="searchField"
                (click)="showDropdown = true;" (keyup)="onSubmit()">
         <div *ngIf="showDropdown == true" class="state-container-dropdown" >
           <div *ngFor="let user of searchedUsers">
-            <div  (click)="showDropdown = false" [routerLink]="['profile', user.username]" id="search-username">{{user.username}}</div>
+
+            <div  (click)="showDropdown = false" [routerLink]="['profile', user.username]" id="search-username">
+              <img style="width:30px;" src="{{translateImage(user.profilepic)}}">
+              {{user.username}}
+            </div>
           </div>
         </div>
       </div>
     </form>
 
-
+    <!-- Register Login Logout -->
     <ul class="nav navbar-nav navbar-right">
       <li *ngIf="!this.cookies.check('jwt')"><a routerLink="register"><span class="glyphicon glyphicon-user"></span>
         Sign Up</a></li>

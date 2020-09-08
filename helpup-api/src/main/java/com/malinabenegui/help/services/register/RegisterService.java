@@ -7,6 +7,7 @@ import com.malinabenegui.help.models.httpResponseParsers.HttpSimpleStringRespons
 import com.malinabenegui.help.repositories.UserDetailsRepository;
 import com.malinabenegui.help.repositories.UserRepository;
 import lombok.NoArgsConstructor;
+import org.apache.tomcat.util.http.fileupload.ByteArrayOutputStream;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,11 @@ import org.springframework.mail.MailAuthenticationException;
 import org.springframework.mail.MailException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 @Service
 @NoArgsConstructor
@@ -35,7 +41,7 @@ public class RegisterService {
         this.credentialsChecker = credentialChecker;
     }
 
-    public ResponseEntity<HttpSimpleStringResponse> registerNewUser(User user) {
+    public ResponseEntity<HttpSimpleStringResponse> registerNewUser(User user) throws IOException {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setRole("USER");
 
@@ -61,11 +67,16 @@ public class RegisterService {
         }
     }
 
-    private UserDetails initUserDetailsOnRegister(String username) {
+    private UserDetails initUserDetailsOnRegister(String username) throws IOException {
         UserDetails userDetails = new UserDetails();
         userDetails.setUsername(username);
         userDetails.setFirstname("");
         userDetails.setLastname("");
+
+        BufferedImage bImage = ImageIO.read(new File("src/main/resources/photos/profilePic.jpeg"));
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        ImageIO.write(bImage, "jpeg", bos );
+        userDetails.setProfilepic(bos.toByteArray());
         return userDetails;
     }
 }

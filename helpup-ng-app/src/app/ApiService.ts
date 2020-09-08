@@ -22,6 +22,7 @@ export class ApiService {
   private SEARCH_USERS = `${this.BASE_URL}/search/users`;
   private EDIT_USER_DETAILS = `${this.BASE_URL}/user/editdetails`;
   private GET_POSTS_OF_USER = `${this.BASE_URL}/user/getposts`;
+  private EDIT_PROFILE_PICTURE = `${this.BASE_URL}/user/editprofilepicture`;
 
 
   constructor(private http: HttpClient, private cookies: CookieService, private router: Router) {
@@ -45,9 +46,7 @@ export class ApiService {
     };
   }
 
-  /**
-   * this function should add a new user in the database(method="POST")
-   */
+  /** this function should add a new user in the database(method="POST") */
   postUser(usernameParam: string, emailParam: string, passwordParam: string): Observable<any> {
     const user = {
       username: usernameParam,
@@ -107,6 +106,11 @@ export class ApiService {
       string: usernameToFind
     };
     return this.http.post(this.GET_USER_DETAILS, body, {headers: this.generateAuthorizeBearerJWT()});
+  }
+
+  editProfilePicture(uploadData: FormData): Observable<any>{
+    console.log(uploadData.get('username'));
+    return this.http.post(this.EDIT_PROFILE_PICTURE, uploadData, {headers: this.generateAuthorizeBearerJWT()});
   }
 
   editUserDetails(userDetails: UserDetails): Observable<any>{

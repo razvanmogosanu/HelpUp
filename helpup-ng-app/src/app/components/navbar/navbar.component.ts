@@ -26,6 +26,7 @@ export class NavbarComponent implements OnInit {
   logout(): void {
     this.cookies.delete('jwt');
     this.cookies.delete('username');
+    this.router.navigateByUrl('login');
   }
 
   onSubmit(): void {
@@ -36,5 +37,7 @@ export class NavbarComponent implements OnInit {
       }
     );
   }
-
+  translateImage(image: any): any {
+    return 'data:image/jpeg;base64,' + image;
+  }
 }

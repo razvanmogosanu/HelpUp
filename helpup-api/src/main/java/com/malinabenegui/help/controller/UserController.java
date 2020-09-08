@@ -7,6 +7,10 @@ import com.malinabenegui.help.services.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.sql.SQLOutput;
 
 @RestController
 @RequestMapping("/user")
@@ -21,8 +25,15 @@ public class UserController {
     }
 
     @RequestMapping(value = "/editdetails", method = RequestMethod.POST)
-    private void editUserDetails(@RequestBody UserDetails userDetails) {
+    private void editUserDetails(@RequestBody UserDetails userDetails) throws IOException {
         service.editUserDetails(userDetails);
+    }
+
+    @RequestMapping(value = "/editprofilepicture", method = RequestMethod.POST)
+    private void editUserDetails(@RequestParam("imageFile") MultipartFile file,
+                                 @RequestParam("username") String username) throws IOException {
+        System.out.println(username);
+        service.editProfilePicture(file, username);
     }
 
     @RequestMapping(value = "/getposts", method = RequestMethod.POST)

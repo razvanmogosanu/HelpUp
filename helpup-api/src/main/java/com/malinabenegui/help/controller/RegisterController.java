@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+
 
 @RestController
 @RequestMapping("/register")
@@ -16,7 +18,7 @@ public class RegisterController {
     private RegisterService service;
 
     @RequestMapping("")
-    public @ResponseBody ResponseEntity<HttpSimpleStringResponse> registerUser(@RequestBody User user) {
+    public @ResponseBody ResponseEntity<HttpSimpleStringResponse> registerUser(@RequestBody User user) throws IOException {
         return service.registerNewUser(user);
     }
 

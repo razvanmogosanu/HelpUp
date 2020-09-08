@@ -9,6 +9,9 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -21,7 +24,7 @@ public class UserDetailsCheck {
 
 
     @Test
-    public void when_edit_description_then_update(){
+    public void when_edit_description_then_update() throws IOException {
         UserDetails userDetails = new UserDetails();
         userDetails.setUsername("mariapopescu");
         userDetails.setFirstname("");

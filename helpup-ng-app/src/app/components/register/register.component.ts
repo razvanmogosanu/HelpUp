@@ -35,17 +35,19 @@ export class RegisterComponent implements OnInit {
     const pass = this.regForm.get('pass').value;
 
     this.apiservice.postUser(username, mail, pass)
-      .pipe(map(data => {
-        if (data == null) { throwError('nulldata'); }
-      }))
       .subscribe(
-      () => {
-        this.apiservice.authUser(username, pass);
-      },
-      (error) => {
-        this.emailOrUsernameExistsMessage = error.error.string;
-      }
-    );
+        (data) => {
+          this.apiservice.authUser(username, pass).subscribe(
+            (token: { jwt: string }) => {
+              this.cookie.set('jwt', token.jwt);
+              this.router.navigateByUrl('profile');
+            }
+          );
+        },
+        (error) => {
+          this.emailOrUsernameExistsMessage = error.error.string;
+        }
+      );
 
   }
 }

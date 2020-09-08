@@ -9,6 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 @Service
 public class UserService {
@@ -25,7 +28,14 @@ public class UserService {
         return new ResponseEntity<>(userDetailsRepository.getByUsername(username.getString()), HttpStatus.ACCEPTED);
     }
 
-    public void editUserDetails(UserDetails userDetails) {
+    public void editProfilePicture(MultipartFile profilePic, String username) throws IOException {
+        UserDetails oldUserDetails = userDetailsRepository.getByUsername(username);
+        oldUserDetails.setProfilepic(profilePic.getBytes());
+        userDetailsRepository.save(oldUserDetails);
+    }
+
+
+    public void editUserDetails(UserDetails userDetails) throws IOException {
         UserDetails oldUserDetails = userDetailsRepository.getByUsername(userDetails.getUsername());
         oldUserDetails = userDetails;
         userDetailsRepository.save(oldUserDetails);

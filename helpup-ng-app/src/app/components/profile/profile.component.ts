@@ -2,7 +2,7 @@ import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {UserDetails} from '../../user_details';
 import {ApiService} from '../../ApiService';
 import {FormControl, FormGroup} from '@angular/forms';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {CookieService} from 'ngx-cookie-service';
 
 interface Post {
@@ -28,7 +28,7 @@ export class ProfileComponent implements OnInit {
   selectedFile: File;
   retrievedPosts: Post[];
 
-  constructor(private apiService: ApiService, private route: ActivatedRoute, private cookies: CookieService) {
+  constructor(private apiService: ApiService, private activatedRoute: ActivatedRoute, private cookies: CookieService) {
     this.profileForm = new FormGroup({
       description: new FormControl(),
       city: new FormControl(),
@@ -38,26 +38,34 @@ export class ProfileComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.route.params.subscribe(
+    console.log(this.retrievedPosts);
+    this.activatedRoute.params.subscribe(
       () => {
         this.initDetails();
       });
-    console.log(this.userDetails);
   }
 
   public onFileChanged(event): void {
     this.selectedFile = event.target.files[0];
     this.userDetails.profilepic = event.target.files[0];
+    const uploadData = new FormData();
+    uploadData.append('imageFile', this.selectedFile);
+    uploadData.append('username', this.userDetails.username);
+    this.apiService.editProfilePicture(uploadData).subscribe(data => {
+      this.userDetails.profilepic = this.translateImage(this.userDetails.profilepic);
+      this.initDetails();
+    });
   }
 
   initDetails(): void {
     this.userDetails = new UserDetails('', '', '',
       '', '', '', '', '', '', '', '');
 
-    this.apiService.getUserDetails(this.route.snapshot.params.username)
+    this.apiService.getUserDetails(this.activatedRoute.snapshot.params.username)
       .subscribe(
         (data: UserDetails) => {
           this.userDetails = data;
+          this.userDetails.profilepic = this.translateImage(this.userDetails.profilepic);
           this.getPosts();
         });
   }
@@ -76,14 +84,30 @@ export class ProfileComponent implements OnInit {
     this.apiService.getPostsOfUser(this.userDetails.username)
       .subscribe((data: Post[]) => {
         this.retrievedPosts = data;
-        console.log(data);
       });
   }
 
+
+  editPost(userId, description): void {
+    this.apiService.editPost(userId, description);
+  }
+
+  saveDescriptionAfterEdit(post: Post, newDescription: string): void {
+    post.editMode = false;
+    if (post.description !== newDescription) {
+      post.description = newDescription;
+      this.editPost(post.id, post.description);
+    }
+  }
+
+  deletePost(idPost: number): void {
+    this.apiService.deletePost(idPost).subscribe(() => {
+      this.getPosts();
+    });
+  }
+
   translateImage(image: any): any {
-    // return 'data:image/jpeg;base64,' + image;
-    console.log(image);
-    return image;
+    return 'data:image/jpeg;base64,' + image;
   }
 
   translateTime(date: Date): any {

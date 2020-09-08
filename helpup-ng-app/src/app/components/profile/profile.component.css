@@ -1,7 +1,14 @@
+#all{
+  background: #f2f2f2;
+  padding-top: 20px;
+}
+
 .profile{
-  width: 61%;
-  margin: auto;
-  padding: 30px 10px 10px;
+  width: 40%;
+  margin: 0 auto auto 20%;
+  padding: 10px;
+  border: 1px solid #dedede;
+  border-radius: 5px;
 }
 
 .edit-name{
@@ -11,24 +18,34 @@
 .name-input{
   height: 35px;
   font-size: large;
+  width: 30%;
 }
 
-.username{
+#username-profile{
   margin-top: -1%;
   color: gray;
   float: left;
 }
 
-.profile_pic{
-  width: 17%;
-  border-radius: 50%;
-  margin-left: 50%;
+#profile-pic-container{
+  position: relative;
+  text-align: center;
+  width: 25%;
+  margin-left: 70%;
   margin-top: -8%;
   display: block;
 }
 
-.profile_pic:hover{
+#profile-pic-container:hover{
   opacity: 60%;
+}
+
+#profile-pic-text{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: x-large;
 }
 
 .message{
@@ -36,11 +53,8 @@
   color: white;
 }
 
-.btn-light{
-  margin-left: 10px;
-}
-
 .infos{
+  background: white;
   width: 20%;
   margin-top: 1%;
   margin-left: 20%;
@@ -67,12 +81,50 @@ span{
   margin-right: 5px;
 }
 
+.posts-list{
+  background: white;
+  width: 40%;
+  margin: 20px auto auto 20%;
+  border: 1px solid #dedede;
+  border-radius: 5px;
+  padding: 10px 20px;
+}
+
+.post{
+  margin-bottom: 30px;
+  border: 1px solid #dedede;
+  border-radius: 5px;
+}
+
+.post-image{
+  width: 70%;
+  display:block;
+  margin:auto;
+}
+
+.username{
+  font-weight: bold;
+  padding-left: 15%;
+  float: none;
+}
+
+.date{
+  color: #6e6e6e;
+  float:right;
+  padding-right: 15%;
+}
+
+.description{
+  padding-left: 15%;
+  padding-right: 15%;
+}
+
 @media only screen and (max-width: 1300px) {
   .profile{
     width: 70%;
   }
 
-  .profile_pic{
+  #profile-pic-container{
     width: 30%;
     margin-left: 65%;
     margin-top: -15%;
@@ -90,7 +142,7 @@ span{
     width: 84%;
   }
 
-  .profile_pic{
+  #profile-pic-container{
     width: 5%;
     border-radius: 50%;
     margin-left: -55%;
@@ -98,7 +150,7 @@ span{
     margin-bottom: 5%;
   }
 
-  .profile_pic:hover{
+  #profile-pic-container:hover{
     width: 40%;
     border-radius: 50%;
     margin-left: -55%;
@@ -117,7 +169,7 @@ span{
     width: 80%;
   }
 
-  .profile_pic{
+  #profile-pic-container{
     width: 40%;
     border-radius: 50%;
     margin-left: 0;
