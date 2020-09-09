@@ -3,10 +3,13 @@
   padding-top: 20px;
 }
 
-.filter{
+.filters{
   float: left;
   margin-left: 50px;
-  margin-top: 50px;
+}
+
+.filter{
+  margin-bottom: 10px;
   border: 1px solid #dedede;
   border-radius: 5px;
   background: white;
