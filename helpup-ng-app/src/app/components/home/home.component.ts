@@ -84,31 +84,74 @@ export class HomeComponent implements OnInit {
 
 
   selectFilter(event) {
-    console.log(event.target.value);
-    if (event.target.value == 'ending' || event.target.value == 'starting') {
-      console.log(event.target.value);
+    if (event.target.name == 'ending' || event.target.name == 'starting') {
+      this.filterAfter.push(event.target.name + ' ' + event.target.value);
 
     } else if (!event.target.checked) {
       this.filterAfter.splice(this.filterAfter.indexOf(event.target.value))
     } else {
       this.filterAfter.push(event.target.value);
     }
+
     this.filterByType();
   }
 
   filterByType(): void {
     this.filteredPosts = [];
     for (const post of this.allPosts) {
-      if (this.filterAfter.length == 0) {
-        this.filteredPosts = this.allPosts;
-        break;
-      } else
-        for (const type of this.filterAfter)
-          if (post.type.includes(type)) {
-            this.filteredPosts.push(post);
-          }
+      for (const type of this.filterAfter) {
+        if (!(type.includes('starting') || type.includes('eding')) && post.type.includes(type)) {
+          this.filteredPosts.push(post);
+        }
+      }
     }
+    if (this.filteredPosts.length == 0)
+      this.filteredPosts = this.allPosts;
 
+    console.log(this.filteredPosts);
+    console.log(this.filterAfter);
+    const secondfilteredPosts = [];
+
+    for (const post of this.filteredPosts) {
+      for (const data of this.filterAfter) {
+        if (data.includes('starting')) {
+          const dateStr = data.substr(data.indexOf(' '), data.length);
+          if ((new Date(post.date).getFullYear() > new Date(dateStr).getFullYear())) {
+            secondfilteredPosts.push(post);
+          } else if ((new Date(post.date).getFullYear() == new Date(dateStr).getFullYear())) {
+            if ((new Date(post.date).getMonth() > new Date(dateStr).getMonth())) {
+              secondfilteredPosts.push(post);
+            } else if ((new Date(post.date).getMonth() == new Date(dateStr).getMonth()) &&
+              (new Date(post.date).getDate() >= new Date(dateStr).getDate())) {
+              secondfilteredPosts.push(post);
+            }
+          }
+        }
+      }
+    }
+    console.log(secondfilteredPosts);
+    const thirdfilteredPosts = [];
+    for (const post of secondfilteredPosts) {
+      for (const data of this.filterAfter) {
+        if (data.includes('ending')) {
+          const dateStr = data.substr(data.indexOf(' '), data.length);
+          if ((new Date(post.date).getFullYear() < new Date(dateStr).getFullYear())) {
+            thirdfilteredPosts.push(post);
+          } else if ((new Date(post.date).getFullYear() == new Date(dateStr).getFullYear())) {
+            if ((new Date(post.date).getMonth() < new Date(dateStr).getMonth())) {
+              thirdfilteredPosts.push(post);
+            } else if ((new Date(post.date).getMonth() == new Date(dateStr).getMonth()) &&
+              (new Date(post.date).getDate() <= new Date(dateStr).getDate())) {
+              thirdfilteredPosts.push(post);
+            }
+          }
+        }
+      }
+    }
+    if(thirdfilteredPosts.length == 0)
+      this.filteredPosts = secondfilteredPosts;
+    else
+      this.filteredPosts = thirdfilteredPosts;
   }
 
 

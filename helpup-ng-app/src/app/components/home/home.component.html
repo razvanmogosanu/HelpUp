@@ -30,10 +30,10 @@
       <div class="filter">
         <p class="filter-title">Date</p>
         <label for="starting">Starting from</label>
-        <input type="date" id="starting" class="filter-date" name="starting">
+        <input (change)="selectFilter($event)" value="2020-09-01" type="date" id="starting" class="filter-date" name="starting">
 
         <label for="ending">Ending with</label>
-        <input type="date" id="ending" class="filter-date" name="ending">
+        <input (change)="selectFilter($event)" value="2020-09-01" type="date" id="ending" class="filter-date" name="ending">
       </div>
 
       <!-- City -->
