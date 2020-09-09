@@ -1,5 +1,5 @@
 <div class="all">
-  
+
   <!-- Filter posts -->
   <div class="filters">
     <form>
@@ -27,14 +27,14 @@
       </div>
 
       <!-- Between Dates  -->
-      <div class="filter">
+      <form class="filter">
         <p>Date</p>
         <label for="starting">Starting from</label>
-        <input type="date" id="starting" name="starting" style="display: block; margin-bottom: 10px;">
+        <input (change)="selectFilter($event)" value="2020-09-01" type="date" id="starting" name="starting" style="display: block; margin-bottom: 10px;">
 
         <label for="ending">Ending with</label>
-        <input type="date" id="ending" name="ending" style="display: block">
-      </div>
+        <input (change)="selectFilter($event)" value="2020-01-01" type="date" id="ending" name="ending" style="display: block">
+      </form>
 
       <!-- City -->
       <div class="filter">
