@@ -1,52 +1,52 @@
 <div class="all">
-  
+
   <!-- Filter posts -->
   <div class="filters">
     <form>
 
       <!-- Post type -->
       <div class="filter">
-        <p>Post Type</p>
-        <input (click)="selectFilter($event)" type="checkbox" id="dog" name="dog" value="dog">
+        <p class="filter-title">Post Type</p>
+        <input (click)="selectFilter($event)" type="checkbox" id="dog" class="filter-checkbox" name="dog" value="dog">
         <label for="dog">Dog</label><br>
 
-        <input (click)="selectFilter($event)" type="checkbox" id="cat" name="cat" value="cat">
+        <input (click)="selectFilter($event)" type="checkbox" id="cat" class="filter-checkbox" name="cat" value="cat">
         <label for="cat">Cat</label><br>
 
-        <input (click)="selectFilter($event)" type="checkbox" id="bunny" name="bunny" value="bunny">
+        <input (click)="selectFilter($event)" type="checkbox" id="bunny" class="filter-checkbox" name="bunny" value="bunny">
         <label for="bunny">Bunny</label><br>
 
-        <input (click)="selectFilter($event)" type="checkbox" id="chromosome" name="chromosome" value="chromosome">
+        <input (click)="selectFilter($event)" type="checkbox" id="chromosome" class="filter-checkbox" name="chromosome" value="chromosome">
         <label for="chromosome">+1 Chromosome</label><br>
 
-        <input (click)="selectFilter($event)" type="checkbox" id="asd" name="asd" value="asd">
+        <input (click)="selectFilter($event)" type="checkbox" id="asd" class="filter-checkbox" name="asd" value="asd">
         <label for="asd">ASD</label><br>
 
-        <input (click)="selectFilter($event)" type="checkbox" id="other" name="other" value="other">
+        <input (click)="selectFilter($event)" type="checkbox" id="other" class="filter-checkbox" name="other" value="other">
         <label for="other">Other</label><br>
       </div>
 
       <!-- Between Dates  -->
       <div class="filter">
-        <p>Date</p>
+        <p class="filter-title">Date</p>
         <label for="starting">Starting from</label>
-        <input type="date" id="starting" name="starting" style="display: block; margin-bottom: 10px;">
+        <input type="date" id="starting" class="filter-date" name="starting">
 
         <label for="ending">Ending with</label>
-        <input type="date" id="ending" name="ending" style="display: block">
+        <input type="date" id="ending" class="filter-date" name="ending">
       </div>
 
       <!-- City -->
       <div class="filter">
-        <p>City</p>
-        <input type="checkbox" id="bucharest" name="bucharest" value="bucharest">
-        <label for="bucharest">Bucharest</label><br><br>
+        <p class="filter-title">City</p>
+        <input type="checkbox" id="bucharest" class="filter-checkbox" name="bucharest" value="bucharest">
+        <label for="bucharest">Bucharest</label><br>
 
-        <input type="checkbox" id="cluj" name="cluj" value="cluj">
-        <label for="cluj">Cluj</label><br><br>
+        <input type="checkbox" id="cluj" class="filter-checkbox" name="cluj" value="cluj">
+        <label for="cluj">Cluj</label><br>
 
-        <input type="checkbox" id="other-city" name="other-city" value="other-city">
-        <label for="other-city">Other</label><br><br>
+        <input type="checkbox" id="other-city" class="filter-checkbox" name="other-city" value="other-city">
+        <label for="other-city">Other</label><br>
       </div>
     </form>
   </div>

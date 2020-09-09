@@ -16,6 +16,26 @@
   padding: 10px;
 }
 
+.filter-title{
+  font-weight: bold;
+}
+
+.filter-checkbox{
+  margin-right: 7px;
+  cursor: pointer;
+}
+
+.filter-date{
+  display: block;
+  margin-bottom: 10px;
+  border: 1px solid #c9c9c9;
+  border-radius: 2px;
+}
+
+label{
+  font-weight: normal;
+}
+
 .center {
   background: white;
   margin: auto;
