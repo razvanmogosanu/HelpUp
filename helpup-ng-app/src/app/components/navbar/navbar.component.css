@@ -5,6 +5,11 @@
 
 .navbar-form{
   margin-left: 10.5%;
+  width: 300px;
+}
+
+.form-control{
+  width: 300px;
 }
 
 .state-container-dropdown {
@@ -12,13 +17,20 @@
   z-index: 1;
   padding: 10px;
 
-  width: 200px;
-  height: 200px;
+  width: 300px;
+  height: 230px;
   max-height: 300px;
 
   border: 1px solid #dedede;
   border-radius: 3px;
   background: white;
+}
+
+#profil-pic{
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  object-fit: cover;
 }
 
 #search-username{

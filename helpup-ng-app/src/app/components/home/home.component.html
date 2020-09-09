@@ -1,4 +1,50 @@
 <div class="all">
+  <!-- Filter posts -->
+  <div class="filter" style="float: left; ">
+    <form>
+
+      <!-- Post type -->
+      <p>Post Type</p>
+      <input type="checkbox" id="dog" name="dog" value="dog">
+      <label for="dog">Dog</label><br>
+
+      <input type="checkbox" id="cat" name="cat" value="cat">
+      <label for="cat">Cat</label><br>
+
+      <input type="checkbox" id="bunny" name="bunny" value="bunny">
+      <label for="bunny">Bunny</label><br><br>
+
+      <input type="checkbox" id="chromosome" name="chromosome" value="chromosome">
+      <label for="chromosome">+1 Chromosome</label><br><br>
+
+      <input type="checkbox" id="asd" name="asd" value="asd">
+      <label for="asd">ASD</label><br><br>
+
+      <input type="checkbox" id="other" name="other" value="other">
+      <label for="other">Other</label><br><br>
+
+      <!-- Between Dates  -->
+      <p>Date</p>
+      <label for="starting">Starting from</label>
+      <input type="date" id="starting" name="starting" style="display: block; margin-bottom: 10px;">
+
+      <label for="ending">Ending with</label>
+      <input type="date" id="ending" name="ending" style="display: block">
+
+      <!-- City -->
+      <p>City</p>
+      <input type="checkbox" id="bucharest" name="bucharest" value="bucharest">
+      <label for="bucharest">Bucharest</label><br><br>
+
+      <input type="checkbox" id="cluj" name="cluj" value="cluj">
+      <label for="cluj">Cluj</label><br><br>
+
+      <input type="checkbox" id="other-city" name="other-city" value="other-city">
+      <label for="other-city">Other</label><br><br>
+    </form>
+  </div>
+
+
   <!-- Create post-->
   <div class="center">
     <h5>Create Post</h5>
@@ -12,6 +58,15 @@
       <div class="form-group">
         <input #fileInput type="file" accept="image/*" (change)="onFileChanged($event)">
       </div>
+      <label for="type">Choose a post type:</label>
+      <select (change)="selectType($event)" id="type" name="type" style="display: block; margin-bottom: 10px">
+        <option value="dog">Dog</option>
+        <option value="cat">Cat</option>
+        <option value="bunny">Bunny</option>
+        <option value="chromosome">+1 chromosome</option>
+        <option value="asd">ASD</option>
+        <option value="other" selected>Other</option>
+      </select>
 
       <input type="button" (click)="onUpload()" value="Post" class="btn button">
     </form>
@@ -20,13 +75,14 @@
 
   <!-- List with posts -->
   <div class="posts">
-    <div *ngFor="let post of retrievedPosts" class="post">
-      <span class="username">@{{post.username}}</span>
+    <div *ngFor="let post of getFilteredPosts()" class="post">
+      <img src="{{post.profilepic}}" class="profile-pic">
+      <span class="username" [routerLink]="['profile', post.username]">{{post.username}}</span>
       <span class="date">‧ {{translateTime(post.date)}}</span>
 
       <div>
-        <div *ngIf="isMine(post)" style="float: right;">
-          <button (click)="post.editMode = true;">EDIT</button>
+        <div *ngIf="isMine(post)" style="float: right; margin-left: 3px">
+          <button (click)="post.editMode = true;">Edit</button>
           <button (click)="deletePost(post.id)">Delete</button>
         </div>
 

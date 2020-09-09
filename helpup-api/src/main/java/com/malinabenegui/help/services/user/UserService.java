@@ -1,5 +1,6 @@
 package com.malinabenegui.help.services.user;
 
+import com.malinabenegui.help.models.ImageModel;
 import com.malinabenegui.help.models.Post;
 import com.malinabenegui.help.models.UserDetails;
 import com.malinabenegui.help.models.httpResponseParsers.HttpSimpleStringResponse;
@@ -34,14 +35,17 @@ public class UserService {
         userDetailsRepository.save(oldUserDetails);
     }
 
-
     public void editUserDetails(UserDetails userDetails) throws IOException {
         UserDetails oldUserDetails = userDetailsRepository.getByUsername(userDetails.getUsername());
         oldUserDetails = userDetails;
         userDetailsRepository.save(oldUserDetails);
     }
 
-    public ResponseEntity<?> getPostsOfUser(HttpSimpleStringResponse username){
+    public ResponseEntity<?> getPostsOfUser(HttpSimpleStringResponse username) {
         return ResponseEntity.ok(postRepository.getAllByUsername(username.getString()));
+    }
+
+    public ResponseEntity<ImageModel> getProfilePic(HttpSimpleStringResponse username) {
+        return ResponseEntity.ok(new ImageModel(userDetailsRepository.getByUsername(username.getString()).getProfilepic()));
     }
 }

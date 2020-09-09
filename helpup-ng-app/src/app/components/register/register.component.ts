@@ -40,7 +40,8 @@ export class RegisterComponent implements OnInit {
           this.apiservice.authUser(username, pass).subscribe(
             (token: { jwt: string }) => {
               this.cookie.set('jwt', token.jwt);
-              this.router.navigateByUrl('profile');
+              this.cookie.set('username', username);
+              this.router.navigateByUrl('');
             }
           );
         },

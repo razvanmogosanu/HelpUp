@@ -24,12 +24,14 @@ public class Post {
     private String username;
     private String description;
     private byte[] image;
+    private String type;
 
-    public Post(String description, String username, byte[] image) {
+    public Post(String description, String username, byte[] image, String type) {
         date = new Date(System.currentTimeMillis());
 
         this.description = description;
         this.username = username;
         this.image = image;
+        this.type = type;
     }
 }

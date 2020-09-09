@@ -12,6 +12,7 @@ interface Post {
   image: any;
   date: Date;
   editMode: boolean;
+  profilepic: any;
   toggle: any;
 }
 
@@ -84,7 +85,20 @@ export class ProfileComponent implements OnInit {
     this.apiService.getPostsOfUser(this.userDetails.username)
       .subscribe((data: Post[]) => {
         this.retrievedPosts = data;
+
+        for (const post of this.retrievedPosts) {
+          this.getProfilePicture(post);
+        }
       });
+  }
+
+  getProfilePicture(post: Post): boolean {
+    this.apiService.getProfilePicture(post.username).subscribe(data => {
+        post.profilepic = this.translateImage(data.image);
+      },
+      () => {}
+    );
+    return true;
   }
 
 

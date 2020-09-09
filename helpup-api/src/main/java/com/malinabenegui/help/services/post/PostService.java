@@ -27,10 +27,10 @@ public class PostService {
     }
 
     public ResponseEntity<?>
-    addPostInDatabase(MultipartFile file, String description, String user_username) throws IOException {
+    addPostInDatabase(MultipartFile file, String description, String user_username, String type) throws IOException {
         if (description == null || user_username == null || file == null)
             return new ResponseEntity<>(HttpStatus.METHOD_NOT_ALLOWED);
-        postRepository.save(new Post(description, user_username, file.getBytes()));
+        postRepository.save(new Post(description, user_username, file.getBytes(), type));
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -44,13 +44,5 @@ public class PostService {
     public void deletePostById(DeleteRequest deleteRequest) {
         postRepository.deleteById(deleteRequest.getId());
     }
-
-
-
-
-//    @GetMapping(path = {"/get/{imageName}"})
-//    public Post getImage(@PathVariable("imageName") String imageID) {
-//        final Optional<Post> retrievedPost = postRepository.findById(Long.parseLong(imageID));
-//        return new Post(retrievedPost.get().getDescription(), retrievedPost.get().getImage());
-//    }
+    
 }

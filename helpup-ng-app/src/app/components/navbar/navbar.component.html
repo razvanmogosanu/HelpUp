@@ -13,14 +13,16 @@
       <div class="form-group">
         <input type="text" class="form-control" placeholder="Search" formControlName="searchField"
                (click)="showDropdown = true;" (keyup)="onSubmit()">
-        <div *ngIf="showDropdown == true" class="state-container-dropdown" >
-          <div *ngFor="let user of searchedUsers">
+        <div *ngIf="showDropdown == true"style=" overflow: hidden" class="state-container-dropdown" >
 
+          <!-- Searched users -->
+          <div *ngFor="let user of searchedUsers">
             <div  (click)="showDropdown = false" [routerLink]="['profile', user.username]" id="search-username">
-              <img style="width:30px;" src="{{translateImage(user.profilepic)}}">
+              <img id="profil-pic" src="{{translateImage(user.profilepic)}}">
               {{user.username}}
             </div>
           </div>
+
         </div>
       </div>
     </form>

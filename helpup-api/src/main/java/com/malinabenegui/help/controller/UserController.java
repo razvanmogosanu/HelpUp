@@ -1,5 +1,6 @@
 package com.malinabenegui.help.controller;
 
+import com.malinabenegui.help.models.ImageModel;
 import com.malinabenegui.help.models.Post;
 import com.malinabenegui.help.models.UserDetails;
 import com.malinabenegui.help.models.httpResponseParsers.HttpSimpleStringResponse;
@@ -9,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.awt.*;
 import java.io.IOException;
 import java.sql.SQLOutput;
 
@@ -32,13 +34,17 @@ public class UserController {
     @RequestMapping(value = "/editprofilepicture", method = RequestMethod.POST)
     private void editUserDetails(@RequestParam("imageFile") MultipartFile file,
                                  @RequestParam("username") String username) throws IOException {
-        System.out.println(username);
         service.editProfilePicture(file, username);
     }
 
     @RequestMapping(value = "/getposts", method = RequestMethod.POST)
     private ResponseEntity<?> getPostsOfUser(@RequestBody HttpSimpleStringResponse username){
         return service.getPostsOfUser(username);
+    }
+
+    @RequestMapping(value = "/getprofilepicture", method = RequestMethod.POST)
+    private ResponseEntity<ImageModel> getProfilePicture(@RequestBody HttpSimpleStringResponse username){
+        return service.getProfilePic(username);
     }
 
 }

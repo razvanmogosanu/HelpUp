@@ -28,8 +28,9 @@ public class PostController {
     private ResponseEntity<?> uploadPost(
             @RequestParam("imageFile") MultipartFile file,
             @RequestParam("description") String description,
-            @RequestParam("user_username") String user_username) throws IOException {
-        return service.addPostInDatabase(file, description, user_username);
+            @RequestParam("user_username") String user_username,
+            @RequestParam("type") String type) throws IOException {
+        return service.addPostInDatabase(file, description, user_username, type);
     }
 
     @RequestMapping(value = "/edit", method = RequestMethod.POST)

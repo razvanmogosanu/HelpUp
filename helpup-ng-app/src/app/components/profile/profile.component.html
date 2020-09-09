@@ -20,7 +20,7 @@
 
       <div *ngIf="onPhotoMode" id="profile-pic-text" (click)="fileInput.click()">Edit</div>
 
-      <img *ngIf="userDetails.profilepic != null" [src]="userDetails.profilepic" style="border-radius: 50%;width: 100%;">
+      <img *ngIf="userDetails.profilepic != null" [src]="userDetails.profilepic" (click)="fileInput.click()" id="profile-pic">
     </div>
 
     <div>
@@ -39,29 +39,33 @@
     <ng-template #editModeOn>
       <div>
         <input #description (change)="userDetails.description = description.value"
-               value="{{this.userDetails.description}}">
+               value="{{this.userDetails.description}}" placeholder="about me">
       </div>
 
       <hr>
 
       <div class="edit-field">
         <span class="glyphicon glyphicon-home edit-span"></span>
-        <input #city (change)="userDetails.city = city.value" value="{{this.userDetails.city}}">
+        <input #city (change)="userDetails.city = city.value" value="{{this.userDetails.city}}"
+                placeholder="live in">
       </div>
 
       <div class="edit-field">
         <span class="glyphicon glyphicon-education edit-span"></span>
-        <input #education (change)="userDetails.education = education.value" value="{{this.userDetails.education}}">
+        <input #education (change)="userDetails.education = education.value" value="{{this.userDetails.education}}"
+                placeholder="studied at">
       </div>
 
       <div class="edit-field">
         <span class="glyphicon glyphicon-briefcase edit-span"></span>
-        <input #job (change)="userDetails.job = job.value" value="{{this.userDetails.job}}">
+        <input #job (change)="userDetails.job = job.value" value="{{this.userDetails.job}}"
+                placeholder="work at">
       </div>
 
       <div class="edit-field">
         <span class="glyphicon glyphicon-earphone edit-span"></span>
-        <input #phonenumber (change)="userDetails.phonenumber = phonenumber.value" value="{{this.userDetails.phonenumber}}">
+        <input #phonenumber (change)="userDetails.phonenumber = phonenumber.value"
+               value="{{this.userDetails.phonenumber}}" placeholder="phone number">
       </div>
     </ng-template>
 
@@ -96,12 +100,13 @@
   <!-- List of user's Posts -->
   <div class="posts-list" *ngIf="retrievedPosts != null && retrievedPosts.length > 0">
     <div *ngFor="let post of retrievedPosts" class="post">
+      <img src="{{post.profilepic}}" class="post-profile-pic">
       <span class="username">@{{post.username}}</span>
       <span class="date">‧ {{translateTime(post.date)}}</span>
 
       <div>
-        <div *ngIf="isMine()" style="float: right;">
-          <button (click)="post.editMode = true;">EDIT</button>
+        <div *ngIf="isMine()" style="float: right; margin-left: 3px">
+          <button (click)="post.editMode = true;">Edit</button>
           <button (click)="deletePost(post.id)">Delete</button>
         </div>
 

@@ -23,6 +23,7 @@ export class ApiService {
   private EDIT_USER_DETAILS = `${this.BASE_URL}/user/editdetails`;
   private GET_POSTS_OF_USER = `${this.BASE_URL}/user/getposts`;
   private EDIT_PROFILE_PICTURE = `${this.BASE_URL}/user/editprofilepicture`;
+  private GET_PROFILE_PICTURE = `${this.BASE_URL}/user/getprofilepicture`;
 
 
   constructor(private http: HttpClient, private cookies: CookieService, private router: Router) {
@@ -57,7 +58,7 @@ export class ApiService {
     return this.http.post(this.POST_USER_URL, user);
   }
 
-  /*** adding a new post**/
+  /** adding a new post */
   addNewPost(uploadData: FormData): Observable<any> {
     uploadData.append('user_username', this.cookies.get('username'));
     return this.http.post(this.USER_POSTING_URL, uploadData, {
@@ -108,12 +109,19 @@ export class ApiService {
     return this.http.post(this.GET_USER_DETAILS, body, {headers: this.generateAuthorizeBearerJWT()});
   }
 
-  editProfilePicture(uploadData: FormData): Observable<any>{
+  getProfilePicture(username: string): Observable<any> {
+    const body = {
+      string: username
+    };
+    return this.http.post(this.GET_PROFILE_PICTURE, body, {headers: this.generateAuthorizeBearerJWT()});
+  }
+
+  editProfilePicture(uploadData: FormData): Observable<any> {
     console.log(uploadData.get('username'));
     return this.http.post(this.EDIT_PROFILE_PICTURE, uploadData, {headers: this.generateAuthorizeBearerJWT()});
   }
 
-  editUserDetails(userDetails: UserDetails): Observable<any>{
+  editUserDetails(userDetails: UserDetails): Observable<any> {
     return this.http.post(this.EDIT_USER_DETAILS, userDetails, {headers: this.generateAuthorizeBearerJWT()});
   }
 
