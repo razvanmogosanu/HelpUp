@@ -26,18 +26,22 @@ interface Post {
 export class HomeComponent implements OnInit {
   postForm: FormGroup;
   selectedFile: File;
-  retrievedPosts: Post[];
+  filteredPosts: Post[];
+  allPosts: Post[];
   username: string;
   @ViewChild('fileInput', {static: false})
   myFileInput: ElementRef;
   errorMessage: string;
   selectedType = '';
+  filterAfter: string[];
 
   constructor(private httpClient: HttpClient, private cookies: CookieService, private router: Router, private apiService: ApiService) {
     this.postForm = new FormGroup({
       description: new FormControl(),
     });
-    this.retrievedPosts = new Array<Post>();
+
+    this.filteredPosts = new Array<Post>();
+    this.filterAfter = new Array<string>();
     this.errorMessage = '';
   }
 
@@ -70,17 +74,43 @@ export class HomeComponent implements OnInit {
   getPosts(): void {
     this.apiService.getAllPosts()
       .subscribe((data: Post[]) => {
-        this.retrievedPosts = data;
-
-        for (const post of this.retrievedPosts) {
+        this.allPosts = data;
+        for (const post of this.allPosts) {
           this.getProfilePicture(post);
         }
+        this.filteredPosts = this.allPosts;
       });
   }
 
-  getFilteredPosts(): Post[]{
-    return this.retrievedPosts;
+
+  selectFilter(event) {
+    console.log(event.target.value);
+    if (event.target.value == 'ending' || event.target.value == 'starting') {
+      console.log(event.target.value);
+
+    } else if (!event.target.checked) {
+      this.filterAfter.splice(this.filterAfter.indexOf(event.target.value))
+    } else {
+      this.filterAfter.push(event.target.value);
+    }
+    this.filterByType();
   }
+
+  filterByType(): void {
+    this.filteredPosts = [];
+    for (const post of this.allPosts) {
+      if (this.filterAfter.length == 0) {
+        this.filteredPosts = this.allPosts;
+        break;
+      } else
+        for (const type of this.filterAfter)
+          if (post.type.includes(type)) {
+            this.filteredPosts.push(post);
+          }
+    }
+
+  }
+
 
   getProfilePicture(post: Post): boolean {
     this.apiService.getProfilePicture(post.username).subscribe(data => {
@@ -111,16 +141,6 @@ export class HomeComponent implements OnInit {
 
   }
 
-  filterByType(type: string, posts: Post[]): Post[] {
-    const filteredPosts: Post[] = [];
-
-    for (const post of this.retrievedPosts) {
-      if (post.type.includes(type)) {
-        filteredPosts.push(post);
-      }
-    }
-    return filteredPosts;
-  }
 
   ngOnInit(): void {
     if (this.cookies.check('jwt')) {
@@ -147,4 +167,6 @@ export class HomeComponent implements OnInit {
     const day = date.toString().substring(8, 10);
     return yearsAndMonths + (Number(day) + 1);
   }
+
+
 }
