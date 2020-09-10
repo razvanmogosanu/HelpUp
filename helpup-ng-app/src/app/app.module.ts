@@ -15,6 +15,7 @@ import { ProfileComponent } from './components/profile/profile.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {CookieService} from 'ngx-cookie-service';
 import {HighlightDirective} from "./components/navbar/highlight.directive";
+import { ChatComponent } from './components/chat/chat.component';
 
 const appRoutes: Routes = [
   {
@@ -36,6 +37,10 @@ const appRoutes: Routes = [
   {
     path: 'profile/:username',
     component: ProfileComponent
+  },
+  {
+    path: 'chat',
+    component: ChatComponent
   }
 ];
 
@@ -50,6 +55,7 @@ const appRoutes: Routes = [
     AboutComponent,
     ProfileComponent,
     HighlightDirective,
+    ChatComponent,
   ],
   imports: [
     BrowserModule,
