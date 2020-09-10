@@ -65,8 +65,8 @@
       <div class="form-group">
         <input #fileInput type="file" accept="image/*" (change)="onFileChanged($event)">
       </div>
-      <label for="type">Choose a post type:</label>
-      <select (change)="selectType($event)" id="type" name="type" style="display: block; margin-bottom: 10px">
+      <label for="post-type">Choose a post type:</label>
+      <select (change)="selectType($event)" id="post-type" name="type" style="display: block; margin-bottom: 10px">
         <option value="dog">Dog</option>
         <option value="cat">Cat</option>
         <option value="bunny">Bunny</option>
@@ -88,9 +88,11 @@
       <span class="date">‧ {{translateTime(post.date)}}</span>
 
       <div>
-        <div *ngIf="isMine(post)" style="float: right; margin-left: 3px">
-          <button *ngIf="!post.editMode" (click)="post.editMode = true;">Edit</button>
-          <button (click)="deletePost(post.id)">Delete</button>
+        <div style="float: right; margin-left: 3px">
+          <button *ngIf="isMine(post) && !post.editMode" type="button" class="btn btn-light"
+                  (click)="post.editMode = true;">Edit</button>
+          <button *ngIf="isAdmin()" type="button" class="btn btn-light"
+                  (click)="deletePost(post.id)">Delete</button>
         </div>
 
         <form>
@@ -99,8 +101,9 @@
 
           </div>
           <div *ngIf="post.editMode">
-            <input class="edit-description" #newDescription value="{{post.description}}">
-            <button (click)="saveDescriptionAfterEdit(post, newDescription.value);">SAVE</button>
+            <textarea maxlength="2000" rows="4" class="edit-description" #newDescription value="{{post.description}}"></textarea>
+            <button type="button" class="btn btn-light"
+                    (click)="saveDescriptionAfterEdit(post, newDescription.value);">SAVE</button>
           </div>
         </form>
 

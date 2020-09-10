@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {CookieService} from 'ngx-cookie-service';
 import {ApiService} from '../../ApiService';
 import {FormControl, FormGroup} from '@angular/forms';
@@ -37,7 +37,12 @@ export class NavbarComponent implements OnInit {
       }
     );
   }
+
   translateImage(image: any): any {
     return 'data:image/jpeg;base64,' + image;
+  }
+
+  isAdmin(): boolean {
+    return this.cookies.get('username').includes('admin');
   }
 }

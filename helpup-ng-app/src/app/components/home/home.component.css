@@ -3,6 +3,7 @@
   padding-top: 20px;
 }
 
+/*  FILTERS */
 .filters{
   float: left;
   margin-left: 50px;
@@ -36,6 +37,8 @@ label{
   font-weight: normal;
 }
 
+
+/* CREATE POST */
 .center {
   background: white;
   margin: auto;
@@ -67,7 +70,7 @@ h5{
   height: 70px;
 }
 
-#type{
+#post-type{
   height: 30px;
   width: 150px;
   border: 1px solid #dedede;
@@ -79,6 +82,8 @@ h5{
   color: white;
 }
 
+
+/* LIST OF POSTS */
 .posts{
   background: white;
   margin: 15px auto auto;
@@ -124,7 +129,7 @@ h5{
 }
 
 .edit-description{
-  width: 50%;
+  width: 60%;
   margin-left: 10%;
   margin-bottom: 10px;
   margin-top: 10px;
@@ -134,6 +139,11 @@ h5{
   padding-left: 10%;
   padding-right: 15%;
   padding-top: 10px;
+}
+
+.btn-light{
+  border-radius: 5px;
+  border: #c9c9c9 1px solid;
 }
 
 #options{

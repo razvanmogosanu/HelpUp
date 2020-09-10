@@ -117,7 +117,6 @@ export class ApiService {
   }
 
   editProfilePicture(uploadData: FormData): Observable<any> {
-    console.log(uploadData.get('username'));
     return this.http.post(this.EDIT_PROFILE_PICTURE, uploadData, {headers: this.generateAuthorizeBearerJWT()});
   }
 

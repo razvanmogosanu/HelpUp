@@ -153,6 +153,11 @@ span{
   padding-top: 10px;
 }
 
+.btn-light{
+  border-radius: 5px;
+  border: #c9c9c9 1px solid;
+}
+
 @media only screen and (max-width: 1300px) {
   .profile{
     width: 70%;

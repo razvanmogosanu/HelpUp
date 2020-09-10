@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.awt.*;
 import java.io.IOException;
 import java.sql.SQLOutput;
+import java.util.Arrays;
 
 @RestController
 @RequestMapping("/user")
@@ -32,7 +33,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/editprofilepicture", method = RequestMethod.POST)
-    private void editUserDetails(@RequestParam("imageFile") MultipartFile file,
+    private void editProfilePicture(@RequestParam("imageFile") MultipartFile file,
                                  @RequestParam("username") String username) throws IOException {
         service.editProfilePicture(file, username);
     }

@@ -105,9 +105,11 @@
       <span class="date">‧ {{translateTime(post.date)}}</span>
 
       <div>
-        <div *ngIf="isMine()" style="float: right; margin-left: 3px">
-          <button *ngIf="!post.editMode" (click)="post.editMode = true;">Edit</button>
-          <button (click)="deletePost(post.id)">Delete</button>
+        <div style="float: right; margin-left: 3px">
+          <button type="button" class="btn btn-light"
+                  *ngIf="isMine() && !post.editMode" (click)="post.editMode = true;">Edit</button>
+          <button type="button" class="btn btn-light" *ngIf="isAdmin()"
+                  (click)="deletePost(post.id)">Delete</button>
         </div>
 
         <form>
@@ -127,6 +129,6 @@
     </div>
   </div>
 
-  <div *ngIf="retrievedPosts == undefined || retrievedPosts.length == 0" style="height: 40px"></div>
+  <div *ngIf="retrievedPosts == undefined || retrievedPosts.length == 0" style="height: 300px"></div>
   <div style="height: 90px"></div>
 </div>

@@ -37,6 +37,7 @@ public class UserService {
 
     public void editUserDetails(UserDetails userDetails) throws IOException {
         UserDetails oldUserDetails = userDetailsRepository.getByUsername(userDetails.getUsername());
+        userDetails.setProfilepic(oldUserDetails.getProfilepic());
         oldUserDetails = userDetails;
         userDetailsRepository.save(oldUserDetails);
     }

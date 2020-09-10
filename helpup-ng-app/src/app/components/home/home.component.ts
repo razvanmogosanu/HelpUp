@@ -224,6 +224,10 @@ export class HomeComponent implements OnInit {
     return this.cookies.get('username') === post.username;
   }
 
+  isAdmin(): boolean {
+    return this.cookies.get('username').includes('admin');
+  }
+
   selectType(event: any): void {
     this.selectedType = event.target.value;
   }

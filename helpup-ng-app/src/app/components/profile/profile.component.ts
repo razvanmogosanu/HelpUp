@@ -39,7 +39,6 @@ export class ProfileComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.retrievedPosts);
     this.activatedRoute.params.subscribe(
       () => {
         this.initDetails();
@@ -77,9 +76,11 @@ export class ProfileComponent implements OnInit {
 
   saveEdit(): void {
     this.editMode = false;
-    this.apiService.editUserDetails(this.userDetails).subscribe();
+    const editedUser = new UserDetails(this.userDetails.username, this.userDetails.firstname, this.userDetails.lastname,
+      null, this.userDetails.city, this.userDetails.education, this.userDetails.job, this.userDetails.gender, this.userDetails.description,
+      this.userDetails.birthday, this.userDetails.phonenumber);
+    this.apiService.editUserDetails(editedUser).subscribe();
   }
-
 
   getPosts(): void {
     this.apiService.getPostsOfUser(this.userDetails.username)
@@ -96,11 +97,11 @@ export class ProfileComponent implements OnInit {
     this.apiService.getProfilePicture(post.username).subscribe(data => {
         post.profilepic = this.translateImage(data.image);
       },
-      () => {}
+      () => {
+      }
     );
     return true;
   }
-
 
   editPost(userId, description): void {
     this.apiService.editPost(userId, description);
@@ -120,6 +121,7 @@ export class ProfileComponent implements OnInit {
     });
   }
 
+
   translateImage(image: any): any {
     return 'data:image/jpeg;base64,' + image;
   }
@@ -132,6 +134,10 @@ export class ProfileComponent implements OnInit {
 
   isMine(): boolean {
     return this.cookies.get('username') === this.userDetails.username;
+  }
+
+  isAdmin(): boolean {
+    return this.cookies.get('username').includes('admin');
   }
 
 }
