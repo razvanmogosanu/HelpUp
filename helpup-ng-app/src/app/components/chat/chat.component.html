@@ -1,1 +1,47 @@
-<p>chat works!</p>
+<div class="container">
+
+  <div id="conversations">
+    <h4  id="username">Your conversations</h4>
+    <div id="history" *ngFor="let conversation of conversations" >
+      <img [src]="translateImage(conversation.icon)" style="width: 80px">
+      <div id="{{getCssForAConversation(conversation)}}" (click)="openConversation(conversation)">
+        {{whoAmITalkingTo(conversation)}}
+      </div>
+
+    </div>
+
+  </div>
+
+  <div *ngIf="whereAmIComingFrom() == '' then thenBlock else elseBlock"></div>
+
+  <ng-template #thenBlock id="welcome">
+    <div>
+      <h2>Welcome to HelpUp Messages!</h2>
+      <h4 style="margin-top: 30px">This page will help you communicate with other users in order to give or receive pet
+        therapy.</h4>
+    </div>
+  </ng-template>
+
+  <ng-template #elseBlock >
+    <div id="conversation">
+      <div id="messages" class="center">
+        <div *ngIf="chosenConversation != undefined">
+          <div *ngFor="let chat of chosenConversation.chat">
+            <div id="message-received" *ngIf="chat.sender === whereAmIComingFrom()"> {{chat.message}}</div>
+            <div id="message-sent" *ngIf="chat.receiver === whereAmIComingFrom()">{{chat.message}}</div>
+          </div>
+        </div>
+      </div>
+
+      <div id="write">
+        <label for="input-message"></label>
+        <input #messageInput type="text" id="input-message">
+        <button (click)="submitMessage()">SEND</button>
+      </div>
+
+    </div>
+
+  </ng-template>
+
+  <div style="height: 520px"></div>
+</div>

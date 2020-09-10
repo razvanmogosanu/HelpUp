@@ -1,0 +1,83 @@
+.container{
+  padding-top: 20px;
+  background-color: white;
+}
+
+#conversations{
+  width: 20%;
+  height: 500px;
+  float: left;
+  border: 1px solid #c9c9c9;
+}
+
+#username{
+  text-align: center;
+  border-bottom: 1px solid #c9c9c9;
+  padding: 10px;
+}
+
+#history{
+}
+
+#conversation-user{
+  height: 100px;
+  padding-top: 50px;
+  padding-left: 10px;
+
+  font-weight: bold;
+  border-bottom: 1px solid #c9c9c9;
+}
+
+#clicked-conversation-user{
+  height: 100px;
+  padding-top: 50px;
+  padding-left: 10px;
+
+  font-weight: bold;
+  border-bottom: 1px solid #c9c9c9;
+  background-color: red;
+}
+
+#conversation{
+  margin-left: 40%;
+  margin-right: 20%;
+  height: 500px;
+  border: 1px solid #c9c9c9;
+  border-radius: 5px;
+  position: relative;
+}
+
+#messages{
+}
+
+#message-sent{
+  margin-left: 60%;
+  padding: 8px;
+  text-align: right;
+  border-radius: 50px;
+  background-color: #2284FF;
+  color: white;
+}
+
+#message-received{
+  margin-right: 60%;
+  padding: 8px;
+  border-radius: 50px;
+  background-color: #F1F0F0;
+}
+
+#write{
+}
+
+#input-message{
+  border: 1px solid #c9c9c9;
+  border-radius: 5px;
+  height: 30px;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+}
+
+#welcome{
+  text-align: center;
+}
