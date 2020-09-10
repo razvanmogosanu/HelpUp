@@ -106,7 +106,7 @@
 
       <div>
         <div *ngIf="isMine()" style="float: right; margin-left: 3px">
-          <button (click)="post.editMode = true;">Edit</button>
+          <button *ngIf="!post.editMode" (click)="post.editMode = true;">Edit</button>
           <button (click)="deletePost(post.id)">Delete</button>
         </div>
 
@@ -116,7 +116,7 @@
           </div>
 
           <div *ngIf="post.editMode">
-            <input #newDescription value="{{post.description}}">
+            <input class="edit-description" #newDescription value="{{post.description}}">
             <button (click)="saveDescriptionAfterEdit(post, newDescription.value);">SAVE</button>
           </div>
         </form>
