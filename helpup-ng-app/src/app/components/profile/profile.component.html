@@ -24,7 +24,7 @@
     </div>
 
     <div>
-      <button *ngIf="!isMine()" class="btn message">Message</button>
+      <button *ngIf="!isMine()" [routerLink]="['', 'chat', userDetails.username]" class="btn message">Message</button>
       <button *ngIf="isMine() && !editMode" class="btn btn-light" (click)="editDetails()">Edit</button>
       <button class="btn btn-light" *ngIf="editMode" (click)="saveEdit()">Save</button>
     </div>
