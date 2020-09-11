@@ -1,9 +1,9 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {CookieService} from "ngx-cookie-service";
-import {ActivatedRoute, Router} from "@angular/router";
-import {MessengerService} from "../../MessengerService";
-import {Conversation} from "../../models/Conversation";
-import {Chat} from "../../models/Chat";
+import {CookieService} from 'ngx-cookie-service';
+import {ActivatedRoute, Router} from '@angular/router';
+import {MessengerService} from '../../MessengerService';
+import {Conversation} from '../../models/Conversation';
+import {Chat} from '../../models/Chat';
 
 @Component({
   selector: 'app-chat',
@@ -26,7 +26,7 @@ export class ChatComponent implements OnInit {
       (data: Conversation[]) => {
         this.conversations = data;
       }
-    )
+    );
   }
 
 
@@ -55,7 +55,7 @@ export class ChatComponent implements OnInit {
     return 'data:image/jpeg;base64,' + image;
   }
 
-  submitMessage() {
+  submitMessage(): void {
     console.log(this.inputMessage.nativeElement.value);
     const newChat = new Chat();
     newChat.message = this.inputMessage.nativeElement.value;

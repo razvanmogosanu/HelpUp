@@ -82,10 +82,18 @@ export class StatisticsComponent implements OnInit {
   allUsersDetails: UsersDetails[];
   postType: Type;
   dailyPosts: Week;
+  bucharest: number;
+  timisoara: number;
+  cluj: number;
+  otherCity: number;
 
   constructor(public apiService: ApiService) {
     this.postType = new Type();
     this.dailyPosts = new Week();
+    this.bucharest = 0;
+    this.timisoara = 0;
+    this.cluj = 0;
+    this.otherCity = 0;
   }
 
   ngOnInit(): void {
@@ -200,6 +208,49 @@ export class StatisticsComponent implements OnInit {
     });
   }
 
+  doughnutCityChart(): void {
+    this.countUsersByCities();
+
+    const myChart = new Chart('doughnutCityChart', {
+      type: 'doughnut',
+      data: {
+        labels: ['Bucharest', 'Cluj', 'Timisoara', 'Other cities'],
+        datasets: [{
+          data: [this.bucharest, this.cluj, this.timisoara, this.otherCity],
+          backgroundColor: [
+            'rgba(255, 159, 64, 1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(255, 99, 132, 1)',
+            'rgba(75, 192, 192, 1)',
+            'rgba(255, 206, 86, 1)',
+            'rgba(153, 102, 255, 1)',
+          ],
+        }]
+      },
+      options: {
+        title: {
+          display: true,
+          text: 'Number of users by city'
+        }
+      }
+    });
+  }
+
+
+  countUsersByCities(): void {
+
+    for (const userDetails of this.allUsersDetails) {
+      if (userDetails.city === 'Bucharest') {
+        this.bucharest++;
+      } else if (userDetails.city === 'Timisoara') {
+        this.timisoara++;
+      } else if (userDetails.city === 'Cluj') {
+        this.cluj++;
+      }else{
+        this.otherCity++;
+      }
+    }
+  }
 
   postsPerDay(): void {
 
@@ -258,9 +309,7 @@ export class StatisticsComponent implements OnInit {
   getAllUsersDetails(): void {
     this.apiService.getAllUsersDetails().subscribe((data: UsersDetails[]) => {
       this.allUsersDetails = data;
-      for (const userDetail of this.allUsersDetails) {
-        console.log('Oras: ' + userDetail.city);
-      }
+      this.doughnutCityChart();
     });
   }
 }

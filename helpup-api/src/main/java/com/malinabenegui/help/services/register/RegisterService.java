@@ -42,15 +42,18 @@ public class RegisterService {
     }
 
     public ResponseEntity<HttpSimpleStringResponse> registerNewUser(User user) throws IOException {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setRole("USER");
 
         AuthorizationResponseMapper credentialsAvailability = credentialsChecker.checkCredentialsAvailability(user);
         if (credentialsAvailability.getHttpStatus() != HttpStatus.ACCEPTED) {
             return new ResponseEntity<>(credentialsAvailability.getResponseMessage(), HttpStatus.UNAUTHORIZED);
         }
 
-        this.sendRegistrationMail(user);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setRole("USER");
+
+        if (!this.sendRegistrationMail(user)) {
+            return new ResponseEntity<>(new HttpSimpleStringResponse("Incorrect email address"), HttpStatus.UNAUTHORIZED);
+        }
 
         userDetailsRepository.save(initUserDetailsOnRegister(user.getUsername()));
         userRepository.save(user);
@@ -59,12 +62,13 @@ public class RegisterService {
     }
 
 
-    private void sendRegistrationMail(User user) throws MailException {
+    private boolean sendRegistrationMail(User user) throws MailException {
         try {
             mailingService.sendNotification(user);
         } catch (MailException e) {
-            throw new MailAuthenticationException(user.getEmail());
+            return false;
         }
+        return true;
     }
 
     private UserDetails initUserDetailsOnRegister(String username) throws IOException {

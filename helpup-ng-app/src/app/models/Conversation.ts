@@ -1,7 +1,7 @@
-import {Chat} from "./Chat";
+import {Chat} from './Chat';
 
 export class Conversation {
-  chat: Chat[]
+  chat: Chat[];
   to: string;
   from: string;
   icon: any;
