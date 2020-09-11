@@ -1,7 +1,6 @@
 package com.malinabenegui.help.controller;
 
 import com.malinabenegui.help.models.ImageModel;
-import com.malinabenegui.help.models.Post;
 import com.malinabenegui.help.models.UserDetails;
 import com.malinabenegui.help.models.httpResponseParsers.HttpSimpleStringResponse;
 import com.malinabenegui.help.services.user.UserService;
@@ -10,10 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.awt.*;
 import java.io.IOException;
-import java.sql.SQLOutput;
-import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -35,24 +31,22 @@ public class UserController {
 
     @RequestMapping(value = "/editprofilepicture", method = RequestMethod.POST)
     private void editProfilePicture(@RequestParam("imageFile") MultipartFile file,
-                                 @RequestParam("username") String username) throws IOException {
+                                    @RequestParam("username") String username) throws IOException {
         service.editProfilePicture(file, username);
     }
 
     @RequestMapping(value = "/getposts", method = RequestMethod.POST)
-    private ResponseEntity<?> getPostsOfUser(@RequestBody HttpSimpleStringResponse username){
+    private ResponseEntity<?> getPostsOfUser(@RequestBody HttpSimpleStringResponse username) {
         return service.getPostsOfUser(username);
     }
 
     @RequestMapping(value = "/getprofilepicture", method = RequestMethod.POST)
-    private ResponseEntity<ImageModel> getProfilePicture(@RequestBody HttpSimpleStringResponse username){
-        System.out.println(username);
-        System.out.println(username.getString());
+    private ResponseEntity<ImageModel> getProfilePicture(@RequestBody HttpSimpleStringResponse username) {
         return service.getProfilePic(username);
     }
 
     @RequestMapping(value = "/getAllUsersDetails", method = RequestMethod.GET)
-    private ResponseEntity<List<UserDetails>> getAllUsersDetails(){
+    private ResponseEntity<List<UserDetails>> getAllUsersDetails() {
         return service.getAllUsersDetails();
     }
 

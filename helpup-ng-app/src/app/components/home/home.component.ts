@@ -15,6 +15,7 @@ interface Post {
   toggle: any;
   profilepic: any;
   type: string;
+  city: string;
 }
 
 @Component({
@@ -87,6 +88,12 @@ export class HomeComponent implements OnInit {
     if (event.target.name === 'ending' || event.target.name === 'starting') {
       this.filterAfter.push(event.target.name + ' ' + event.target.value);
 
+    } else if (event.target.name === 'city') {
+      if (!event.target.checked) {
+        this.filterAfter.splice(this.filterAfter.indexOf(event.target.name + ' ' + event.target.value));
+      } else {
+        this.filterAfter.push(event.target.name + ' ' + event.target.value);
+      }
     } else if (!event.target.checked) {
       this.filterAfter.splice(this.filterAfter.indexOf(event.target.value));
     } else {
@@ -95,6 +102,7 @@ export class HomeComponent implements OnInit {
 
     this.filterByType();
   }
+
 
   isStartingDateValid(post: Post, filter): boolean {
     if (filter.includes('starting')) {
@@ -132,16 +140,20 @@ export class HomeComponent implements OnInit {
 
   filterByType(): void {
     this.filteredPosts = [];
+    console.log(this.filterAfter)
+    let iHadAPool = false;
     for (const post of this.allPosts) {
       for (const type of this.filterAfter) {
         if (post.type.includes(type)) {
+          iHadAPool = true;
           this.filteredPosts.push(post);
         }
       }
     }
-    if (this.filteredPosts.length === 0) {
+    if (this.filterAfter.length === 0 || !iHadAPool) {
       this.filteredPosts = this.allPosts;
     }
+
 
     const secondfilteredPosts = [];
 
@@ -162,23 +174,48 @@ export class HomeComponent implements OnInit {
       }
       if (cont1 && cont2) {
         if (this.isStartingDateValid(post, startingFilter) && this.isEndingDateValid(post, endingFilter)) {
+          console.log('yes, sir');
           secondfilteredPosts.push(post);
         }
-      }
-      else if (cont1) {
+      } else if (cont1) {
         if (this.isStartingDateValid(post, startingFilter)) {
           secondfilteredPosts.push(post);
         }
-      }
-      else if (cont2) {
+      } else if (cont2) {
         if (this.isEndingDateValid(post, endingFilter)) {
           secondfilteredPosts.push(post);
         }
       }
     }
-    if (secondfilteredPosts.length !== 0) {
+    console.log(secondfilteredPosts);
+    if (this.filterAfter.length !== 0) {
       this.filteredPosts = secondfilteredPosts;
     }
+
+    const thirdFilteredPosts = [];
+    let iHadASearchingPool = false;
+
+    for (const post of this.allPosts) {
+      for (const city of this.filterAfter) {
+
+        if (city.includes('city') && post.city === city.substr(5)) {
+          iHadASearchingPool = true;
+          let alreadyExists = false;
+
+          for(const filteredPost of this.filteredPosts) {
+            if (post == filteredPost) {
+              alreadyExists = true;
+              break;
+            }
+          }
+
+          if (alreadyExists)
+            thirdFilteredPosts.push(post);
+        }
+      }
+    }
+    if (iHadASearchingPool)
+      this.filteredPosts = thirdFilteredPosts;
   }
 
 

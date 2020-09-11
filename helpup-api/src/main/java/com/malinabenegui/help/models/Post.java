@@ -25,13 +25,15 @@ public class Post {
     private String description;
     private byte[] image;
     private String type;
+    private String city;
 
-    public Post(String description, String username, byte[] image, String type) {
+    public Post(String description, String username, byte[] image, String type, String city) {
         date = new Date(System.currentTimeMillis());
 
         this.description = description;
         this.username = username;
         this.image = image;
         this.type = type;
+        this.city = city;
     }
 }

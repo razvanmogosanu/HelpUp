@@ -1,10 +1,7 @@
 package com.malinabenegui.help.controller;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 import com.malinabenegui.help.models.Chat;
 import com.malinabenegui.help.models.Conversation;
-import com.malinabenegui.help.models.UserDetails;
 import com.malinabenegui.help.models.httpResponseParsers.HttpSimpleStringResponse;
 import com.malinabenegui.help.repositories.ChatRepository;
 import com.malinabenegui.help.repositories.UserDetailsRepository;
@@ -14,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 

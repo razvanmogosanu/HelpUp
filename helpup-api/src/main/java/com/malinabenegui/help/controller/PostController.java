@@ -19,6 +19,7 @@ public class PostController {
     @Autowired
     private PostService service;
 
+
     @GetMapping("/all")
     private Iterable<Post> retrieveAllPosts() {
         return service.getAllPosts();
