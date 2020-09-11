@@ -14,6 +14,7 @@ import java.awt.*;
 import java.io.IOException;
 import java.sql.SQLOutput;
 import java.util.Arrays;
+import java.util.List;
 
 @RestController
 @RequestMapping("/user")
@@ -46,6 +47,11 @@ public class UserController {
     @RequestMapping(value = "/getprofilepicture", method = RequestMethod.POST)
     private ResponseEntity<ImageModel> getProfilePicture(@RequestBody HttpSimpleStringResponse username){
         return service.getProfilePic(username);
+    }
+
+    @RequestMapping(value = "/getAllUsersDetails", method = RequestMethod.GET)
+    private ResponseEntity<List<UserDetails>> getAllUsersDetails(){
+        return service.getAllUsersDetails();
     }
 
 }

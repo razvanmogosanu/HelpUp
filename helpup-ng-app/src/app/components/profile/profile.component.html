@@ -108,7 +108,7 @@
         <div style="float: right; margin-left: 3px">
           <button type="button" class="btn btn-light"
                   *ngIf="isMine() && !post.editMode" (click)="post.editMode = true;">Edit</button>
-          <button type="button" class="btn btn-light" *ngIf="isAdmin()"
+          <button type="button" class="btn btn-light" *ngIf="isAdmin() || isMine()"
                   (click)="deletePost(post.id)">Delete</button>
         </div>
 

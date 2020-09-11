@@ -16,6 +16,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {CookieService} from 'ngx-cookie-service';
 import {HighlightDirective} from './components/navbar/highlight.directive';
 import {StatisticsComponent} from './components/statistics/statistics.component';
+
 import { ChatComponent } from './components/chat/chat.component';
 
 const appRoutes: Routes = [

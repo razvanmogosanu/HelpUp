@@ -23,6 +23,8 @@
     "@stomp/rx-stomp": "^0.3.5",
     "@stomp/stompjs": "^5.4.4",
     "bootstrap": "^3.3.7",
+    "chart.js": "^2.9.3",
+    "chartjs-plugin-datalabels": "^0.7.0",
     "net": "^1.0.2",
     "ngx-bootstrap": "^5.6.1",
     "ngx-cookie-service": "^10.0.1",

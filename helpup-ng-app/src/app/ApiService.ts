@@ -24,6 +24,7 @@ export class ApiService {
   private GET_POSTS_OF_USER = `${this.BASE_URL}/user/getposts`;
   private EDIT_PROFILE_PICTURE = `${this.BASE_URL}/user/editprofilepicture`;
   private GET_PROFILE_PICTURE = `${this.BASE_URL}/user/getprofilepicture`;
+  private GET_ALL_USERS_DETAILS = `${this.BASE_URL}/user/getAllUsersDetails`;
 
 
   constructor(private http: HttpClient, private cookies: CookieService, private router: Router) {
@@ -100,6 +101,10 @@ export class ApiService {
 
   whoAmI(): Observable<any> {
     return this.http.get(this.GET_USERNAME_FROM_JWT, {headers: this.generateAuthorizeBearerJWT()});
+  }
+
+  getAllUsersDetails(): Observable<any> {
+    return this.http.get(this.GET_ALL_USERS_DETAILS, {headers: this.generateAuthorizeBearerJWT()});
   }
 
   getUserDetails(usernameToFind: string): Observable<any> {
