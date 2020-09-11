@@ -3,4 +3,5 @@ export interface PostDetails{
   date: string;
   description: string;
   image: string;
+  city: string
 }
