@@ -45,6 +45,10 @@ const appRoutes: Routes = [
     component: StatisticsComponent
   },
   {
+    path: 'chat/:username',
+    component: ChatComponent
+  },
+  {
     path: 'chat',
     component: ChatComponent
   }
