@@ -4,6 +4,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {MessengerService} from "../../MessengerService";
 import {Conversation} from "../../models/Conversation";
 import {Chat} from "../../models/Chat";
+import {ApiService} from "../../ApiService";
 
 @Component({
   selector: 'app-chat',
@@ -16,18 +17,49 @@ export class ChatComponent implements OnInit {
   @ViewChild('messageInput', {static: false})
   inputMessage: ElementRef;
 
-  constructor(private cookies: CookieService, private router: Router, private messengerService: MessengerService) {
-
+  constructor(private cookies: CookieService, private router: Router, private messengerService: MessengerService, private api: ApiService) {
   }
 
   ngOnInit(): void {
     this.conversations = new Array<any>();
+    this.updateChat();
+    setInterval(() => {
+      this.updateChat();
+    }, 300)
+  }
+  
+
+  updateChat() {
     this.messengerService.getConversationHistory().subscribe(
       (data: Conversation[]) => {
+        console.log(data);
         this.conversations = data;
+
+        if (this.whereAmIComingFrom() !== '') {
+          let conversationExists = false;
+          for(const conversation of this.conversations) {
+            if (conversation.to == this.whereAmIComingFrom()){
+              conversationExists = true;
+              break;
+            }
+          }
+
+          if (!conversationExists) {
+            console.log("pana aici, e bine");
+            this.api.getProfilePicture(this.whereAmIComingFrom()).subscribe(
+              (data) => {
+                console.log(data);
+                this.conversations.push(new Conversation(this.whereAmIComingFrom(), this.cookies.get('username'), data.image));
+              }
+            )
+          }
+
+        }
+
       }
     )
   }
+
 
 
   openConversation(conversation): void {
