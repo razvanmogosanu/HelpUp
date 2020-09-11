@@ -2,12 +2,14 @@
 
   <!-- History conversations -->
   <div id="conversations">
-    <h4  id="username">Your conversations</h4>
+    <h3 id="your-conversations">Your conversations</h3>
     <div id="history" *ngFor="let conversation of conversations" >
-      <img [src]="translateImage(conversation.icon)" style="width: 80px">
+
       <div id="{{getCssForAConversation(conversation)}}" (click)="openConversation(conversation)">
-        {{whoAmITalkingTo(conversation)}}
+        <img [src]="translateImage(conversation.icon)" id="profile-pictures">
+        <div id="conversation-username">{{whoAmITalkingTo(conversation)}}</div>
       </div>
+
     </div>
   </div>
 
@@ -22,27 +24,30 @@
     </div>
   </ng-template>
 
+  <!-- Conversation -->
   <ng-template #elseBlock >
-    <!-- Conversation -->
+    <!-- messages -->
     <div id="conversation">
-      <div id="messages" class="center">
+      <div id="messages">
         <div *ngIf="chosenConversation != undefined">
           <div *ngFor="let chat of chosenConversation.chat">
             <div id="message-received" *ngIf="chat.sender === whereAmIComingFrom()"> {{chat.message}}</div>
-            <div id="message-sent" *ngIf="chat.receiver === whereAmIComingFrom()">{{chat.message}}</div>
+            <div *ngIf="chat.receiver === whereAmIComingFrom()">
+              <div id="message-sent">{{chat.message}}</div>
+            </div>
           </div>
         </div>
       </div>
       <!-- write message -->
       <div id="write">
-        <label for="input-message"></label>
-        <input #messageInput type="text" id="input-message">
-        <button (click)="submitMessage()">SEND</button>
+        <input #messageInput type="text" id="input-message" placeholder="Type a message...">
+        <button (click)="submitMessage()" class="btn" id="send">SEND</button>
       </div>
 
     </div>
 
   </ng-template>
 
-  <div style="height: 100px"></div>
 </div>
+
+<div style="height: 180px"></div>
