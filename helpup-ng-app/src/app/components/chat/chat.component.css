@@ -1,11 +1,11 @@
 .container{
-  padding-top: 20px;
   background-color: white;
 }
 
 #conversations{
   width: 20%;
-  height: 500px;
+  height: 580px;
+  background: lightgray;
   float: left;
   border: 1px solid #c9c9c9;
 }
@@ -51,8 +51,11 @@
 }
 
 #message-sent{
+  display: inline-block;
+  left: 0;
   margin-left: 60%;
-  padding: 8px;
+  margin-bottom: 3px;
+  padding: 8px 13px;
   text-align: right;
   border-radius: 50px;
   background-color: #2284FF;
@@ -60,8 +63,10 @@
 }
 
 #message-received{
+  display: inline-block;
   margin-right: 60%;
-  padding: 8px;
+  margin-bottom: 3px;
+  padding: 8px 13px;
   border-radius: 50px;
   background-color: #F1F0F0;
 }

@@ -45,6 +45,8 @@ export class ProfileComponent implements OnInit {
       });
   }
 
+
+
   public onFileChanged(event): void {
     this.selectedFile = event.target.files[0];
     this.userDetails.profilepic = event.target.files[0];

@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 
 import {CookieService} from 'ngx-cookie-service';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -12,11 +12,12 @@ import {ApiService} from '../../ApiService';
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.css']
 })
-export class ChatComponent implements OnInit {
+export class ChatComponent implements OnInit, OnDestroy {
   conversations: any[];
   chosenConversation: Conversation;
   @ViewChild('messageInput', {static: false})
   inputMessage: ElementRef;
+  id: number;
 
   constructor(private cookies: CookieService, private router: Router, private messengerService: MessengerService, private api: ApiService) {
   }
@@ -24,7 +25,7 @@ export class ChatComponent implements OnInit {
   ngOnInit(): void {
     this.conversations = new Array<any>();
     this.updateChat();
-    setInterval(() => {
+    this.id = setInterval(() => {
       this.updateChat();
     }, 400);
   }
@@ -58,6 +59,11 @@ export class ChatComponent implements OnInit {
     );
   }
 
+  ngOnDestroy(): void {
+    if (this.id) {
+      clearInterval(this.id);
+    }
+  }
 
 
   openConversation(conversation): void {

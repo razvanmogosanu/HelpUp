@@ -46,6 +46,8 @@ public class UserController {
 
     @RequestMapping(value = "/getprofilepicture", method = RequestMethod.POST)
     private ResponseEntity<ImageModel> getProfilePicture(@RequestBody HttpSimpleStringResponse username){
+        System.out.println(username);
+        System.out.println(username.getString());
         return service.getProfilePic(username);
     }
 

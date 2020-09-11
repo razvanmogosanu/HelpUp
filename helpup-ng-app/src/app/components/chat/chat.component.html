@@ -1,5 +1,6 @@
 <div class="container">
 
+  <!-- History conversations -->
   <div id="conversations">
     <h4  id="username">Your conversations</h4>
     <div id="history" *ngFor="let conversation of conversations" >
@@ -7,13 +8,12 @@
       <div id="{{getCssForAConversation(conversation)}}" (click)="openConversation(conversation)">
         {{whoAmITalkingTo(conversation)}}
       </div>
-
     </div>
-
   </div>
 
   <div *ngIf="whereAmIComingFrom() == '' then thenBlock else elseBlock"></div>
 
+  <!-- Welcome message-->
   <ng-template #thenBlock id="welcome">
     <div>
       <h2>Welcome to HelpUp Messages!</h2>
@@ -23,6 +23,7 @@
   </ng-template>
 
   <ng-template #elseBlock >
+    <!-- Conversation -->
     <div id="conversation">
       <div id="messages" class="center">
         <div *ngIf="chosenConversation != undefined">
@@ -32,7 +33,7 @@
           </div>
         </div>
       </div>
-
+      <!-- write message -->
       <div id="write">
         <label for="input-message"></label>
         <input #messageInput type="text" id="input-message">
@@ -43,5 +44,5 @@
 
   </ng-template>
 
-  <div style="height: 520px"></div>
+  <div style="height: 100px"></div>
 </div>
