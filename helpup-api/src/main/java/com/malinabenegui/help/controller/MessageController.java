@@ -36,7 +36,6 @@ public class MessageController {
             @RequestBody HttpSimpleStringResponse toJson) {
 
         String from = jwtService.parseUsernameFromJWT(header).getString();
-        System.out.println(from);
         String to = toJson.getString();
         List<Chat> retrieved = chatRepository.findBySender(from)
                 .stream()
@@ -60,10 +59,14 @@ public class MessageController {
         List<Chat> list = chatRepository.findAll();
 
         for(Chat chat : list) {
+
             if(chat.getReceiver().equals(from) || chat.getSender().equals(from)) {
                 boolean conversationExists = false;
+
                 for (Conversation conversation : conversations) {
-                    if (conversation.getFrom().equals(from)) {
+
+                    if (conversation.getFrom().equals(from)
+                            && conversation.getTo().equals((from.equals(chat.getReceiver())) ? chat.getSender() : chat.getReceiver())) {
                         conversation.getChat().add(chat);
                         conversationExists = true;
                         break;
@@ -71,7 +74,7 @@ public class MessageController {
                 }
                 if (!conversationExists) {
                     Conversation newConversation =
-                            new Conversation(chat.getReceiver(), from, userDetailsRepository.getByUsername(from).getProfilepic());
+                            new Conversation((from.equals(chat.getReceiver())) ? chat.getSender() : chat.getReceiver(), from, userDetailsRepository.getByUsername(chat.getReceiver()).getProfilepic());
                     newConversation.getChat().add(chat);
                     conversations.add(newConversation);
                 }
