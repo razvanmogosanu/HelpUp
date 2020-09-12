@@ -7,7 +7,7 @@
 
       <div id="{{getCssForAConversation(conversation)}}" (click)="openConversation(conversation)">
         <img [src]="translateImage(conversation.icon)" id="profile-pictures">
-        <div id="conversation-username">{{whoAmITalkingTo(conversation)}}</div>
+        <div id="conversations-username">{{whoAmITalkingTo(conversation)}}</div>
       </div>
 
     </div>
@@ -16,11 +16,12 @@
   <div *ngIf="whereAmIComingFrom() == '' then thenBlock else elseBlock"></div>
 
   <!-- Welcome message-->
-  <ng-template #thenBlock id="welcome">
-    <div>
-      <h2>Welcome to HelpUp Messages!</h2>
-      <h4 style="margin-top: 30px">This page will help you communicate with other users in order to give or receive pet
+  <ng-template #thenBlock>
+    <div id="welcome">
+      <h2 id="welcome-title">Welcome to HelpUp Messages!</h2>
+      <h4 class="welcome-text">This page will help you communicate with other users in order to give or receive pet
         therapy.</h4>
+      <h4 class="welcome-text">You can find anyone you talked to in the past and send them messages in the <i>Your conversations</i> box.</h4>
     </div>
   </ng-template>
 
@@ -28,6 +29,12 @@
   <ng-template #elseBlock >
     <!-- messages -->
     <div id="conversation">
+      <div id="conversation-username-box">
+        <div *ngIf="this.chosenConversation !== undefined">
+          <img id="talking-to-image" [src]="this.translateImage(chosenConversation.icon)">
+          <p id="talking-to-username">{{this.chosenConversation.to}}</p>
+        </div>
+      </div>
       <div id="messages">
         <div *ngIf="chosenConversation != undefined">
           <div *ngFor="let chat of chosenConversation.chat">

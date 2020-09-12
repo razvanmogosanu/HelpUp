@@ -27,7 +27,7 @@ export class ChatComponent implements OnInit, OnDestroy {
     this.updateChat();
     this.id = setInterval(() => {
       this.updateChat();
-    }, 30000);
+    }, 300);
   }
 
 
