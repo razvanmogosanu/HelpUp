@@ -3,7 +3,7 @@ import {HttpClient, HttpParams} from '@angular/common/http';
 import {FormControl, FormGroup} from '@angular/forms';
 import {Router} from '@angular/router';
 import {CookieService} from 'ngx-cookie-service';
-import {ApiService} from '../../ApiService';
+import {ApiService} from '../../services/ApiService';
 import {map} from 'rxjs/operators';
 import {throwError} from 'rxjs';
 

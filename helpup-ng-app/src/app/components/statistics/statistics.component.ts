@@ -1,76 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {ApiService} from '../../ApiService';
+import {ApiService} from '../../services/ApiService';
 import {Chart} from 'node_modules/chart.js';
-
-interface Post {
-  id: number;
-  description: string;
-  username: string;
-  image: any;
-  date: Date;
-  editMode: boolean;
-  toggle: any;
-  profilepic: any;
-  type: string;
-}
-
-interface UsersDetails {
-  id: number;
-  username: string;
-  firstname: string;
-  lastname: string;
-  profilepic: any;
-  city: string;
-  education: string;
-  job: string;
-  gender: string;
-  description: string;
-  birthday: Date;
-  phonenumber: string;
-  user_type: string;
-}
-
-class Type {
-  dog: number;
-  cat: number;
-  bunny: number;
-  asd: number;
-  down: number;
-  other: number;
-  pet: number;
-  affection: number;
-
-  constructor() {
-    this.dog = 0;
-    this.cat = 0;
-    this.bunny = 0;
-    this.asd = 0;
-    this.down = 0;
-    this.other = 0;
-    this.pet = 0;
-    this.affection = 0;
-  }
-}
-
-class Week {
-  monday: number;
-  tuesday: number;
-  wednesday: number;
-  thursday: number;
-  friday: number;
-  saturday: number;
-  sunday: number;
-
-  constructor() {
-    this.monday = 0;
-    this.tuesday = 0;
-    this.wednesday = 0;
-    this.thursday = 0;
-    this.friday = 0;
-    this.saturday = 0;
-    this.sunday = 0;
-  }
-}
+import {Post} from "../../models/Post";
+import {UsersDetails} from "../../models/UserDetails";
+import {Type} from "../../models/Type";
+import {Week} from "../../models/Week";
 
 @Component({
   selector: 'app-statistics',
@@ -246,7 +180,7 @@ export class StatisticsComponent implements OnInit {
         this.timisoara++;
       } else if (userDetails.city === 'Cluj') {
         this.cluj++;
-      }else{
+      } else {
         this.otherCity++;
       }
     }

@@ -3,7 +3,7 @@ import {CookieService} from 'ngx-cookie-service';
 import {Router} from '@angular/router';
 import {Injectable, OnInit} from '@angular/core';
 import {Observable} from 'rxjs';
-import {UserDetails} from './user_details';
+import {UserDetails} from "../models/UserDetails";
 
 
 @Injectable({
@@ -126,7 +126,10 @@ export class ApiService {
   }
 
   editUserDetails(userDetails: UserDetails): Observable<any> {
-    return this.http.post(this.EDIT_USER_DETAILS, userDetails, {headers: this.generateAuthorizeBearerJWT()});
+    const edited = new UserDetails(userDetails.username, userDetails.firstname, userDetails.lastname,
+      null, userDetails.city, userDetails.education, userDetails.job, userDetails.gender, userDetails.description,
+      userDetails.birthday, userDetails.phonenumber, userDetails.user_type);
+    return this.http.post(this.EDIT_USER_DETAILS, edited, {headers: this.generateAuthorizeBearerJWT()});
   }
 
   searchAfterUsers(searchFilter: string): Observable<any> {
