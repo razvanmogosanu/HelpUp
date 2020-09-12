@@ -57,6 +57,12 @@
   position: relative;
 }
 
+#messages{
+  height: 550px;
+  overflow:scroll;
+  overflow-x:hidden;
+}
+
 #message-sent{
   float: right;
   display: inline-block;
@@ -77,6 +83,35 @@
   padding: 8px 13px;
   border-radius: 50px;
   background-color: #F1F0F0;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  display: none;
+}
+
+/* Track on hover */
+::-webkit-scrollbar-track:hover {
+  border-radius: 5px;
+  background: #f1f0f0;
+  display: block;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  display: none;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  border-radius: 5px;
+  background: #a3a3a3;
+  display: block;
 }
 
 /* Write message */
@@ -107,8 +142,9 @@ textarea:focus, input:focus{
   outline: none;
 }
 
-#send{
+#send-button{
   float: right;
+  margin-right: 7px;
 }
 
 #welcome{

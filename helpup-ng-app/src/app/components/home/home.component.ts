@@ -140,7 +140,6 @@ export class HomeComponent implements OnInit {
 
   filterByType(): void {
     this.filteredPosts = [];
-    console.log(this.filterAfter)
     let iHadAPool = false;
     for (const post of this.allPosts) {
       for (const type of this.filterAfter) {
@@ -197,25 +196,30 @@ export class HomeComponent implements OnInit {
 
     for (const post of this.allPosts) {
       for (const city of this.filterAfter) {
-
         if (city.includes('city') && post.city === city.substr(5)) {
+
           iHadASearchingPool = true;
           let alreadyExists = false;
 
-          for(const filteredPost of this.filteredPosts) {
-            if (post == filteredPost) {
+          for (const filteredPost of this.filteredPosts) {
+            if (post === filteredPost) {
               alreadyExists = true;
               break;
             }
           }
+          if (this.filteredPosts.length === 0) {
+            alreadyExists = true;
+          }
 
-          if (alreadyExists)
+          if (alreadyExists) {
             thirdFilteredPosts.push(post);
+          }
         }
       }
     }
-    if (iHadASearchingPool)
+    if (iHadASearchingPool) {
       this.filteredPosts = thirdFilteredPosts;
+    }
   }
 
 
