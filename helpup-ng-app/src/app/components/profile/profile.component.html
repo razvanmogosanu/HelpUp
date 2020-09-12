@@ -25,7 +25,7 @@
 
     <div>
       <button *ngIf="!isMine()" [routerLink]="['', 'chat', userDetails.username]" class="btn message">Message</button>
-      <button *ngIf="isMine() && !editMode" class="btn btn-light" (click)="editDetails()">Edit</button>
+      <button *ngIf="isMine() && !editMode" class="btn btn-light" (click)="this.editMode = true">Edit</button>
       <button class="btn btn-light" *ngIf="editMode" (click)="saveEdit()">Save</button>
     </div>
   </div>
@@ -100,9 +100,9 @@
   <!-- List of user's Posts -->
   <div class="posts-list" *ngIf="retrievedPosts != null && retrievedPosts.length > 0">
     <div *ngFor="let post of retrievedPosts" class="post">
-      <img src="{{post.profilepic}}" class="post-profile-pic">
+      <img [src]="this.userDetails.profilepic" class="post-profile-pic">
       <span class="username">@{{post.username}}</span>
-      <span class="date">‧ {{translateTime(post.date)}}</span>
+      <span class="date">‧ {{this.translateService.translateTime(post.date)}}</span>
 
       <div>
         <div style="float: right; margin-left: 3px">
@@ -125,7 +125,7 @@
 
       </div>
 
-      <img [src]="translateImage(post.image)" class="post-image">
+      <img [src]="this.translateService.translateImage(post.image)" class="post-image">
     </div>
   </div>
 

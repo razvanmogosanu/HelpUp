@@ -85,7 +85,7 @@
     <div *ngFor="let post of filteredPosts" class="post">
       <img src="{{post.profilepic}}" class="profile-pic">
       <span class="username" [routerLink]="['profile', post.username]">{{post.username}}</span>
-      <span class="date">‧ {{translateTime(post.date)}}</span>
+      <span class="date">‧ {{this.translateService.translateTime(post.date)}}</span>
 
       <div>
         <div style="float: right; margin-left: 3px">
@@ -109,7 +109,7 @@
 
       </div>
 
-      <img [src]="translateImage(post.image)" class="post-image">
+      <img [src]="this.translateService.translateImage(post.image)" class="post-image">
 
     </div>
   </div>

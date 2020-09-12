@@ -3,7 +3,7 @@ import {FormControl, FormGroup} from '@angular/forms';
 import {HttpClient} from '@angular/common/http';
 import {CookieService} from 'ngx-cookie-service';
 import {Router} from '@angular/router';
-import {ApiService} from '../../ApiService';
+import {ApiService} from '../../services/ApiService';
 
 @Component({
   selector: 'app-login',

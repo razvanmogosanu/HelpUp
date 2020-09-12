@@ -5,7 +5,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {MessengerService} from '../../MessengerService';
 import {Conversation} from '../../models/Conversation';
 import {Chat} from '../../models/Chat';
-import {ApiService} from '../../ApiService';
+import {ApiService} from '../../services/ApiService';
 
 @Component({
   selector: 'app-chat',
