@@ -3,11 +3,18 @@
   <!-- History conversations -->
   <div id="conversations">
     <h3 id="your-conversations">Your conversations</h3>
-    <div id="history" *ngFor="let conversation of conversations" >
+    <div id="history" *ngFor="let conversation of conversations">
 
       <div id="{{getCssForAConversation(conversation)}}" (click)="openConversation(conversation)">
-        <img [src]="translateImage(conversation.icon)" id="profile-pictures">
-        <div id="conversation-username">{{whoAmITalkingTo(conversation)}}</div>
+        <img [src]="translateImage(conversation.icon)" alt="profile picture" id="profile-pictures">
+
+        <div id="conversations-username">
+          <p>{{whoAmITalkingTo(conversation)}}</p>
+          <p id="last-message">
+            <span>{{whoSentLastMessage(conversation)}}
+              {{getShortLastMessege(conversation)}}</span>
+          </p>
+        </div>
       </div>
 
     </div>
@@ -16,18 +23,26 @@
   <div *ngIf="whereAmIComingFrom() == '' then thenBlock else elseBlock"></div>
 
   <!-- Welcome message-->
-  <ng-template #thenBlock id="welcome">
-    <div>
-      <h2>Welcome to HelpUp Messages!</h2>
-      <h4 style="margin-top: 30px">This page will help you communicate with other users in order to give or receive pet
-        therapy.</h4>
+  <ng-template #thenBlock>
+    <div id="welcome">
+      <h2 id="welcome-title">Welcome to HelpUp Messages!</h2>
+      <h4 class="welcome-text">This page will help you communicate with other users in order to give or receive pet
+        therapy. You can find anyone you talked to in the past and send them messages in the
+        <i>Your conversations</i> box.</h4>
+      <img id="welcome-image" src="../../../assets/teenagers.PNG">
     </div>
   </ng-template>
 
   <!-- Conversation -->
-  <ng-template #elseBlock >
+  <ng-template #elseBlock>
     <!-- messages -->
     <div id="conversation">
+      <div id="conversation-username-box">
+        <div *ngIf="this.chosenConversation !== undefined">
+          <img id="talking-to-image" alt="profile picture" [src]="this.translateImage(chosenConversation.icon)">
+          <p id="talking-to-username">{{this.chosenConversation.to}}</p>
+        </div>
+      </div>
       <div id="messages">
         <div *ngIf="chosenConversation != undefined">
           <div *ngFor="let chat of chosenConversation.chat">

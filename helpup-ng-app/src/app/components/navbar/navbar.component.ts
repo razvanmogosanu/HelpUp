@@ -1,26 +1,46 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {CookieService} from 'ngx-cookie-service';
 import {ApiService} from '../../services/ApiService';
 import {FormControl, FormGroup} from '@angular/forms';
 import {Router} from '@angular/router';
+import {HttpClient} from "@angular/common/http";
+import {NotificationService} from "../../services/NotificationService";
 
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css']
 })
-export class NavbarComponent implements OnInit {
+export class NavbarComponent implements OnInit, OnDestroy {
   searchedUsers: any[];
   showDropdown: boolean;
   searchForm: FormGroup;
+  id: number;
+  noOfNotifications: any;
 
-  constructor(public cookies: CookieService, private api: ApiService, private router: Router) {
+  constructor(public cookies: CookieService, private api: ApiService, private router: Router,
+              private notificationService: NotificationService) {
     this.searchForm = new FormGroup({
       searchField: new FormControl()
     });
   }
 
   ngOnInit(): void {
+    this.id = setInterval(() => {
+      if (this.cookies.check('jwt')) {
+        this.notificationService.getNrOfNotifications().subscribe(
+          (data) => {
+            this.noOfNotifications = data.string;
+          }
+        );
+      }
+    }, 5000);
+  }
+
+  ngOnDestroy(): void {
+    if (this.id) {
+      clearInterval(this.id);
+    }
   }
 
   logout(): void {

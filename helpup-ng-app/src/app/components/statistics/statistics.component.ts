@@ -6,6 +6,7 @@ import {UserDetails} from "../../models/UserDetails";
 import {Type} from "../../models/Type";
 import {Week} from "../../models/Week";
 
+
 @Component({
   selector: 'app-statistics',
   templateUrl: './statistics.component.html',

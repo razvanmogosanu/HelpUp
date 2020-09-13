@@ -6,7 +6,11 @@
     <ul class="nav navbar-nav">
       <li *ngIf="cookies.check('username') && !isAdmin()"><a [routerLink]="['profile', this.cookies.get('username')]">Profile</a></li>
       <li *ngIf="cookies.check('username') && isAdmin()"><a [routerLink]="['statistics']">Statistics</a></li>
-      <li *ngIf="cookies.check('username') && !isAdmin()"><a [routerLink]="['chat']">Chat</a></li>
+      <li *ngIf="cookies.check('username') && !isAdmin()">
+        <a [routerLink]="['chat']">
+          <span>Chat</span>
+          <div *ngIf="noOfNotifications !== '0'" style="color: white; text-align: center; width: 20px; height: 20px; background: red">{{noOfNotifications}}</div></a>
+      </li>
 
       <li><a routerLink="about">About Us</a></li>
     </ul>
@@ -16,12 +20,12 @@
       <div class="form-group">
         <input type="text" class="form-control" placeholder="Search" formControlName="searchField"
                (click)="showDropdown = true;" (keyup)="onSubmit()">
-        <div *ngIf="showDropdown == true"style=" overflow: hidden" class="state-container-dropdown" >
+        <div *ngIf="showDropdown == true" class="state-container-dropdown" >
 
           <!-- Searched users -->
           <div *ngFor="let user of searchedUsers">
             <div  (click)="showDropdown = false" [routerLink]="['profile', user.username]" id="search-username">
-              <img id="profil-pic" src="{{translateImage(user.profilepic)}}">
+              <img id="profile-pic" alt="profile-picture" src="{{translateImage(user.profilepic)}}">
               {{user.username}}
             </div>
           </div>

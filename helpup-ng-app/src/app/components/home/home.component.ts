@@ -4,9 +4,9 @@ import {FormControl, FormGroup} from '@angular/forms';
 import {CookieService} from 'ngx-cookie-service';
 import {Router} from '@angular/router';
 import {ApiService} from '../../services/ApiService';
-import {TranslateService} from "../../services/TranslateService";
-import {FilterService} from "../../services/FilterService";
-import {Post} from "../../models/Post";
+import {TranslateService} from '../../services/TranslateService';
+import {FilterService} from '../../services/FilterService';
+import {Post} from '../../models/Post';
 
 @Component({
   selector: 'app-home',
