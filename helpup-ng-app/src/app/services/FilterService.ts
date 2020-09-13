@@ -1,5 +1,5 @@
-import {Injectable} from "@angular/core";
-import {Post} from "../models/Post";
+import {Injectable} from '@angular/core';
+import {Post} from '../models/Post';
 
 
 @Injectable({
@@ -44,11 +44,11 @@ export class FilterService {
 
   filterPosts(allPosts: Post[], filterAfter: string[]): Post[] {
 
-    let filteredPostsByType = this.filterByType(allPosts, filterAfter);
+    const filteredPostsByType = this.filterByType(allPosts, filterAfter);
 
-    let filteredPostsByCity = this.filterByCity(filteredPostsByType, filterAfter);
+    const filteredPostsByCity = this.filterByCity(filteredPostsByType, filterAfter);
 
-    let filteredPosts = this.filterByDate(filteredPostsByCity, filterAfter);
+    const filteredPosts = this.filterByDate(filteredPostsByCity, filterAfter);
 
     return filteredPosts;
   }
