@@ -26,6 +26,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.noOfNotifications = '0';
     this.id = setInterval(() => {
       if (this.cookies.check('jwt')) {
         this.notificationService.getNrOfNotifications().subscribe(
@@ -34,7 +35,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
           }
         );
       }
-    }, 5000);
+    }, 500);
   }
 
   ngOnDestroy(): void {
