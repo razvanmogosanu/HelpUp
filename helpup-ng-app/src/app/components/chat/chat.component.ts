@@ -6,6 +6,7 @@ import {MessengerService} from '../../MessengerService';
 import {Conversation} from '../../models/Conversation';
 import {Chat} from '../../models/Chat';
 import {ApiService} from '../../services/ApiService';
+import {NotificationService} from "../../services/NotificationService";
 
 @Component({
   selector: 'app-chat',
@@ -19,7 +20,9 @@ export class ChatComponent implements OnInit, OnDestroy {
   inputMessage: ElementRef;
   id: number;
 
-  constructor(private cookies: CookieService, private router: Router, private messengerService: MessengerService, private api: ApiService) {
+  constructor(private cookies: CookieService, private router: Router,
+              private messengerService: MessengerService, private api: ApiService,
+              private notificationService: NotificationService) {
   }
 
   ngOnInit(): void {
@@ -71,6 +74,7 @@ export class ChatComponent implements OnInit, OnDestroy {
 
   openConversation(conversation): void {
     this.router.navigateByUrl('chat/' + this.whoAmITalkingTo(conversation));
+    this.notificationService.seeNotification(conversation);
   }
 
   whereAmIComingFrom(): string {
