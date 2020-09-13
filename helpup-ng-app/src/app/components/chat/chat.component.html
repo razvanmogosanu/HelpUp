@@ -11,8 +11,10 @@
         <div id="conversations-username">
           <p>{{whoAmITalkingTo(conversation)}}</p>
           <p id="last-message">
-            <span>{{whoSentLastMessage(conversation)}}
-              {{getShortLastMessege(conversation)}}</span>
+            <span *ngIf="conversation.chat[0] != undefined">
+              {{whoSentLastMessage(conversation)}}
+              {{getShortLastMessage(conversation)}}
+            </span>
           </p>
         </div>
       </div>

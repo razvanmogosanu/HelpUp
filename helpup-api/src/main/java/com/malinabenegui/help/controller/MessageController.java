@@ -69,8 +69,9 @@ public class MessageController {
                     }
                 }
                 if (!conversationExists) {
+                    String to = (from.equals(chat.getReceiver())) ? chat.getSender() : chat.getReceiver();
                     Conversation newConversation =
-                            new Conversation((from.equals(chat.getReceiver())) ? chat.getSender() : chat.getReceiver(), from, userDetailsRepository.getByUsername(chat.getReceiver()).getProfilepic());
+                            new Conversation(to, from, userDetailsRepository.getByUsername(to).getProfilepic());
                     newConversation.getChat().add(chat);
                     conversations.add(newConversation);
                 }
