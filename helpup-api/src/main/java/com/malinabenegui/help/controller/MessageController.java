@@ -83,6 +83,29 @@ public class MessageController {
 
     @RequestMapping(value = "/addMessage", method = RequestMethod.POST)
     private void addMessage(@RequestBody Chat chat) {
+        chat.setSeen(false);
         chatRepository.save(chat);
+    }
+
+    @RequestMapping(value = "/getNotifications", method = RequestMethod.POST)
+    private ResponseEntity<HttpSimpleStringResponse> getNotifications(@RequestBody List<Conversation> conversations) {
+        int nrOfNotifications = 0;
+        for(Conversation conversation : conversations) {
+            Chat lastMessage = conversation.getChat().lastElement();
+
+            if (!lastMessage.isSeen() && conversation.getTo().equals(lastMessage.getSender())) {
+                nrOfNotifications++;
+            }
+        }
+        return ResponseEntity.ok(new HttpSimpleStringResponse(Integer.toString(nrOfNotifications)));
+    }
+
+    @RequestMapping(value = "/messageSeen", method = RequestMethod.POST)
+    private void seeLastMessage(@RequestBody Conversation conversation) {
+        Chat chat = chatRepository.getOne(conversation.getChat().lastElement().getId());
+        System.out.println(chat);
+        chat.setSeen(true);
+        chatRepository.save(chat);
+        System.out.println(chatRepository.getOne(conversation.getChat().lastElement().getId()));
     }
 }

@@ -22,6 +22,7 @@ public class Chat {
     private String receiver;
     private String message;
     private Date timestamp;
+    private boolean seen;
 
     public Chat(String sender, String receiver, String message, Date timestamp) {
         this.sender = sender;
@@ -38,6 +39,7 @@ public class Chat {
                 ", receiver='" + receiver + '\'' +
                 ", message='" + message + '\'' +
                 ", timestamp=" + timestamp +
+                ", seen=" + seen +
                 '}';
     }
 }

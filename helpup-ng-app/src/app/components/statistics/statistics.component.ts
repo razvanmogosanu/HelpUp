@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ApiService} from '../../services/ApiService';
 import {Chart} from 'node_modules/chart.js';
 import {Post} from "../../models/Post";
-import {UsersDetails} from "../../models/UserDetails";
+import {UserDetails} from "../../models/UserDetails";
 import {Type} from "../../models/Type";
 import {Week} from "../../models/Week";
 
@@ -13,7 +13,7 @@ import {Week} from "../../models/Week";
 })
 export class StatisticsComponent implements OnInit {
   allPosts: Post[];
-  allUsersDetails: UsersDetails[];
+  allUsersDetails: UserDetails[];
   postType: Type;
   dailyPosts: Week;
   bucharest: number;
@@ -241,7 +241,7 @@ export class StatisticsComponent implements OnInit {
   }
 
   getAllUsersDetails(): void {
-    this.apiService.getAllUsersDetails().subscribe((data: UsersDetails[]) => {
+    this.apiService.getAllUsersDetails().subscribe((data: UserDetails[]) => {
       this.allUsersDetails = data;
       this.doughnutCityChart();
     });
