@@ -27,20 +27,20 @@ public class SearchUserService {
     public ResponseEntity<List<UserDetails>> searchUsers(SearchFilter search) {
         List<UserDetails> filteredUsersList = userDetailsRepository.findAll()
                 .stream()
-                .filter(user -> usersFilter(user, search.getSearchField()))
+                .filter(user -> usersFilter(user, search.getSearchField().toLowerCase()))
                 .collect(Collectors.toList());
 
         return new ResponseEntity<>(filteredUsersList, HttpStatus.ACCEPTED);
     }
 
     private boolean usersFilter(UserDetails user, String filter) {
-        if (user.getUsername().contains(filter))
+        if (user.getUsername().toLowerCase().contains(filter))
             return true;
 
 
-        if (user.getFirstname().contains(filter))
+        if (user.getFirstname().toLowerCase().contains(filter))
             return true;
-        return user.getLastname().contains(filter);
+        return user.getLastname().toLowerCase().contains(filter);
     }
 
 

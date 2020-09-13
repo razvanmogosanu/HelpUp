@@ -35,11 +35,10 @@ export class ChatComponent implements OnInit, OnDestroy {
     this.messengerService.getConversationHistory().subscribe(
       (data: Conversation[]) => {
         this.conversations = data;
-
         if (this.whereAmIComingFrom() !== '') {
           let conversationExists = false;
           for (const conversation of this.conversations) {
-            if (conversation.to === this.whereAmIComingFrom()){
+            if (conversation.to === this.whereAmIComingFrom()) {
               conversationExists = true;
               break;
             }
@@ -101,5 +100,18 @@ export class ChatComponent implements OnInit, OnDestroy {
     this.messengerService.addMessage(newChat);
     this.chosenConversation.chat.push(newChat);
     this.inputMessage.nativeElement.value = '';
+  }
+
+  getLastMessage(conversation): Chat {
+    return conversation.chat[conversation.chat.length - 1];
+  }
+
+  whoSentLastMessage(conversation): string {
+    return (conversation.from === this.getLastMessage(conversation).sender) ? 'You:' : '';
+  }
+
+  getShortLastMessege(conversation): string {
+    const message = this.getLastMessage(conversation).message;
+    return (message.length > 28) ? message.substring(0, 28) + '...' : message;
   }
 }
