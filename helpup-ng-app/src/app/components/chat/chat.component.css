@@ -51,6 +51,11 @@
 }
 #last-message{
   font-weight: normal;
+  color: #6e6e6e;
+}
+#timestamp{
+  float: right;
+  margin-right: 10px;
 }
 
 
@@ -107,7 +112,6 @@
 #messages{
   height: 465px;
   overflow:scroll;
-  overflow-x:hidden;
 }
 
 #message-sent{
@@ -190,4 +194,40 @@ textarea:focus, input:focus{
 #send-button{
   float: right;
   margin-right: 7px;
+}
+
+@media only screen and (max-width: 900px){
+  /* History conversations */
+  #conversations{
+    width: 40%;
+    height: 600px;
+  }
+
+  #conversation-user{
+    height: 80px;
+    margin-right: 1px;
+  }
+
+  #clicked-conversation-user{
+    height: 80px;
+    margin-right: 1px;
+  }
+
+  #profile-pictures{
+    width: 50px;
+    height: 50px;
+    margin-top: 15px;
+    margin-left: 10px;
+  }
+
+  #conversations-username{
+    width: 180px;
+    margin-top: 13px;
+  }
+
+
+  /* Conversation Messages*/
+  #conversation{
+    margin-right: 0;
+  }
 }
