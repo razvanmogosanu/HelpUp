@@ -33,7 +33,7 @@ export class ChatComponent implements OnInit, OnDestroy {
 
     this.id = setInterval(() => {
       this.updateChat();
-    }, 30000);
+    }, 300);
   }
 
 
@@ -107,6 +107,8 @@ export class ChatComponent implements OnInit, OnDestroy {
     console.log(this.inputMessage.nativeElement.value);
     const newChat = new Chat();
     newChat.message = this.inputMessage.nativeElement.value;
+    if(newChat.message === '')
+      return;
     newChat.sender = this.chosenConversation.from;
     newChat.receiver = this.chosenConversation.to;
     newChat.timestamp = Date.now();

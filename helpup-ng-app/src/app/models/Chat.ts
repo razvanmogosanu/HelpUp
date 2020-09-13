@@ -3,4 +3,5 @@ export class Chat {
   receiver: string;
   message: string;
   timestamp: any;
+  seen: boolean;
 }

@@ -9,11 +9,29 @@
         <img [src]="translateImage(conversation.icon)" alt="profile picture" id="profile-pictures">
 
         <div id="conversations-username">
-          <p>{{whoAmITalkingTo(conversation)}}</p>
+          <p style="font-size: 17px">
+
+            <span *ngIf="conversation.from === getLastChat(conversation).receiver
+               && !getLastChat(conversation).seen; then whoSentLastMessageIfBlock else whoSentLastMessageElseBlock; "></span>
+
+
+            <ng-template #whoSentLastMessageIfBlock>
+              <span>{{whoAmITalkingTo(conversation)}}</span>
+            </ng-template>
+            <ng-template #whoSentLastMessageElseBlock>
+              <span style="font-weight: normal !important;">{{whoAmITalkingTo(conversation)}}</span>
+            </ng-template>
+          </p>
           <p id="last-message">
             <span *ngIf="conversation.chat[0] != undefined">
-              {{whoSentLastMessage(conversation)}}
-              {{getShortLastMessage(conversation)}}
+               {{whoSentLastMessage(conversation)}}
+
+              <span *ngIf="conversation.from === getLastChat(conversation).receiver
+               && !getLastChat(conversation).seen; then lastMessageIf else lastMessageElse; "></span>
+              <ng-template #lastMessageIf>
+                <span style="font-weight: 600; color: black">{{getShortLastMessage(conversation)}}</span>
+              </ng-template>
+              <ng-template #lastMessageElse>{{getShortLastMessage(conversation)}}</ng-template>
             </span>
             <span id="timestamp">
               {{getTimestamp(conversation)}}
