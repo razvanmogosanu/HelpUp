@@ -84,6 +84,56 @@ public class MessageController {
 
     @RequestMapping(value = "/addMessage", method = RequestMethod.POST)
     private void addMessage(@RequestBody Chat chat) {
+        chat.setSeen(false);
+        chatRepository.save(chat);
+    }
+
+    @RequestMapping(value = "/getNotifications", method = RequestMethod.GET)
+    private ResponseEntity<HttpSimpleStringResponse> getNotifications(@RequestHeader("Authorization") String header) {
+        String from = jwtService.parseUsernameFromJWT(header).getString();
+        List<Conversation> conversations = new ArrayList<>();
+
+        List<Chat> list = chatRepository.findAll();
+
+        for(Chat chat : list) {
+
+            if(chat.getReceiver().equals(from) || chat.getSender().equals(from)) {
+                boolean conversationExists = false;
+
+                for (Conversation conversation : conversations) {
+
+                    if (conversation.getFrom().equals(from)
+                            && conversation.getTo().equals((from.equals(chat.getReceiver())) ? chat.getSender() : chat.getReceiver())) {
+                        conversation.getChat().add(chat);
+                        conversationExists = true;
+                        break;
+                    }
+                }
+                if (!conversationExists) {
+                    Conversation newConversation =
+                            new Conversation((from.equals(chat.getReceiver())) ? chat.getSender() : chat.getReceiver(), from, userDetailsRepository.getByUsername(chat.getReceiver()).getProfilepic());
+                    newConversation.getChat().add(chat);
+                    conversations.add(newConversation);
+                }
+            }
+        }
+
+
+        int nrOfNotifications = 0;
+        for(Conversation conversation : conversations) {
+            Chat lastMessage = conversation.getChat().lastElement();
+
+            if (!lastMessage.isSeen() && conversation.getTo().equals(lastMessage.getSender())) {
+                nrOfNotifications++;
+            }
+        }
+        return ResponseEntity.ok(new HttpSimpleStringResponse(Integer.toString(nrOfNotifications)));
+    }
+
+    @RequestMapping(value = "/messageSeen", method = RequestMethod.POST)
+    private void seeLastMessage(@RequestBody Conversation conversation) {
+        Chat chat = chatRepository.getOne(conversation.getChat().lastElement().getId());
+        chat.setSeen(true);
         chatRepository.save(chat);
     }
 }

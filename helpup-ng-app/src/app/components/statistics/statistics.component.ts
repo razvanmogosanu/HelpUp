@@ -1,10 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {ApiService} from '../../services/ApiService';
 import {Chart} from 'node_modules/chart.js';
-import {Post} from '../../models/Post';
-import {UserDetails} from '../../models/UserDetails';
-import {Type} from '../../models/Type';
-import {Week} from '../../models/Week';
+import {Post} from "../../models/Post";
+import {UserDetails} from "../../models/UserDetails";
+import {Type} from "../../models/Type";
+import {Week} from "../../models/Week";
+
 
 @Component({
   selector: 'app-statistics',

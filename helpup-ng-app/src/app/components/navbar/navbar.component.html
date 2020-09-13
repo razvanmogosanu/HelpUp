@@ -6,7 +6,11 @@
     <ul class="nav navbar-nav">
       <li *ngIf="cookies.check('username') && !isAdmin()"><a [routerLink]="['profile', this.cookies.get('username')]">Profile</a></li>
       <li *ngIf="cookies.check('username') && isAdmin()"><a [routerLink]="['statistics']">Statistics</a></li>
-      <li *ngIf="cookies.check('username') && !isAdmin()"><a [routerLink]="['chat']">Chat</a></li>
+      <li *ngIf="cookies.check('username') && !isAdmin()">
+        <a [routerLink]="['chat']">
+          <span>Chat</span>
+          <div *ngIf="noOfNotifications !== '0'" style="color: white; text-align: center; width: 20px; height: 20px; background: red">{{noOfNotifications}}</div></a>
+      </li>
 
       <li><a routerLink="about">About Us</a></li>
     </ul>
