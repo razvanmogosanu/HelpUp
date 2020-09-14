@@ -27,9 +27,9 @@
 
           <!-- Searched users -->
           <div *ngFor="let user of searchedUsers">
-            <div  (click)="showDropdown = false" [routerLink]="['profile', user.username]" id="search-username">
+            <div  (click)="clearSearchField()" [routerLink]="['profile', user.username]" id="search-username">
               <img id="profile-pic" alt="profile-picture" src="{{translateImage(user.profilepic)}}">
-              {{user.username}}
+              <div>{{user.username}}</div>
             </div>
           </div>
 

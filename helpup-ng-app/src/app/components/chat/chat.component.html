@@ -72,7 +72,11 @@
           <div *ngFor="let chat of chosenConversation.chat">
             <div id="message-received" *ngIf="chat.sender === whereAmIComingFrom()"> {{chat.message}}</div>
             <div *ngIf="chat.receiver === whereAmIComingFrom()">
-              <div id="message-sent">{{chat.message}}</div>
+              <div id="message-sent">{{chat.message}}
+                <div *ngIf="getLastChat(chosenConversation).sender === this.chosenConversation.from ">
+                  {{getLastChat(chosenConversation).seen}}
+                </div>  
+              </div>
             </div>
           </div>
         </div>

@@ -66,4 +66,9 @@ export class NavbarComponent implements OnInit, OnDestroy {
   isAdmin(): boolean {
     return this.cookies.get('username').includes('admin');
   }
+
+  clearSearchField():void {
+    this.showDropdown = false;
+    this.searchForm.reset();
+  }
 }

@@ -2,7 +2,7 @@ import {AfterViewChecked, Component, ElementRef, OnDestroy, OnInit, ViewChild} f
 
 import {CookieService} from 'ngx-cookie-service';
 import {ActivatedRoute, Router} from '@angular/router';
-import {MessengerService} from '../../MessengerService';
+import {MessengerService} from '../../services/MessengerService';
 import {Conversation} from '../../models/Conversation';
 import {Chat} from '../../models/Chat';
 import {ApiService} from '../../services/ApiService';
@@ -104,7 +104,6 @@ export class ChatComponent implements OnInit, OnDestroy {
   }
 
   submitMessage(): void {
-    console.log(this.inputMessage.nativeElement.value);
     const newChat = new Chat();
     newChat.message = this.inputMessage.nativeElement.value;
     if(newChat.message === '')
@@ -139,7 +138,7 @@ export class ChatComponent implements OnInit, OnDestroy {
   getTimestamp(conversation): string{
     const date = this.getLastChat(conversation).timestamp;
     const nowDate = new Date();
-    console.log('Conversation: ' + new Date(date).getFullYear() + 'Now: ' + new Date().getFullYear());
+    // console.log('Conversation: ' + new Date(date).getFullYear() + 'Now: ' + new Date().getFullYear());
 
     if ((new Date(date).getFullYear() === nowDate.getFullYear()) && (new Date(date).getMonth() === nowDate.getMonth())
       && (new Date(date).getDate() === nowDate.getDate())){
