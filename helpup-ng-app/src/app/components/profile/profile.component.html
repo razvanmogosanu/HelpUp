@@ -16,9 +16,9 @@
     <h3 id="username-profile">@{{this.userDetails.username}}</h3>
 
     <div id="profile-pic-container" (mouseenter)="onPhotoMode = true;" (mouseleave)="onPhotoMode = false;" >
-      <input #fileInput style="display: none" type="file" accept="image/*" (change)="onFileChanged($event)">
+      <input #fileInput  style="display: none" type="file" accept="image/*" (change)="onFileChanged($event)">
 
-      <div *ngIf="onPhotoMode" id="profile-pic-text" (click)="fileInput.click()">Edit</div>
+      <div *ngIf="onPhotoMode && isMine()" id="profile-pic-text" (click)="fileInput.click()">Edit</div>
 
       <img *ngIf="userDetails.profilepic != null" [src]="userDetails.profilepic" (click)="fileInput.click()" id="profile-pic">
     </div>
